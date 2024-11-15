@@ -1,0 +1,104 @@
+/* Variables de Colores */
+:root {
+    --azul-academico: #1B3A57;
+    --gris-tecnico: #2C3E50;
+    --blanco: #FFFFFF;
+    --acento: #F39C12;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: var(--blanco);
+    background-color: var(--gris-tecnico);
+}
+
+/* Estilos Generales */
+.seccion {
+    padding: 60px 20px;
+}
+
+.contenedor {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Sección de Inicio */
+#inicio {
+    background-color: var(--azul-academico);
+    text-align: center;
+}
+
+#inicio h1 {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+#inicio h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.botones .boton {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: var(--acento);
+    color: var(--blanco);
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+/* Secciones Restantes */
+h2 {
+    font-size: 36px;
+    color: var(--acento);
+    margin-bottom: 20px;
+}
+
+h3 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+p, li {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+/* Galería de Proyectos */
+.galeria {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.proyecto {
+    background-color: var(--azul-academico);
+    padding: 20px;
+    flex: 1 1 calc(33% - 40px);
+    box-sizing: border-box;
+}
+
+.proyecto img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.redes-sociales a {
+    color: var(--blanco);
+    margin-right: 15px;
+    text-decoration: none;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .galeria {
+        flex-direction: column;
+    }
+
+    .proyecto {
+        flex: 1 1 100%;
+    }
+}
