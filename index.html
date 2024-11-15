@@ -1,86 +1,128 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Tu Nombre Completo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Enlace al archivo CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <title>Juan Lara - Data Scientist & Researcher</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"></script>
 </head>
-<body>
-
-    <!-- Sección de Inicio -->
-    <section id="inicio" class="seccion">
-        <div class="contenedor">
-            <h1>Tu Nombre Completo</h1>
-            <h2>Matemáticas | Ciencias de la Computación | Aprendizaje Automático | Teoría de Juegos</h2>
-            <div class="botones">
-                <a href="tu_cv.pdf" class="boton">Currículum</a>
-                <a href="https://www.linkedin.com/in/tuperfil" class="boton">LinkedIn</a>
-                <a href="https://github.com/tu-usuario" class="boton">GitHub</a>
-                <a href="mailto:tuemail@dominio.com" class="boton">Contacto</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Investigación y Trabajo -->
-    <section id="investigacion" class="seccion">
-        <div class="contenedor">
-            <h2>Investigación y Trabajo</h2>
-            <h3>Investigación Actual</h3>
-            <p>Detalles sobre tus proyectos en Teoría de Juegos, Economía Organizacional, etc.</p>
-            <h3>Experiencia en la Industria</h3>
-            <p>Descripción de tu experiencia en ciencia de datos, proyectos como TextInsight, etc.</p>
-        </div>
-    </section>
-
-    <!-- Formación Académica -->
-    <section id="formacion" class="seccion">
-        <div class="contenedor">
-            <h2>Formación Académica</h2>
-            <h3>Educación</h3>
-            <ul>
-                <li>Título Académico 1</li>
-                <li>Título Académico 2</li>
-                <!-- Agrega más según sea necesario -->
-            </ul>
-            <h3>Intereses de Investigación</h3>
-            <p>Aprendizaje Automático, Estrategia Económica, Métodos Computacionales, etc.</p>
-        </div>
-    </section>
-
-    <!-- Proyectos y Herramientas -->
-    <section id="proyectos" class="seccion">
-        <div class="contenedor">
-            <h2>Proyectos y Herramientas</h2>
-            <!-- Galería de Proyectos -->
-            <div class="galeria">
-                <!-- Proyecto 1 -->
-                <div class="proyecto">
-                    <img src="ruta_a_imagen_proyecto1" alt="Proyecto 1">
-                    <h3>Título del Proyecto 1</h3>
-                    <p>Descripción breve del proyecto.</p>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-gray-900">Juan Lara</h1>
+                <div class="flex space-x-4">
+                    <a href="#about" class="text-gray-700 hover:text-gray-900">About</a>
+                    <a href="#experience" class="text-gray-700 hover:text-gray-900">Experience</a>
+                    <a href="#projects" class="text-gray-700 hover:text-gray-900">Projects</a>
+                    <a href="#contact" class="text-gray-700 hover:text-gray-900">Contact</a>
                 </div>
-                <!-- Agrega más proyectos -->
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="bg-white">
+        <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
+                    Data Scientist & Researcher
+                </h1>
+                <p class="mt-6 max-w-2xl mx-auto text-xl text-gray-500">
+                    Transforming complex data into actionable insights through AI and machine learning
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8">About Me</h2>
+            <div class="prose prose-lg text-gray-500">
+                <p>Innovative Data Scientist and Researcher with dual degrees in Mathematics and Computer Science. Currently working at Ipsos and collaborating with Harvard Business School on research projects in corporate strategy and organizational economics.</p>
             </div>
         </div>
     </section>
 
-    <!-- Sección de Contacto -->
-    <section id="contacto" class="seccion">
-        <div class="contenedor">
-            <h2>Contacto</h2>
-            <p>Email: <a href="mailto:tuemail@dominio.com">tuemail@dominio.com</a></p>
-            <p>Ubicación: Tu Ciudad, País</p>
-            <div class="redes-sociales">
-                <a href="https://www.linkedin.com/in/tuperfil">LinkedIn</a>
-                <a href="https://github.com/tu-usuario">GitHub</a>
-                <!-- Agrega más enlaces si es necesario -->
+    <!-- Experience Section -->
+    <section id="experience" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8">Experience</h2>
+            <div class="space-y-12">
+                <div class="space-y-2">
+                    <h3 class="text-2xl font-bold text-gray-900">Data Scientist @ Ipsos</h3>
+                    <p class="text-gray-500">Feb 2024 - Present</p>
+                    <p class="text-gray-600">Leading the transformation of the Statistics department into an advanced Data Science team, implementing AI-powered solutions and MLOps practices.</p>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="text-2xl font-bold text-gray-900">Research Assistant @ Harvard University</h3>
+                    <p class="text-gray-500">Sep 2022 - Present</p>
+                    <p class="text-gray-600">Collaborating on research projects in corporate strategy and organizational economics, developing complex mathematical models and implementing large-scale simulations.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Enlace al archivo JavaScript -->
-    <script src="script.js"></script>
+    <!-- Projects Section -->
+    <section id="projects" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8">Featured Projects</h2>
+            <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                <div class="bg-white shadow rounded-lg overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900">TextInsight</h3>
+                        <p class="mt-2 text-gray-600">Interactive text analysis tool built with Streamlit for market research applications.</p>
+                    </div>
+                </div>
+                <div class="bg-white shadow rounded-lg overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900">MadameX</h3>
+                        <p class="mt-2 text-gray-600">Web-based game developed using JavaScript with advanced gameplay mechanics.</p>
+                    </div>
+                </div>
+                <div class="bg-white shadow rounded-lg overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900">Multi-Agent Optimization</h3>
+                        <p class="mt-2 text-gray-600">Research project on optimization in organizational economics with Harvard Business School.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8">Get in Touch</h2>
+            <div class="flex justify-center space-x-6">
+                <a href="https://www.linkedin.com/in/juandavidlara/" class="text-gray-600 hover:text-gray-900">
+                    <span class="sr-only">LinkedIn</span>
+                    <i data-feather="linkedin" class="w-6 h-6"></i>
+                </a>
+                <a href="https://github.com/JuanLara18" class="text-gray-600 hover:text-gray-900">
+                    <span class="sr-only">GitHub</span>
+                    <i data-feather="github" class="w-6 h-6"></i>
+                </a>
+                <a href="mailto:larajuand@outlook.com" class="text-gray-600 hover:text-gray-900">
+                    <span class="sr-only">Email</span>
+                    <i data-feather="mail" class="w-6 h-6"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-50">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-gray-500">© 2024 Juan Lara. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        feather.replace();
+    </script>
 </body>
 </html>
