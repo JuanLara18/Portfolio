@@ -3,90 +3,397 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juan Lara - Data Scientist & Researcher</title>
+    <title>Juan Lara</title>
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/assets/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="/assets/favicon/favicon.png">
+    <!-- <link rel="shortcut icon" href="https://www.flaticon.com/free-icons/portfolio"> -->
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Hojas de estilo -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"></script>
 </head>
-<body class="bg-gray-50">
+<body>
     <!-- Header -->
-    <header class="bg-white shadow-sm">
-        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div class="flex justify-between items-center">
-                <h1 class="text-2xl font-bold text-gray-900">Juan Lara</h1>
-                <div class="flex space-x-4">
-                    <a href="#about" class="text-gray-700 hover:text-gray-900">About</a>
-                    <a href="#experience" class="text-gray-700 hover:text-gray-900">Experience</a>
-                    <a href="#projects" class="text-gray-700 hover:text-gray-900">Projects</a>
-                    <a href="#contact" class="text-gray-700 hover:text-gray-900">Contact</a>
+    <header>
+        <nav class="container">
+            <div class="nav-content">
+                <h1>Juan Lara</h1>
+                <div class="nav-links">
+                    <a href="#about">About</a>
+                    <a href="#experience">Experience</a>
+                    <a href="#education">Education</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#contact">Contact</a>
                 </div>
             </div>
         </nav>
     </header>
 
     <!-- Hero Section -->
-    <div class="bg-white">
-        <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <h1 class="text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
-                    Data Scientist & Researcher
-                </h1>
-                <p class="mt-6 max-w-2xl mx-auto text-xl text-gray-500">
-                    Transforming complex data into actionable insights through AI and machine learning
-                </p>
+    <div class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-grid">
+                    <div class="profile-side">
+                        <div class="profile-image">
+                            <img src="assets/profile.jpg" alt="Juan Lara" class="profile-pic">
+                        </div>
+                        <div class="profile-tags">
+                            <span class="tag">Mathematics</span>
+                            <span class="tag">Business</span>
+                            <span class="tag">Game Theory</span>
+                            <span class="tag">Microeconomics</span>
+                            <span class="tag">Optimization</span>
+                            <span class="tag">AI</span>
+                        </div>
+                    </div>
+                    <div class="content-side">
+                        <h1>Juan Lara</h1>
+                        <h2 class="subtitle">Research Assistant at Harvard Business School</h2>
+                        <div class="quote">
+                            <blockquote>
+                                <p>"The beauty of mathematics only shows itself to more patient followers."</p>
+                                <cite>— Maryam Mirzakhani</cite>
+                            </blockquote>
+                        </div>
+                        <div class="hero-contact">
+                            <span class="email">Email: <span class="email-format">jlaracamacho [at] hbs [dot] edu</span></span>
+                            <a href="/assets/CV___EN.pdf" class="cv-button">Download my CV</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- About Section -->
-    <section id="about" class="py-16 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-8">About Me</h2>
-            <div class="prose prose-lg text-gray-500">
-                <p>Innovative Data Scientist and Researcher with dual degrees in Mathematics and Computer Science. Currently working at Ipsos and collaborating with Harvard Business School on research projects in corporate strategy and organizational economics.</p>
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <p class="intro">I am a mathematician and computer scientist currently working as a research assistant for <a href="https://www.hbs.edu/faculty/Pages/profile.aspx?facId=1063486" class="highlight">Professor Jorge Tamayo</a> at Harvard Business School. My research focuses on microeconomics and organizational economics, where I explore firm behavior and strategic decision-making in multiunit organizations through the lens of game theory and dynamic optimization.</p>
+                
+                <p class="research">With a strong foundation in mathematics and computer science from Universidad Nacional de Colombia, I blend theoretical modeling with computational methods to analyze complex economic scenarios. My technical expertise extends to artificial intelligence and machine learning, which I leverage to enhance and validate theoretical predictions through large-scale numerical simulations.</p>
             </div>
         </div>
     </section>
 
     <!-- Experience Section -->
-    <section id="experience" class="py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-8">Experience</h2>
-            <div class="space-y-12">
-                <div class="space-y-2">
-                    <h3 class="text-2xl font-bold text-gray-900">Data Scientist @ Ipsos</h3>
-                    <p class="text-gray-500">Feb 2024 - Present</p>
-                    <p class="text-gray-600">Leading the transformation of the Statistics department into an advanced Data Science team, implementing AI-powered solutions and MLOps practices.</p>
+    <section id="experience">
+        <div class="container">
+            <h2 class="section-title">Experience</h2>
+            <div class="experience-grid">
+                <div class="experience-card">
+                    <div class="card-header">
+                        <div class="company-logo">
+                            <img src="assets/company-logos/hbs-logo.png" alt="Harvard Business School">
+                        </div>
+                        <div class="header-content">
+                            <h3>Research Assistant</h3>
+                            <div class="company">Harvard Business School</div>
+                            <p class="date">September 2022 - Present</p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <p class="description">Working with Professor Jorge Tamayo on research projects in corporate strategy and organizational economics.</p>
+                        <ul class="responsibilities">
+                            <li>Develop theoretical models using game theory and dynamic optimization to analyze firm behavior and strategic decision-making.</li>
+                            <li>Implement large-scale numerical simulations in Python and C++ with parallel computing techniques.</li>
+                            <li>Apply econometric methods to analyze empirical data and validate theoretical predictions.</li>
+                            <li>Collaborate in formulating research questions and hypotheses for academic papers.</li>
+                        </ul>
+                        <div class="skills-used">
+                            <span class="skill-tag">Game Theory</span>
+                            <span class="skill-tag">Dynamic Optimization</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">C++</span>
+                            <span class="skill-tag">Econometrics</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="space-y-2">
-                    <h3 class="text-2xl font-bold text-gray-900">Research Assistant @ Harvard University</h3>
-                    <p class="text-gray-500">Sep 2022 - Present</p>
-                    <p class="text-gray-600">Collaborating on research projects in corporate strategy and organizational economics, developing complex mathematical models and implementing large-scale simulations.</p>
+
+                <div class="experience-card">
+                    <div class="card-header">
+                        <div class="company-logo">
+                            <img src="assets/company-logos/ipsos-logo.jpg" alt="Ipsos">
+                        </div>
+                        <div class="header-content">
+                            <h3>Data Scientist</h3>
+                            <div class="company">Ipsos</div>
+                            <p class="date">February 2024 - Present</p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <p class="description">Leading the transformation of statistical methodologies through advanced data science and AI solutions.</p>
+                        <ul class="responsibilities">
+                            <li>Develop AI-powered automation tools using Python and cloud technologies.</li>
+                            <li>Design and implement scalable data pipelines for real-time processing.</li>
+                            <li>Create machine learning models for market segmentation and analysis.</li>
+                            <li>Establish MLOps frameworks integrating CI/CD practices.</li>
+                        </ul>
+                        <div class="skills-used">
+                            <span class="skill-tag">Machine Learning</span>
+                            <span class="skill-tag">MLOps</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Cloud Computing</span>
+                            <span class="skill-tag">Data Pipeline</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Education Section -->
+<section id="education">
+    <div class="container">
+        <h2 class="section-title">Education</h2>
+        
+        <!-- Main Degrees -->
+        <div class="education-grid">
+            <div class="education-card">
+                <div class="card-header">
+                    <div class="institution-logo">
+                        <img src="assets/institutions/unal-logo.png" alt="Universidad Nacional de Colombia">
+                    </div>
+                    <div class="header-content">
+                        <h3>B.S. in Mathematics</h3>
+                        <div class="institution">Universidad Nacional de Colombia</div>
+                        <p class="date">2018 - 2022</p>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="key-details">
+                        <span class="detail-tag">GPA: 4.7/5.0</span>
+                        <span class="detail-tag">Applied Mathematics</span>
+                    </div>
+                    <ul class="education-highlights">
+                        <li>Focus on Mathematical Analysis and Optimization</li>
+                        <li>Research in Game Theory and Economic Modeling</li>
+                        <li>Advanced courses in Numerical Methods</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="education-card">
+                <div class="card-header">
+                    <div class="institution-logo">
+                        <img src="assets/institutions/unal-logo.png" alt="Universidad Nacional de Colombia">
+                    </div>
+                    <div class="header-content">
+                        <h3>B.S. in Computer Science</h3>
+                        <div class="institution">Universidad Nacional de Colombia</div>
+                        <p class="date">2019 - 2023</p>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="key-details">
+                        <span class="detail-tag">GPA: 4.7/5.0</span>
+                        <span class="detail-tag">Machine Learning</span>
+                    </div>
+                    <ul class="education-highlights">
+                        <li>Specialization in AI and Machine Learning</li>
+                        <li>Advanced Algorithm Design and Analysis</li>
+                        <li>Software Engineering and Development</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Training -->
+        <div class="additional-training">
+            <h3>Additional Training</h3>
+            <div class="courses-carousel">
+                <div class="carousel-container">
+                    <!-- Talento Tech Course -->
+                    <div class="training-card">
+                        <div class="course-provider">
+                            <img src="assets/institutions/cymetria-logo.png" alt="Talento Tech Cymetria">
+                        </div>
+                        <div class="course-content">
+                            <h4>Artificial Intelligence Bootcamp</h4>
+                            <p class="course-duration">159 hours • May-Oct 2024</p>
+                            <p class="course-description">Advanced AI and ML training, focusing on cutting-edge algorithms and deep learning architectures.</p>
+                            <div class="course-tags">
+                                <span class="course-tag">Deep Learning</span>
+                                <span class="course-tag">Neural Networks</span>
+                                <span class="course-tag">PyTorch</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Platzi Course -->
+                    <div class="training-card">
+                        <div class="course-provider">
+                            <img src="assets/institutions/platzi-logo.png" alt="Platzi">
+                        </div>
+                        <div class="course-content">
+                            <h4>DevOps Certification</h4>
+                            <p class="course-duration">Oct 2024</p>
+                            <p class="course-description">Comprehensive DevOps and MLOps practices, with focus on containerization and CI/CD pipelines.</p>
+                            <div class="course-tags">
+                                <span class="course-tag">Docker</span>
+                                <span class="course-tag">GitHub Actions</span>
+                                <span class="course-tag">MLOps</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Coursera Courses -->
+                    <div class="training-card">
+                        <div class="course-provider">
+                            <img src="assets/institutions/coursera-logo.png" alt="Coursera">
+                        </div>
+                        <div class="course-content">
+                            <h4>Algorithmic Toolbox</h4>
+                            <p class="course-duration">May 2023</p>
+                            <p class="course-description">Design and analysis of algorithms with practical problem-solving techniques.</p>
+                            <div class="course-tags">
+                                <span class="course-tag">Algorithms</span>
+                                <span class="course-tag">Data Structures</span>
+                                <span class="course-tag">Problem Solving</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="training-card">
+                        <div class="course-provider">
+                            <img src="assets/institutions/coursera-logo.png" alt="Coursera">
+                        </div>
+                        <div class="course-content">
+                            <h4>Linux and Bash for Data Engineering</h4>
+                            <p class="course-duration">June 2023</p>
+                            <p class="course-description">Essential Linux commands and Bash scripting for data engineering tasks.</p>
+                            <div class="course-tags">
+                                <span class="course-tag">Linux</span>
+                                <span class="course-tag">Bash</span>
+                                <span class="course-tag">Automation</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="training-card">
+                        <div class="course-provider">
+                            <img src="assets/institutions/coursera-logo.png" alt="Coursera">
+                        </div>
+                        <div class="course-content">
+                            <h4>Python and Pandas for Data Engineering</h4>
+                            <p class="course-duration">June 2023</p>
+                            <p class="course-description">Advanced data manipulation and analysis using Python and Pandas.</p>
+                            <div class="course-tags">
+                                <span class="course-tag">Python</span>
+                                <span class="course-tag">Pandas</span>
+                                <span class="course-tag">Data Analysis</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carousel Navigation -->
+                <div class="carousel-nav">
+                    <button class="carousel-prev" aria-label="Previous courses">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="carousel-next" aria-label="Next courses">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+
+                <!-- Carousel Indicators -->
+                <div class="carousel-indicators"></div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
     <!-- Projects Section -->
-    <section id="projects" class="py-16 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-8">Featured Projects</h2>
-            <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                <div class="bg-white shadow rounded-lg overflow-hidden">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-900">TextInsight</h3>
-                        <p class="mt-2 text-gray-600">Interactive text analysis tool built with Streamlit for market research applications.</p>
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3>TextInsight</h3>
+                            <div class="project-links">
+                                <a href="https://textinsight-ipsos.streamlit.app/" target="_blank" class="project-link">
+                                    <i data-feather="external-link"></i>
+                                    <span>Live Demo</span>
+                                </a>
+                                <a href="https://github.com/yourusername/textinsight" target="_blank" class="project-link">
+                                    <i data-feather="github"></i>
+                                    <span>Source</span>
+                                </a>
+                            </div>
+                        </div>
+                        <p class="project-description">Interactive text analysis tool built with Streamlit for market research applications.</p>
+                        <div class="project-tags">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">NLP</span>
+                            <span class="tech-tag">Streamlit</span>
+                        </div>
                     </div>
                 </div>
-                <div class="bg-white shadow rounded-lg overflow-hidden">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-900">MadameX</h3>
-                        <p class="mt-2 text-gray-600">Web-based game developed using JavaScript with advanced gameplay mechanics.</p>
+
+                <div class="project-card">
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3>Multi-Agent Optimization</h3>
+                            <div class="project-links">
+                                <a href="your-research-link" target="_blank" class="project-link">
+                                    <i data-feather="file-text"></i>
+                                    <span>Paper</span>
+                                </a>
+                            </div>
+                        </div>
+                        <p class="project-description">Research project on optimization in organizational economics with Harvard Business School, focusing on game theory applications.</p>
+                        <div class="project-tags">
+                            <span class="tech-tag">Game Theory</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Optimization</span>
+                        </div>
                     </div>
                 </div>
-                <div class="bg-white shadow rounded-lg overflow-hidden">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-900">Multi-Agent Optimization</h3>
-                        <p class="mt-2 text-gray-600">Research project on optimization in organizational economics with Harvard Business School.</p>
+
+                <div class="project-card">
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3>MadameX</h3>
+                            <div class="project-links">
+                                <a href="https://juanlara18.github.io/MadameX/" target="_blank" class="project-link">
+                                    <i data-feather="play"></i>
+                                    <span>Play</span>
+                                </a>
+                                <a href="https://github.com/JuanLara18/MadameX" target="_blank" class="project-link">
+                                    <i data-feather="github"></i>
+                                    <span>Source</span>
+                                </a>
+                            </div>
+                        </div>
+                        <p class="project-description">Web-based game developed using JavaScript with advanced gameplay mechanics.</p>
+                        <div class="project-tags">
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">CSS3</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -94,35 +401,44 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-8">Get in Touch</h2>
-            <div class="flex justify-center space-x-6">
-                <a href="https://www.linkedin.com/in/juandavidlara/" class="text-gray-600 hover:text-gray-900">
-                    <span class="sr-only">LinkedIn</span>
-                    <i data-feather="linkedin" class="w-6 h-6"></i>
-                </a>
-                <a href="https://github.com/JuanLara18" class="text-gray-600 hover:text-gray-900">
-                    <span class="sr-only">GitHub</span>
-                    <i data-feather="github" class="w-6 h-6"></i>
-                </a>
-                <a href="mailto:larajuand@outlook.com" class="text-gray-600 hover:text-gray-900">
-                    <span class="sr-only">Email</span>
-                    <i data-feather="mail" class="w-6 h-6"></i>
-                </a>
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Let's Connect</h2>
+            <div class="contact-content">
+                <p class="contact-text">Feel free to reach out for research collaborations, technical discussions, or just to say hello!</p>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/julara/?locale=en_US" class="social-link" target="_blank">
+                        <i data-feather="linkedin"></i>
+                        <span>LinkedIn</span>
+                    </a>
+                    <a href="https://github.com/JuanLara18" class="social-link" target="_blank">
+                        <i data-feather="github"></i>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="mailto:larajuand@outlook.com" class="social-link">
+                        <i data-feather="mail"></i>
+                        <span>Email</span>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-50">
-        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            <p class="text-center text-gray-500">© 2024 Juan Lara. All rights reserved.</p>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p class="copyright">© 2024 Juan Lara. All rights reserved.</p>
+                <!-- <p class="footer-note">Made with ♥️ using HTML, CSS, and JavaScript</p> -->
+            </div>
         </div>
     </footer>
 
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"></script>
     <script>
         feather.replace();
     </script>
+    <script src="script.js"></script>
 </body>
 </html>

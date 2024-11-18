@@ -1,191 +1,307 @@
-// Esperar a que el DOM esté completamente cargado
-document.addEventListener('DOMContentLoaded', function() {
-    // Inicialización de variables
+document.addEventListener('DOMContentLoaded', () => {
+    // ======= Elementos DOM =======
     const header = document.querySelector('header');
     const navLinks = document.querySelectorAll('nav a');
     const sections = document.querySelectorAll('section');
-    let lastScrollTop = 0;
+    const heroSection = document.querySelector('.hero');
+    const experienceCards = document.querySelectorAll('.experience-card');
+    const projectCards = document.querySelectorAll('.project-card');
 
-    // ===============================
-    // Navegación y Scroll
-    // ===============================
-    
-    // Navegación suave para enlaces internos
+    // ======= Animación de entrada para el hero =======
+    const animateHero = () => {
+        const heroContent = document.querySelector('.hero-content');
+        heroContent.style.opacity = '0';
+        heroContent.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+            heroContent.style.transition = 'all 0.8s ease-out';
+            heroContent.style.opacity = '1';
+            heroContent.style.transform = 'translateY(0)';
+        }, 200);
+    };
+
+    // ======= Efecto Parallax para el hero =======
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        heroSection.style.transform = `translateY(${scrolled * 0.08}px)`;
+    });
+
+    // ======= Navegación Mejorada =======
+    const smoothScroll = (target, duration = 800) => {
+        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+        const startPosition = window.pageYOffset;
+        const distance = targetPosition - startPosition;
+        let startTime = null;
+
+        const animation = currentTime => {
+            if (startTime === null) startTime = currentTime;
+            const timeElapsed = currentTime - startTime;
+            const run = ease(timeElapsed, startPosition, distance, duration);
+            window.scrollTo(0, run);
+            if (timeElapsed < duration) requestAnimationFrame(animation);
+        };
+
+        // Función de facilitación
+        const ease = (t, b, c, d) => {
+            t /= d / 2;
+            if (t < 1) return c / 2 * t * t + b;
+            t--;
+            return -c / 2 * (t * (t - 2) - 1) + b;
+        };
+
+        requestAnimationFrame(animation);
+    };
+
+    // Navegación suave mejorada
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
+        anchor.addEventListener('click', e => {
             e.preventDefault();
-            const targetId = this.getAttribute('href');
+            const targetId = anchor.getAttribute('href');
             const targetSection = document.querySelector(targetId);
-            
             if (targetSection) {
-                targetSection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+                smoothScroll(targetSection);
+                // Actualizar URL sin recargar
+                history.pushState(null, null, targetId);
             }
         });
     });
 
-    // Control de header en scroll
-    window.addEventListener('scroll', () => {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        
-        // Añadir/remover clase scrolled al header
-        if (scrollTop > 50) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
+    // ======= Observador de Intersección Mejorado =======
+    const observerOptions = {
+        root: null,
+        threshold: 0.2,
+        rootMargin: '50px 0px 50px 0px'
+    };
 
-        // Ocultar/mostrar header basado en dirección de scroll
-        if (scrollTop > lastScrollTop && scrollTop > 100) {
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            // Una vez que el elemento es visible, lo mantenemos visible
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                // Dejar de observar el elemento una vez que aparece
+                sectionObserver.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // ======= Animaciones de Cards =======
+    const cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('card-visible');
+            }
+        });
+    }, {
+        threshold: 1.05
+    });
+
+    // Inicializar observadores y animaciones
+    sections.forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(20px)';
+        section.style.transition = 'all 0.6s ease-out';
+        sectionObserver.observe(section);
+    });
+
+    experienceCards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateX(-20px)';
+        card.style.transition = `all 0.5s ease-out ${index * 0.2}s`;
+        cardObserver.observe(card);
+    });
+
+    projectCards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = `all 0.5s ease-out ${index * 0.2}s`;
+        cardObserver.observe(card);
+    });
+
+    // ======= Efecto Header =======
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        
+        // Efecto de aparición/desaparición del header
+        if (currentScroll > lastScroll && currentScroll > 100) {
             header.style.transform = 'translateY(-100%)';
         } else {
             header.style.transform = 'translateY(0)';
         }
-        lastScrollTop = scrollTop;
+        
+        // Efecto de blur y sombra
+        if (currentScroll > 50) {
+            header.style.backdropFilter = 'blur(10px)';
+            header.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+        } else {
+            header.style.backdropFilter = 'blur(0px)';
+            header.style.boxShadow = 'none';
+        }
 
-        // Actualizar navegación activa basada en la sección visible
-        updateActiveNavigation();
+        lastScroll = currentScroll;
     });
 
-    // ===============================
-    // Animaciones de Entrada
-    // ===============================
-    
-    // Observador para animaciones de entrada
-    const fadeInElements = document.querySelectorAll('.fade-in');
-    const observerOptions = {
-        threshold: 0.2,
-        rootMargin: '0px'
+    // ======= Loading Animation =======
+    window.addEventListener('load', () => {
+        document.body.classList.add('loaded');
+        animateHero();
+    });
+
+    // ======= Hover Effects =======
+    projectCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-10px) scale(1.02)';
+            card.style.boxShadow = '0 20px 25px rgba(0, 0, 0, 0.15)';
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0) scale(1)';
+            card.style.boxShadow = 'var(--box-shadow)';
+        });
+    });
+
+    // ======= Contact Form Analytics =======
+    const trackContactClick = (type) => {
+        console.log(`Contact interaction: ${type}`);
+        // Aquí podrías integrar con Google Analytics u otra herramienta
     };
 
-    const appearOnScroll = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
+    document.querySelectorAll('.social-links a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            const platform = link.getAttribute('href').includes('linkedin') ? 'LinkedIn' :
+                           link.getAttribute('href').includes('github') ? 'GitHub' : 'Email';
+            trackContactClick(platform);
         });
-    }, observerOptions);
-
-    fadeInElements.forEach(element => {
-        appearOnScroll.observe(element);
     });
 
-    // ===============================
-    // Funciones de Utilidad
-    // ===============================
-    
-    // Actualizar navegación activa
-    function updateActiveNavigation() {
-        const scrollPosition = window.scrollY;
-
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop - 100;
-            const sectionBottom = sectionTop + section.offsetHeight;
-            const sectionId = section.getAttribute('id');
-
-            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${sectionId}`) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-        });
-    }
-
-    // ===============================
-    // Efectos de Typing
-    // ===============================
-    
-    // Efecto de typing para el título principal
-    const titleElement = document.querySelector('.hero h1');
-    if (titleElement) {
-        const text = titleElement.textContent;
-        titleElement.textContent = '';
-        let index = 0;
-
-        function typeText() {
-            if (index < text.length) {
-                titleElement.textContent += text.charAt(index);
-                index++;
-                setTimeout(typeText, 100);
-            }
+    // Carousel Functionality
+    const initializeCarousel = () => {
+        const carousel = document.querySelector('.carousel-container');
+        const cards = carousel.querySelectorAll('.training-card');
+        const prevBtn = document.querySelector('.carousel-prev');
+        const nextBtn = document.querySelector('.carousel-next');
+        const indicatorsContainer = document.querySelector('.carousel-indicators');
+        
+        if (!carousel || !cards.length || !prevBtn || !nextBtn || !indicatorsContainer) {
+            console.error('Required carousel elements not found');
+            return;
         }
 
-        // Iniciar efecto de typing después de un breve delay
-        setTimeout(typeText, 500);
-    }
+        let currentIndex = 0;
+        const cardWidth = cards[0].offsetWidth + 24; // Width + gap
+        const containerWidth = carousel.offsetWidth;
+        const visibleCards = Math.floor(containerWidth / cardWidth);
+        const maxIndex = Math.max(0, cards.length - visibleCards);
 
-    // ===============================
-    // Manejo de Proyectos
-    // ===============================
-    
-    // Añadir interactividad a las tarjetas de proyectos
-    const projectCards = document.querySelectorAll('.project-card');
-    projectCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-10px)';
-        });
+        // Clear existing indicators
+        indicatorsContainer.innerHTML = '';
 
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
-        });
-    });
+        // Create indicators
+        for (let i = 0; i <= maxIndex; i++) {
+            const indicator = document.createElement('div');
+            indicator.classList.add('indicator');
+            if (i === 0) indicator.classList.add('active');
+            indicator.addEventListener('click', () => scrollToIndex(i));
+            indicatorsContainer.appendChild(indicator);
+        }
 
-    // ===============================
-    // Inicialización de Contacto
-    // ===============================
-    
-    // Manejar eventos de contacto
-    const contactLinks = document.querySelectorAll('#contact a');
-    contactLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            // Añadir analytics si es necesario
-            console.log(`Contact click: ${this.getAttribute('href')}`);
-        });
-    });
-
-    // ===============================
-    // Optimización de Rendimiento
-    // ===============================
-    
-    // Debounce para eventos de scroll
-    function debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
+        const updateIndicators = () => {
+            const indicators = indicatorsContainer.querySelectorAll('.indicator');
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentIndex);
+            });
         };
-    }
 
-    // Aplicar debounce al evento de scroll
-    const debouncedScroll = debounce(() => {
-        updateActiveNavigation();
-    }, 100);
+        const updateButtons = () => {
+            prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.style.opacity = currentIndex === maxIndex ? '0.5' : '1';
+            nextBtn.disabled = currentIndex === maxIndex;
+        };
 
-    window.addEventListener('scroll', debouncedScroll);
+        const scrollToIndex = (index) => {
+            currentIndex = Math.max(0, Math.min(index, maxIndex));
+            const scrollLeft = currentIndex * cardWidth;
+            
+            carousel.scrollTo({
+                left: scrollLeft,
+                behavior: 'smooth'
+            });
+            
+            updateIndicators();
+            updateButtons();
+        };
 
-    // ===============================
-    // Modo Oscuro (opcional)
-    // ===============================
-    
-    // Detectar preferencia de modo oscuro del sistema
-    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-    
-    function toggleDarkMode(e) {
-        if (e.matches) {
-            document.body.classList.add('dark-mode');
-        } else {
-            document.body.classList.remove('dark-mode');
-        }
-    }
+        // Event Listeners
+        prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                scrollToIndex(currentIndex - 1);
+            }
+        });
 
-    prefersDarkScheme.addListener(toggleDarkMode);
+        nextBtn.addEventListener('click', () => {
+            if (currentIndex < maxIndex) {
+                scrollToIndex(currentIndex + 1);
+            }
+        });
+
+        // Handle scroll events
+        let scrollTimeout;
+        carousel.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                const newIndex = Math.round(carousel.scrollLeft / cardWidth);
+                if (newIndex !== currentIndex) {
+                    currentIndex = newIndex;
+                    updateIndicators();
+                    updateButtons();
+                }
+            }, 100);
+        });
+
+        // Touch events for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        carousel.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        carousel.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > 50) { // Minimum swipe distance
+                if (diff > 0 && currentIndex < maxIndex) {
+                    scrollToIndex(currentIndex + 1);
+                } else if (diff < 0 && currentIndex > 0) {
+                    scrollToIndex(currentIndex - 1);
+                }
+            }
+        });
+
+        // Window resize handling
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                const newContainerWidth = carousel.offsetWidth;
+                const newVisibleCards = Math.floor(newContainerWidth / cardWidth);
+                const newMaxIndex = Math.max(0, cards.length - newVisibleCards);
+                
+                if (newMaxIndex !== maxIndex) {
+                    currentIndex = Math.min(currentIndex, newMaxIndex);
+                    scrollToIndex(currentIndex);
+                }
+            }, 200);
+        });
+
+        // Initial setup
+        updateButtons();
+    };
+
+    // Initialize carousel
+    initializeCarousel();
+
 });
