@@ -1233,3 +1233,71 @@ footer {
 .indicator.active {
     background: var(--accent-primary);
 }
+
+/* Logos de empresas en la sección de experiencia */
+.company-logo {
+    width: 100px;  /* Aumentado de 60px */
+    height: 100px; /* Aumentado de 60px */
+    flex-shrink: 0;
+    margin-bottom: 1rem;
+}
+
+.company-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Logos de instituciones educativas */
+.institution-logo {
+    width: 120px;  /* Aumentado de 80px */
+    height: 120px; /* Aumentado de 80px */
+    margin-bottom: 1.5rem;
+}
+
+.institution-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Logos de proveedores de cursos */
+.course-provider {
+    width: 80px;   /* Aumentado de 50px */
+    height: 80px;  /* Aumentado de 50px */
+    flex-shrink: 0;
+}
+
+.course-provider img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Ajustes de espaciado para acomodar logos más grandes */
+.card-header {
+    padding: 2rem;  /* Aumentado de 1.5rem */
+    display: flex;
+    align-items: center;
+    gap: 2rem;     /* Aumentado de 1.5rem */
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Ajuste responsivo para pantallas pequeñas */
+@media (max-width: 768px) {
+    .company-logo,
+    .institution-logo {
+        width: 90px;
+        height: 90px;
+    }
+    
+    .course-provider {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .card-header {
+        padding: 1.5rem;
+        gap: 1.5rem;
+    }
+}
