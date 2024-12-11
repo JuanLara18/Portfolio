@@ -8,6 +8,7 @@ const Portfolio = {
         this.cacheElements();
         this.bindEvents();
         this.initializeFeatures();
+        this.themeManager.init();
     },
 
     // Cache all DOM elements
@@ -122,43 +123,116 @@ const Portfolio = {
     // Carousel functionality
     initializeCarousel() {
         const { container, cards, prevBtn, nextBtn, indicators } = this.elements.carousel;
+        
+        // Guard clause for missing elements
         if (!container || !cards.length) return;
 
-        let currentIndex = 0;
-        const cardWidth = cards[0].offsetWidth + 24;
-        const visibleCards = Math.floor(container.offsetWidth / cardWidth);
-        const maxIndex = Math.max(0, cards.length - visibleCards);
+        // Wait for images to load before initializing
+        const images = container.querySelectorAll('img');
+        let loadedImages = 0;
 
-        // Create indicators
-        indicators.innerHTML = Array.from({ length: maxIndex + 1 }, (_, i) => 
-            `<div class="indicator${i === 0 ? ' active' : ''}" data-index="${i}"></div>`
-        ).join('');
-
-        // Handle navigation
-        const scrollToIndex = (index) => {
-            currentIndex = Math.max(0, Math.min(index, maxIndex));
-            container.scrollTo({ left: currentIndex * cardWidth, behavior: 'smooth' });
+        const initializeAfterLoad = () => {
+            let currentIndex = 0;
             
-            // Update UI
-            indicators.querySelectorAll('.indicator').forEach((ind, i) => 
-                ind.classList.toggle('active', i === currentIndex));
-            prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
-            nextBtn.style.opacity = currentIndex === maxIndex ? '0.5' : '1';
+            // Recalculate dimensions after everything is loaded
+            const cardWidth = cards[0].offsetWidth + 24; // Width + gap
+            const visibleCards = Math.floor(container.offsetWidth / cardWidth);
+            const maxIndex = Math.max(0, cards.length - visibleCards);
+
+            // Reset container scroll position
+            container.scrollLeft = 0;
+
+            // Create indicators with proper spacing
+            if (indicators) {
+                indicators.innerHTML = Array.from({ length: maxIndex + 1 }, (_, i) => 
+                    `<div class="indicator${i === 0 ? ' active' : ''}" data-index="${i}"></div>`
+                ).join('');
+            }
+
+            const scrollToIndex = (index) => {
+                currentIndex = Math.max(0, Math.min(index, maxIndex));
+                container.scrollTo({
+                    left: currentIndex * cardWidth,
+                    behavior: 'smooth'
+                });
+                
+                // Update UI elements
+                if (indicators) {
+                    indicators.querySelectorAll('.indicator').forEach((ind, i) => 
+                        ind.classList.toggle('active', i === currentIndex));
+                }
+                
+                if (prevBtn && nextBtn) {
+                    prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
+                    nextBtn.style.opacity = currentIndex === maxIndex ? '0.5' : '1';
+                }
+            };
+
+            // Set up event listeners
+            const setupListeners = () => {
+                if (prevBtn) {
+                    prevBtn.addEventListener('click', () => scrollToIndex(currentIndex - 1));
+                }
+                
+                if (nextBtn) {
+                    nextBtn.addEventListener('click', () => scrollToIndex(currentIndex + 1));
+                }
+                
+                if (indicators) {
+                    indicators.addEventListener('click', (e) => {
+                        if (e.target.classList.contains('indicator')) {
+                            scrollToIndex(parseInt(e.target.dataset.index));
+                        }
+                    });
+                }
+
+                // Add touch support for mobile
+                let startX;
+                container.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].pageX;
+                });
+
+                container.addEventListener('touchend', (e) => {
+                    const endX = e.changedTouches[0].pageX;
+                    const diff = startX - endX;
+                    
+                    if (Math.abs(diff) > 50) { // Minimum swipe distance
+                        if (diff > 0) {
+                            scrollToIndex(currentIndex + 1);
+                        } else {
+                            scrollToIndex(currentIndex - 1);
+                        }
+                    }
+                });
+            };
+
+            setupListeners();
+            scrollToIndex(0); // Initialize position
         };
 
-        // Event listeners
-        [prevBtn, nextBtn, indicators].forEach(el => {
-            if (!el) return;
-            el.addEventListener('click', (e) => {
-                if (e.target.classList.contains('indicator')) {
-                    scrollToIndex(parseInt(e.target.dataset.index));
-                } else if (e.target === prevBtn) {
-                    scrollToIndex(currentIndex - 1);
-                } else if (e.target === nextBtn) {
-                    scrollToIndex(currentIndex + 1);
+        // If there are images, wait for them to load
+        if (images.length > 0) {
+            images.forEach(img => {
+                if (img.complete) {
+                    loadedImages++;
+                } else {
+                    img.addEventListener('load', () => {
+                        loadedImages++;
+                        if (loadedImages === images.length) {
+                            initializeAfterLoad();
+                        }
+                    });
                 }
             });
-        });
+            
+            // If all images are already loaded
+            if (loadedImages === images.length) {
+                initializeAfterLoad();
+            }
+        } else {
+            // If no images, initialize immediately
+            initializeAfterLoad();
+        }
     },
 
     // Mobile menu
@@ -257,7 +331,11 @@ const Portfolio = {
 
     // Resize handler
     handleResize() {
-        this.initializeCarousel();
+        const reinitializeCarousel = this.debounce(() => {
+            this.initializeCarousel();
+        }, 250);
+        
+        reinitializeCarousel();
     },
 
     // Utility: Debounce function
@@ -271,7 +349,31 @@ const Portfolio = {
             clearTimeout(timeout);
             timeout = setTimeout(later, wait);
         };
-    }
+    },
+
+    // Add to the Portfolio object
+    themeManager: {
+        init() {
+            const themeToggle = document.querySelector('.theme-toggle');
+            if (!themeToggle) return;
+
+            // Load saved theme
+            const savedTheme = localStorage.getItem('portfolio-theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            }
+
+            // Toggle theme
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('portfolio-theme', newTheme);
+            });
+        }
+    },
+
 };
 
 // Initialize when DOM is ready
