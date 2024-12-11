@@ -1,116 +1,137 @@
-# Portfolio Website
+# Personal Portfolio Website
 
-[![Website Status](https://img.shields.io/website?url=https%3A%2F%2Fjuanlara18.github.io&style=for-the-badge)](https://juanlara18.github.io)
-[![Last Updated](https://img.shields.io/github/last-commit/JuanLara18/juanlara18.github.io?style=for-the-badge)](https://github.com/JuanLara18/juanlara18.github.io/commits/main)
+This repository contains the source code for my personal portfolio website, a Flask-based web application that showcases my professional experience, educational background, and technical projects. The website features a responsive design, dark/light theme switching, and analytics tracking capabilities.
 
-A modern, responsive portfolio website built to showcase my professional experience, projects, and research work. Visit the live site at [juanlara18.github.io](https://juanlara18.github.io).
+## Project Overview
 
-## 🛠️ Built With
+The portfolio website serves as a comprehensive platform to present my professional profile, including:
 
-- **HTML5** - Semantic markup
-- **CSS3** - Custom styling with CSS variables for theming
-- **JavaScript** - Interactive features and animations
-  - Intersection Observer for scroll animations
-  - Carousel functionality for courses section
-  - Smooth scrolling navigation
-- **Responsive Design** - Mobile-first approach with flexible layouts
+- Professional experience and research work at Harvard Business School
+- Educational background from Universidad Nacional de Colombia
+- Technical skills and certifications
+- Featured projects and their demonstrations
+- Contact information and professional links
 
-## 🌟 Features
+## Technical Architecture
 
-- **Dynamic Hero Section**
-  - Animated introduction
-  - Profile image with tag cloud
-  - Downloadable CV button
+The application is built using the following technologies:
 
-- **Interactive Experience Timeline**
-  - Harvard Business School research work
-  - Ipsos data science projects
-  - Animated cards with hover effects
+- **Backend**: Flask (Python 3.11)
+- **Frontend**: HTML5, CSS3, JavaScript
+- **Analytics**: Custom SQLite-based analytics system
+- **Deployment**: Heroku platform
 
-- **Education Showcase**
-  - Dual degree details
-  - Interactive course carousel
-  - Custom animations for engagement
-
-- **Project Portfolio**
-  - Live demos and source code links
-  - Technology tags
-  - Hover animations
-
-## 📂 Project Structure
+## Project Structure
 
 ```
-portfolio-website/
-├── index.html          # Main HTML structure
-├── assets/            
-│   ├── images/         # Image resources
-│   ├── profile.jpg     # Profile picture
-│   └── company-logos/  # Company and institution logos
-├── css/
-│   └── styles.css      # Main stylesheet
-└── js/
-    └── script.js       # Interactive functionality
+portfolio/
+├── assets/
+│   ├── documents/
+│   ├── icons/
+│   └── images/
+├── src/
+│   ├── index.html
+│   ├── script.js
+│   └── styles.css
+├── Procfile
+├── requirements.txt
+├── runtime.txt
+└── server.py
 ```
 
-## 🚀 Getting Started
+## Features
 
-1. Clone the repository
+### Core Functionality
+
+- Responsive design that adapts to all device sizes
+- Dynamic theme switching between light and dark modes
+- Interactive project showcase with live demos
+- Professional experience timeline
+- Educational background with detailed course information
+- Integrated contact form and social media links
+
+### Analytics Implementation
+
+The website includes a custom analytics system that tracks:
+
+- Page visits and user interactions
+- Device types and geographical distribution
+- Time spent on different sections
+- Interaction patterns with various elements
+
+## Setup and Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/portfolio.git
+   cd portfolio
+   ```
+
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Run the development server:
+   ```bash
+   python server.py
+   ```
+
+The application will be available at `http://localhost:8000`.
+
+## Deployment
+
+The application is configured for deployment on Heroku. Key deployment files include:
+
+- `Procfile`: Specifies the command to run the application
+- `runtime.txt`: Defines the Python version
+- `requirements.txt`: Lists all Python dependencies
+
+For deployment updates, push changes to the main branch:
 ```bash
-git clone https://github.com/JuanLara18/juanlara18.github.io.git
+git push origin main
 ```
 
-2. Navigate to the project directory
-```bash
-cd juanlara18.github.io
-```
+## Environment Variables
 
-3. Open `index.html` in your browser or use a local server
-```bash
-python -m http.server 8000
-```
+The application uses the following environment variables:
 
-## 💡 Implementation Details
+- `FLASK_APP`: Set to "server.py"
+- `FLASK_ENV`: Set to "production" for deployment
+- `PORT`: Automatically set by Heroku
 
-- **CSS Variables** for consistent theming and easy customization
-- **Intersection Observer API** for scroll-based animations
-- **Custom Carousel Component** for the courses section
-- **Responsive Images** with optimal loading strategies
-- **Semantic HTML** for better accessibility and SEO
+## Browser Compatibility
 
-## 🎨 Color Scheme
+The website is tested and optimized for:
 
-```css
-:root {
-    --primary-dark: #1a227d;   /* Deep blue for primary elements */
-    --primary-light: #283593;  /* Lighter blue for secondary elements */
-    --accent-primary: #3949ab; /* Accent color for interactive elements */
-    --background-main: #ffffff;/* Main background color */
-    --text-primary: #0e1242;   /* Primary text color */
-}
-```
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
 
-## 📱 Responsive Design
+## Development Guidelines
 
-- Mobile-first approach
-- Flexible grid layouts
-- Responsive typography
-- Adaptive navigation
-- Optimized images for different screen sizes
+When contributing to this project:
 
-## 🔧 Future Improvements
+1. Maintain consistent code formatting using the established style
+2. Add descriptive comments for complex functionality
+3. Test responsive design across different device sizes
+4. Ensure cross-browser compatibility
+5. Update documentation for any new features
 
-- [ ] Add dark mode support
-- [ ] Implement blog section
-- [ ] Add more interactive project demos
-- [ ] Integrate a contact form
-- [ ] Add multilingual support
+## Performance Considerations
 
-## 📫 Contact
+The website implements several optimization strategies:
 
-- LinkedIn: [julara](https://www.linkedin.com/in/julara/?locale=en_US)
+- Lazy loading of images
+- Minified CSS and JavaScript
+- Optimized asset delivery
+- Efficient database queries for analytics
+
+## Contact
+
+For questions or collaboration opportunities, please reach out through:
+
 - Email: [larajuand@outlook.com](mailto:larajuand@outlook.com)
-- GitHub: [@JuanLara18](https://github.com/JuanLara18)
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+- LinkedIn: [julara](https://www.linkedin.com/in/julara/)
+- GitHub: [JuanLara18](https://github.com/JuanLara18)
