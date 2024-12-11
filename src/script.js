@@ -9,6 +9,7 @@ const Portfolio = {
         this.bindEvents();
         this.initializeFeatures();
         this.themeManager.init();
+        this.analyticsManager.init();
     },
 
     // Cache all DOM elements
@@ -370,6 +371,68 @@ const Portfolio = {
                 
                 document.documentElement.setAttribute('data-theme', newTheme);
                 localStorage.setItem('portfolio-theme', newTheme);
+            });
+        }
+    },
+
+    analyticsManager: {
+        API_URL: 'https://your-heroku-app.herokuapp.com',  // We'll set this URL later
+        
+        init() {
+            this.setupInteractionTracking();
+            this.setupSectionTracking();
+        },
+
+        logInteraction(type, elementId, data = {}) {
+            fetch(`${this.API_URL}/analytics/interaction`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    type,
+                    element_id: elementId,
+                    data
+                }),
+                credentials: 'include'
+            }).catch(error => console.error('Analytics error:', error));
+        },
+
+        setupInteractionTracking() {
+            // Track project card interactions
+            document.querySelectorAll('.project-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    this.logInteraction('project_view', card.querySelector('h3').textContent);
+                });
+            });
+
+            // Track social link clicks
+            document.querySelectorAll('.social-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    this.logInteraction('social_click', link.href);
+                });
+            });
+
+            // Track CV downloads
+            const cvButton = document.querySelector('.cv-button');
+            if (cvButton) {
+                cvButton.addEventListener('click', () => {
+                    this.logInteraction('cv_download', 'cv_button');
+                });
+            }
+        },
+
+        setupSectionTracking() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        this.logInteraction('section_view', entry.target.id);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            document.querySelectorAll('section').forEach(section => {
+                observer.observe(section);
             });
         }
     },
