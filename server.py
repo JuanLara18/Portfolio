@@ -42,6 +42,23 @@ class PortfolioAnalytics:
                     additional_data TEXT
                 )
             ''')
+            
+    def _get_device_type(self, user_agent):
+        """
+        Determina el tipo de dispositivo basado en el user agent.
+        
+        Args:
+            user_agent: Objeto user_agents.parsers.UserAgent
+            
+        Returns:
+            str: Tipo de dispositivo ('mobile', 'tablet', o 'desktop')
+        """
+        if user_agent.is_mobile:
+            return 'mobile'
+        elif user_agent.is_tablet:
+            return 'tablet'
+        else:
+            return 'desktop'
 
     def log_visit(self, request_data):
         user_agent = parse(request_data.user_agent.string)
