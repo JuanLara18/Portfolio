@@ -1941,3 +1941,296 @@ footer {
     transform: translateY(-5px);
     box-shadow: var(--shadow-lg);
 }
+
+/* Theme Toggle Button */
+.theme-toggle {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--background-main);
+    border: 2px solid var(--border-light);
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Move toggle button on mobile to avoid hamburger menu */
+@media (max-width: 768px) {
+    .theme-toggle {
+        bottom: 5rem;
+        right: 1rem;
+    }
+}
+
+/* Theme Variables */
+:root {
+    /* Light theme (default) */
+    --background-main: #ffffff;
+    --background-alt: #f5f7fa;
+    --text-primary: #0e1242;
+    --text-secondary: #64748b;
+    --border-light: #e2e8f0;
+    --primary-dark: #1a227d;
+    --primary-light: #283593;
+    --accent-primary: #3949ab;
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Dark theme */
+[data-theme="dark"] {
+    --background-main: #0f172a;
+    --background-alt: #1e293b;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --border-light: #334155;
+    --primary-dark: #3949ab;
+    --primary-light: #5c6bc0;
+    --accent-primary: #7986cb;
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Base theme variables (Light Mode) */
+:root {
+    /* Main backgrounds */
+    --background-main: #ffffff;
+    --background-alt: #f8fafc;
+    --background-card: #ffffff;
+    
+    /* Text colors */
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    
+    /* Brand colors */
+    --primary-dark: #1a227d;
+    --primary-light: #283593;
+    --accent-primary: #3949ab;
+    
+    /* Interactive elements */
+    --hover-color: #f1f5f9;
+    --border-color: #e2e8f0;
+    --card-border: #e5e7eb;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.05);
+    
+    /* Hero section */
+    --hero-background: #1a227d;
+    --hero-text: #ffffff;
+    
+    /* Card effects */
+    --card-hover-transform: translateY(-5px);
+    --card-hover-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark theme overrides */
+[data-theme="dark"] {
+    /* Main backgrounds */
+    --background-main: #0f172a;
+    --background-alt: #1e293b;
+    --background-card: #1e293b;
+    
+    /* Text colors */
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    
+    /* Brand colors - adjusted for dark mode */
+    --primary-dark: #3949ab;
+    --primary-light: #5c6bc0;
+    --accent-primary: #7986cb;
+    
+    /* Interactive elements */
+    --hover-color: #334155;
+    --border-color: #334155;
+    --card-border: #334155;
+    
+    /* Shadows - enhanced for dark mode */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+    
+    /* Hero section */
+    --hero-background: #0f172a;
+    --hero-text: #f8fafc;
+    
+    /* Card effects - adjusted for dark mode */
+    --card-hover-transform: translateY(-5px);
+    --card-hover-shadow: 0 20px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Additional theme-specific adjustments */
+[data-theme="dark"] .hero {
+    background: var(--hero-background);
+}
+
+[data-theme="dark"] .card,
+[data-theme="dark"] .experience-card,
+[data-theme="dark"] .education-card,
+[data-theme="dark"] .project-card {
+    background: var(--background-card);
+    border-color: var(--card-border);
+}
+
+[data-theme="dark"] .theme-toggle {
+    background: var(--background-card);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] header {
+    background: rgba(15, 23, 42, 0.8);
+    border-color: var(--border-color);
+}
+
+/* Ensure smooth transitions between themes */
+body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: var(--background-main);
+    color: var(--text-primary);
+}
+
+/* Universal transitions for theme changes */
+*, *::before, *::after {
+    transition: background-color 0.3s ease,
+                color 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+}
+
+/* Adjust theme toggle button appearance */
+.theme-toggle {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--background-card);
+    border: 2px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-lg);
+}
+
+.theme-toggle svg {
+    stroke: var(--text-primary);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .theme-toggle {
+        bottom: 5rem;
+        right: 1rem;
+    }
+}
+
+/* Dark theme carousel adjustments */
+[data-theme="dark"] .carousel-container {
+    /* Adjust background for dark mode */
+    background: var(--background-card);
+}
+
+/* Training cards in carousel */
+[data-theme="dark"] .training-card {
+    background: var(--background-card);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+}
+
+[data-theme="dark"] .training-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+/* Carousel navigation buttons */
+[data-theme="dark"] .carousel-prev,
+[data-theme="dark"] .carousel-next {
+    background: var(--background-card);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+}
+
+[data-theme="dark"] .carousel-prev:hover,
+[data-theme="dark"] .carousel-next:hover {
+    background: var(--hover-color);
+    transform: scale(1.1);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Carousel indicators */
+[data-theme="dark"] .indicator {
+    background: var(--border-color);
+}
+
+[data-theme="dark"] .indicator.active {
+    background: var(--accent-primary);
+}
+
+/* Course content in dark mode */
+[data-theme="dark"] .course-content h4 {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .course-duration {
+    color: var(--accent-primary);
+}
+
+[data-theme="dark"] .course-description {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .course-tags {
+    gap: 0.75rem;
+}
+
+[data-theme="dark"] .course-tag {
+    background: var(--background-main);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+/* Ensure smooth transitions */
+.carousel-prev,
+.carousel-next,
+.training-card,
+.indicator,
+.course-tag {
+    transition: all 0.3s ease;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    [data-theme="dark"] .training-card {
+        padding: 1.25rem;
+    }
+    
+    [data-theme="dark"] .carousel-prev,
+    [data-theme="dark"] .carousel-next {
+        width: 36px;
+        height: 36px;
+    }
+}
