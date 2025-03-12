@@ -1,0 +1,393 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Plasmati Graduate CV
+% LaTeX Template
+% Version 1.0 (24/3/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Alessandro Plasmati (alessandro.plasmati@gmail.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+% Important note:
+% This template needs to be compiled with XeLaTeX.
+% The main document font is called Fontin and can be downloaded for free
+% from here: http://www.exljbris.com/fontin.html
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[a4paper,10pt]{article} % Default font size and paper size
+\usepackage{fontspec} % For loading fonts
+\setmainfont{[Fontin-Regular.otf]}
+\defaultfontfeatures{Mapping=tex-text}
+% \setmainfont{[Fontin-Regular.otf]} % Main document font
+% \setmainfont[SmallCapsFont = Fontin-SmallCaps.otf]{[Fontin-Regular.otf]} % Main document font
+\setmainfont{Fontin-Regular.otf}[
+BoldFont       = Fontin-Bold.otf ,
+ItalicFont     = Fontin-Italic.otf ,
+SmallCapsFont  = Fontin-SmallCaps.otf ]
+
+
+\usepackage{xunicode,xltxtra,url,parskip} % Formatting packages
+
+\usepackage[usenames,dvipsnames]{xcolor} % Required for specifying custom colors
+
+\usepackage[big]{layaureo} % Margin formatting of the A4 page, an alternative to layaureo can be \usepackage{fullpage}
+% To reduce the height of the top margin uncomment: \addtolength{\voffset}{-1.3cm}
+
+\usepackage{hyperref} % Required for adding links	and customizing them
+\definecolor{linkcolour}{rgb}{0,0.2,0.6} % Link color
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour} % Set link colors throughout the document
+
+\usepackage{titlesec} % Used to customize the \section command
+\titleformat{\section}{\Large\scshape\raggedright}{}{0em}{}[\titlerule] % Text formatting of sections
+\titlespacing{\section}{0pt}{3pt}{3pt} % Spacing around sections
+\usepackage{multicol}
+\usepackage{float}
+\begin{document}
+
+\pagestyle{empty} % Removes page numbering
+
+\font\fb=''[cmr10]'' % Change the font of the \LaTeX command under the skills section
+
+%----------------------------------------------------------------------------------------
+%	NAME AND CONTACT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\par{
+\centering{
+    \huge Juan\textsc{ Lara}}\bigskip\par
+} % Your name
+\vspace{0.5em}
+\section{Personal Data}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{rlrl}
+    %\textsc{Place and Date of Birth:} & Colombia  | 4 July, 2001 \\
+    \textsc{Current city:} & Bogotá, Colombia &
+    \textsc{Phone:} & +57 315 512 8464\\
+    \textsc{Portfolio:} & \href{https://juanlara18.github.io/Portafolio/}{juanlara18.github.io} &
+    % \textsc{LinkedIn:} & \href{https://www.linkedin.com/in/julara/?locale=en_US&profileId=ACoAACIpjk4BS78qvk7wafpNlgUjRQPCRBMrjdM}{julara} &
+    \textsc{email:} & \href{mailto:larajuand@outlook.com}{larajuand@outlook.com} 
+    \end{tabular}
+\end{table}
+
+
+%----------------------------------------------------------------------------------------
+%	Summary 
+%----------------------------------------------------------------------------------------
+\vspace{-1.5em}
+\section{Summary}
+
+Versatile Computer Scientist with a strong background in Mathematics from the Universidad Nacional de Colombia and specialized training in Machine Learning. Currently engaged in applied research at Harvard Business School, I bridge theoretical modeling with practical computational solutions. My work includes developing advanced mathematical models, implementing numerical simulations, and applying machine learning techniques to transform complex datasets into strategic insights. Known for being proactive, creative, and an effective communicator, I excel at collaborating in interdisciplinary teams to deliver scalable, high-impact AI solutions.
+
+
+%Innovative Data Scientist and Researcher with a strong foundation in Mathematics and Computer Science. Specializes in machine learning and MLOps, leveraging advanced statistical modeling and AI-driven solutions to transform complex data into actionable insights. Proficient in Python, SQL, R, and cloud technologies, with a proven track record of developing cutting-edge algorithms and implementing scalable data pipelines. %Combines rigorous academic research in corporate strategy and organizational economics with hands-on industry experience, consistently delivering high-impact results in both theoretical and applied settings.
+
+%A natural leader and effective communicator, bridging technical complexities with business objectives. Excels in problem-solving and thrives in collaborative environments. Passionate about AI innovation and business strategy, seeking challenging roles in AI research or MLOps engineering. %Aims to leverage interdisciplinary knowledge and interpersonal skills to drive data-driven decision-making and groundbreaking projects across organizations.
+
+%----------------------------------------------------------------------------------------
+%	WORK EXPERIENCE 
+%----------------------------------------------------------------------------------------
+\vspace{1em}
+\section{Work Experience}
+\begin{tabular}{r|p{11cm}}
+\emph{Sep 2022 - Present} & \textbf{Research Assistant} \\
+& \textbf{Harvard Business School} \\
+& Boston, USA (Remote) \\
+& \footnotesize{
+Collaborate with Professor Jorge Tamayo's research team on advanced projects in corporate strategy and organizational economics:
+\begin{itemize}
+    \item Developed analytical frameworks inspired by economic models (e.g., Garicano, JPE 2000) to study knowledge organization in corporate settings.
+    \item Formalized mathematical concepts such as labor specialization, organizational hierarchies, and resource optimization through rigorous proofs.
+    \item Conducted numerical simulations in Python and C to solve dynamic optimization problems derived from theoretical models.
+    \item Applied machine learning techniques to validate hypotheses and extract insights from large organizational datasets.
+    \item Designed interactive visualizations and computational tools for comparative analysis of multi-agent systems.
+\end{itemize}
+Contribution: Bridged theoretical rigor with practical applications in organizational science.
+} \\
+& Supervisor: \href{mailto:jtamayo@hbs.edu}{Jorge Tamayo} \\
+%\end{tabular}
+
+% \begin{tabular}{r|p{11cm}}
+% \emph{Sep 2022 - Present} & Research Assistant \\
+% & \textbf{Harvard University} \\
+% & Boston, USA \\
+% & \footnotesize{
+% Collaborate with Professor Jorge Tamayo's research team on cutting-edge economic research projects in corporate strategy and organizational economics:
+% \begin{itemize}
+%     \item Develop and analyze complex mathematical models using game theory and dynamic optimization to explain firm behavior and strategic decision-making in multiunit organizations.
+    
+%     \item Implement large-scale numerical simulations in Python and C with parallel computing techniques.
+    
+%     \item Apply advanced econometric methods to analyze empirical data, providing evidence for theoretical models and informing policy implications in organizational economics.
+    
+%     \item Contribute to formulating research questions and hypotheses, engaging in critical discussions about model assumptions and economic intuitions with senior researchers.
+%     %\item Draft key sections of academic papers using LaTeX, prepare comprehensive literature reviews, and present findings at internal seminars and international conferences.
+% \end{itemize}
+% } \\
+% & Supervisor: \href{mailto:jtamayo@hbs.edu}{Jorge Tamayo}
+%\begin{tabular}{r|p{11cm}}
+\\
+\emph{Feb 2024 - Jan 2025} & \textbf{Data Science} \\
+& \textbf{Ipsos} \\
+& Bogotá D.C., Colombia (Hybrid) \\
+& \footnotesize{
+Led the transformation of the Statistics department into an advanced data-driven team by implementing end-to-end computational solutions:
+\begin{itemize}
+    \item Built a georeferencing platform using R Shiny/Leaflet for geospatial analysis of gas stations and commercial establishments, featuring interactive dashboards with real-time KPIs and dynamic charts.
+    \item Developed a web application in R Shiny for automated pharmacy classification, integrating Google Cloud Storage and Random Forest models, with workflows for real-time data validation and user authentication.
+    \item Created "TextInsight," a Python library for text analysis that leverages NLP techniques (BERT/GPT), graph visualization (NetworkX), and batch processing to efficiently analyze large volumes of data.
+    \item Implemented a robust API with automated testing, logging, and version control to support scalable machine learning deployments.
+\end{itemize}
+Contribution: Delivered comprehensive computational solutions that combined data analysis, web development, and AI, enhancing process efficiency and decision-making.
+} \\
+& Supervisor: \href{mailto:sandra.pastran@ipsos.com}{Sandra Pastrán} \\
+\end{tabular}
+
+%\\
+% \emph{Feb 2024 - Present} & Data Scientist \\
+% & \textbf{Ipsos} \\
+% & Bogotá D.C, Colombia \\
+% & \footnotesize{
+% Lead the transformation of the Statistics department into an advanced Data Science team:
+% \begin{itemize}
+%     \item Developed AI-powered automation tools using Python, implementing robust software architecture and unit testing practices.
+    
+%     \item Designed and implemented cloud-based, scalable data pipelines on GCP and Linux environments, enabling real-time processing of terabyte-scale datasets.
+    
+%     \item Created machine learning models using Scikit-learn, TensorFlow, and PyTorch for market segmentation and sentiment analysis.
+    
+%     \item Established a comprehensive MLOps framework using MLflow, integrating CI/CD practices and implementing automated testing.
+%     %\item Led cross-functional agile teams in developing and deploying data science solutions, including experience with signal processing and image analysis for advanced analytics projects.
+% \end{itemize}
+% } \\
+% & Supervisor: \href{mailto:sandra.pastran@ipsos.com}{Sandra Pastrán} \\
+% %------------------------------------------------
+% \end{tabular}
+
+%----------------------------------------------------------------------------------------
+%	EDUCATION
+%----------------------------------------------------------------------------------------
+\vspace{1em}
+\section{Education}
+
+\begin{tabular}{r|l}	
+\textsc{Jun} 2019-\textsc{Nov} 2023 & \textsc{B.S. in Computer Science}\\
+& \normalsize\textbf{Universidad Nacional de Colombia}, Bogota\\
+& \small\emph{Emphasis on Machine Learning}, \textsc{Gpa}: 4.7/5.0 \href{https://drive.google.com/file/d/1bp6QKeEqpOeCBIBKsst0IwQpr48nmjoi/view?usp=sharing}{\hfill| \footnotesize Detailed List of Exams}\\
+&\\
+
+%------------------------------------------------
+
+\textsc{Feb} 2018-\textsc{Jun} 2022& \textsc{B.S. in Mathematics}\\
+& \normalsize\textbf{Universidad Nacional de Colombia}, Bogotá\\
+& \small\emph{Emphasis on Applied Mathematics}, \textsc{Gpa}: 4.7/5.0 \href{https://drive.google.com/file/d/1RW4Q3Kca8rfMUJpejdwlmtTTiA5YgYwU/view?usp=sharing}{\hfill| \footnotesize Detailed List of Exams} \\
+& \small Director: Omar \textsc{Duque} Gomez. \href{mailto:oduqueg@unal.edu.co}{Contact.} \\
+&\\
+
+%------------------------------------------------
+
+\textsc{Feb} 2015-\textsc{Nov} 2017& Technical Baccalaureate in \textsc{business administration}\\
+& \normalsize\textbf{Centro Educativo los Andes}, Bogotá D.C. \\
+& \small\emph{Emphasis on entrepreneurship and innovation}\\
+&\\
+
+%------------------------------------------------
+
+\textsc{Nov} 2015-\textsc{Dec} 2016& Technician in \textsc{maintenance of computer equipment}\\
+& \normalsize\textbf{Servicio Nacional de Aprendizaje - SENA}, Bogotá D.C.\\
+& \small\emph{Emphasis on corrective software}, \textsc{Gpa}: 4.6/5.0 \href{https://drive.google.com/file/d/1beMFGTbBiNhCdUMJnjLYQfCetz7V3xCW/view}{\hfill| \footnotesize Certificate}\\
+
+\end{tabular}
+
+%----------------------------------------------------------------------------------------
+%	ADDITIONAL TRAINING
+%----------------------------------------------------------------------------------------
+\vspace{1em}
+\section{Additional Training}
+\begin{tabular}{r|l}
+\textsc{Nov} 2024 & Artificial Intelligence Expert Certificate (CAIEC)\\
+& \normalsize\textbf{Certiprof}\\
+& \small Advanced-level certification focusing on artificial intelligence concepts,\\
+& \small methodologies, and best practices. Developed expertise in applying AI solutions\\
+& \small to real-world problems, emphasizing ethical AI development and implementation.\\
+& \small \href{https://www.credly.com/badges/TLZVDQTVTGG-XWHHHQPTQ-RDJFLDLRK}{Credential ID: TLZVDQTVTGG-XWHHHQPTQ-RDJFLDLRK}\\
+\\
+\textsc{May} -\textsc{Oct} 2024 & Artificial Intelligence Bootcamp (159 hours)\\
+& \normalsize\textbf{Talento Tech Cymetria}, Bogotá D.C.\\
+& \small Completed an intensive, advanced-level training program in artificial intelligence\\
+& \small and machine learning. The bootcamp covered cutting-edge algorithms and deep\\
+& \small learning model construction, with hands-on experience using tools such as\\
+& \small Scikit-learn, XGBoost, and LightGBM. Engaged in applied projects focusing on\\
+& \small predictive modeling and advanced data analysis techniques.\\
+& \small \href{https://certificados.talentotech.co/?cert=2518458921#pdf}{Credential ID: 2518458921}\\
+\\
+\textsc{Oct} 2024 & DevOps Certification\\
+& \normalsize\textbf{Platzi}\\
+& \small Comprehensive DevOps program covering Docker, Swarm, GitHub Actions, GitLab,\\
+& \small Jenkins, Azure DevOps, and MLOps. Gained skills in containerization, orchestration,\\
+& \small CI/CD pipelines, high concurrency architecture, and machine learning model deployment.\\
+& \small Enhanced proficiency in automation, continuous integration, and deployment practices.\\
+& \small \href{https://platzi.com/p/larajuan/learning-path/8353-cloud-devops/diploma/detalle/}{Credential ID: cc4cfe8a-d78a-4883-8a75-ca90931151f6}\\
+\\
+\textsc{May} 2023 & Algorithmic Toolbox\\
+& \normalsize\textbf{Coursera}\\
+& \small Teaches design and analysis of algorithms, emphasizing practical\\
+& \small problem-solving techniques and efficient implementation strategies.\\
+& \small \href{https://www.coursera.org/account/accomplishments/certificate/8GR62BCT499V}{Credential ID: 8GR62BCT499V}\\
+\\
+\textsc{Jun} 2023 & Linux and Bash for Data Engineering\\
+& \normalsize\textbf{Coursera}\\
+& \small Covers essential Linux commands and Bash scripting for data engineering tasks,\\
+& \small including file manipulation, process management, and automation.\\
+& \small \href{https://www.coursera.org/account/accomplishments/certificate/CAZUJPW6D4BP}{Credential ID: CAZUJPW6D4BP}\\
+\\
+\textsc{Jun} 2023 & Python and Pandas for Data Engineering\\
+& \normalsize\textbf{Coursera}\\
+& \small Focuses on using Python and Pandas for data manipulation, analysis, and\\
+& \small preprocessing in data engineering workflows.\\
+& \small \href{https://www.coursera.org/account/accomplishments/certificate/72QS5JSBC67L}{Credential ID: 72QS5JSBC67L}\\
+\end{tabular}
+
+%----------------------------------------------------------------------------------------
+%	TECHNICAL SKILLS
+%----------------------------------------------------------------------------------------
+
+\vspace{1em}
+\section{Technical Skills}
+
+\begin{tabular}{r|l}
+Mathematics: & Optimization, Regression, Classification, Segmentation,\\& Numerical Analysis, Statistical Modeling\\
+\\
+Programming: & Python, R, SQL, C++, Bash\\
+\\
+Data Science \& Machine Learning: & Scikit-learn, TensorFlow, PyTorch, NLP, SVM,\\& Random Forest, K-means, Deep Learning,\\& CNNs, RNNs, Transformers\\
+\\
+Cloud \& DevOps: & GCP, AWS, Docker, Kubernetes, Git, CI/CD, MLflow\\
+\\
+Data Visualization: & Matplotlib, Streamlit, Shiny\\
+\\
+Big Data: & Spark, Hadoop, Distributed Computing\\
+\\
+Software Engineering: & Software Design Patterns, Unit Testing\\
+\\
+Tools: & LaTeX, MATLAB, Mathematica\\
+\\
+Methodologies: & Agile, Scrum, MLOps\\
+\end{tabular}
+
+
+% \vspace{1em}
+% \section{Technical Skills}
+
+% \begin{tabular}{r|l}
+% Mathematics: & Optimization, Machine Learning Algorithms, Statistics, Game Theory,\\
+% & Numerical Analysis\\
+% \\
+% Programming: & Python, R, SQL, C++, Bash\\
+% \\
+% Data Science \& ML: & TensorFlow, PyTorch, Scikit-learn, Pandas, NumPy, NLP, Deep Learning\\
+% \\
+% Cloud \& DevOps: & GCP, AWS, Docker, Kubernetes, Git, CI/CD\\
+% \\
+% Data Visualization: & Matplotlib, Seaborn, PowerBI, Tableau, Streamlit, Shiny\\
+% \\
+% Big Data: & Spark, Hadoop, Distributed Computing\\
+% \\
+% Software Engineering: & Software Design Patterns, Unit Testing\\
+% \\
+% Tools: & LaTeX, MATLAB, Mathematica, MLflow\\
+% \\
+% Methodologies: & Agile, Scrum, MLOps
+% \end{tabular}
+
+%----------------------------------------------------------------------------------------
+%	PROJECTS
+%----------------------------------------------------------------------------------------
+% \vspace{1em}
+% \section{Notable Projects}
+
+% \begin{tabular}{r|p{11cm}}
+% \emph{[Date]} & \textbf{[Project Name]}\\
+% & \footnotesize{
+% \begin{itemize}
+%     \item Brief description of the project and its significance
+%     \item Key technologies or methodologies used
+%     \item Quantifiable results or impact
+% \end{itemize}
+% }\\
+% \end{tabular}
+
+% Add more projects as needed
+
+%----------------------------------------------------------------------------------------
+%	PUBLICATIONS
+%----------------------------------------------------------------------------------------
+% \vspace{1em}
+% \section{Publications and Presentations}
+
+% \begin{tabular}{r|p{11cm}}
+% \emph{[Date]} & \textbf{[Title of Paper/Presentation]}\\
+% & \footnotesize{[Journal/Conference Name]}\\
+% & \footnotesize{Brief description of the research and its impact}
+% \end{tabular}
+
+% Add more publications as needed
+
+%----------------------------------------------------------------------------------------
+%	DISTINCTIONS
+%----------------------------------------------------------------------------------------
+
+\section{Distinctions}
+
+\begin{tabular}{r|l}
+\textsc{Dec} 2018 - \textsc{Jun} 2023 & Best Averages Scholarship (10 semesters)\\
+& \normalsize\textbf{Universidad Nacional de Colombia}, Bogotá D.C.\\
+& This scholarship is awarded each semester to the 15 best averages \\& among all students in the program.\\
+\\
+\textsc{Apr} 2024 & Total Ops Star Employee - LATAM \\
+& \normalsize\textbf{Ipsos}, Bogotá D.C.\\
+& For developing TextInsight, an innovative AI-powered text analysis tool,  \\
+& demonstrating \ exceptional \ initiative, technical expertise, and \\
+& commitment to operational excellence.
+\end{tabular}
+
+%----------------------------------------------------------------------------------------
+%	RESEARCH INTERESTS
+%----------------------------------------------------------------------------------------
+\vspace{1em}
+\section{Research Interests}
+\begin{itemize}
+    \item Advanced AI and Machine Learning, with a focus on virtual agent systems and multi-agent simulations.
+    \item Development of interpretable deep learning models and integration of large language models for strategic decision-making.
+    \item Optimization and causal inference in multi-agent environments for digital and biomedical applications.
+\end{itemize}
+
+% \section{Research Interests}
+% \begin{itemize}
+%     \item Advanced Machine Learning and AI applications in corporate strategy, organizational economics, and decision theory
+%     \item Optimization and causal inference in multi-agent systems for economic policy and business strategy
+%     \item Integration of statistical learning theory with econometrics for robust predictive modeling in digital economies
+%     \item Large language models and their implications for information economics and strategic communication
+% \end{itemize}
+
+%----------------------------------------------------------------------------------------
+%	LANGUAGES
+%----------------------------------------------------------------------------------------
+\vspace{1em}
+\section{Languages}
+
+\begin{tabular}{rl}
+\textsc{Spanish:} & Native language \\
+\textsc{English:} & Advanced \\
+\end{tabular}
+
+\end{document}

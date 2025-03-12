@@ -1,0 +1,221 @@
+%----------------------------------------------------------------------------------------
+%   MODERN PROFESSIONAL CV TEMPLATE
+%   Version: 3.2 - Fixed
+%----------------------------------------------------------------------------------------
+
+\documentclass[a4paper,10pt]{article}
+
+%----------------------------------------------------------------------------------------
+%   REQUIRED PACKAGES AND CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+\usepackage{fontspec}
+\usepackage{xunicode,xltxtra,url,parskip}
+\usepackage{xcolor} % Removed obsolete 'usenames' option
+\usepackage[top=1.5cm, bottom=1.5cm, left=1.8cm, right=1.8cm]{geometry}
+\usepackage[most]{tcolorbox}
+\usepackage{hyperref}
+\usepackage{fontawesome5}
+\usepackage{titlesec}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{enumitem} % For better list control
+
+% Font Configuration
+\setmainfont{Fontin-Regular.otf}[
+    BoldFont     = Fontin-Bold.otf,
+    ItalicFont   = Fontin-Italic.otf,
+    SmallCapsFont= Fontin-SmallCaps.otf
+]
+
+% Color Scheme
+\definecolor{primary}{RGB}{0, 51, 153}
+\definecolor{secondary}{RGB}{100, 100, 100}
+\definecolor{accent}{RGB}{0, 102, 204}
+\definecolor{background}{RGB}{248, 249, 250}
+\definecolor{sidebarcolor}{RGB}{240, 242, 245}
+
+% Hyperlink Configuration
+\hypersetup{
+    colorlinks=true,
+    breaklinks=true,
+    urlcolor=accent,
+    linkcolor=accent
+}
+
+% Section Styling
+\titleformat{\section}
+    {\Large\scshape\raggedright\color{primary}}
+    {}{0em}
+    {}[\titlerule]
+\titlespacing{\section}{0pt}{12pt}{6pt}
+
+% Custom Box Styling
+\tcbset{
+    enhanced,
+    boxrule=0.5pt,
+    colback=sidebarcolor,
+    colframe=primary!20,
+    arc=2mm,
+    boxsep=5pt,
+    left=6pt,
+    right=6pt,
+    top=6pt,
+    bottom=6pt,
+    sharp corners=all
+}
+
+% List settings for better spacing
+\setlist[itemize]{leftmargin=*,topsep=2pt,itemsep=0pt,parsep=0pt}
+
+%----------------------------------------------------------------------------------------
+%   CUSTOM COMMANDS
+%----------------------------------------------------------------------------------------
+\newcommand{\cvitem}[2]{
+    \small\textbf{#1} & #2 \\[2pt]
+}
+
+\newcommand{\dateitem}[1]{
+    \small\textcolor{secondary}{\textit{#1}}
+}
+
+\newcommand{\workposition}[4]{
+    \textbf{#1} \hfill \dateitem{#2}\\
+    \textit{#3} | #4\\[0.3em]
+}
+
+%----------------------------------------------------------------------------------------
+%   DOCUMENT START
+%----------------------------------------------------------------------------------------
+\begin{document}
+\pagestyle{empty}
+\pagecolor{background} % Subtle background for the entire page
+
+%----------------------------------------------------------------------------------------
+%   HEADER
+%----------------------------------------------------------------------------------------
+\begin{center}
+    {\Huge\textbf{\textcolor{primary}{Juan Lara}}}\\[0.6em]
+    {\small\color{secondary}
+        \faMapMarker* Bogotá, Colombia \quad | \quad
+        \faMobile* +57 315 512 8464 \quad | \quad
+        \faEnvelope \href{mailto:larajuand@outlook.com}{larajuand@outlook.com} \quad | \quad
+        \faGlobe \href{https://juanlara18.github.io/Portafolio/}{Portfolio}
+    }
+\end{center}
+
+\vspace{0.3cm} % Additional space after header
+
+%----------------------------------------------------------------------------------------
+%   SUMMARY
+%----------------------------------------------------------------------------------------
+\section{Professional Summary}
+\begin{tcolorbox}
+Versatile Computer Scientist with a strong background in Mathematics from the Universidad Nacional de Colombia and specialized training in Machine Learning. Currently engaged in applied research at Harvard Business School, bridging theoretical modeling with practical computational solutions. Known for being proactive, creative, and an effective communicator in delivering scalable, high-impact AI solutions.
+\end{tcolorbox}
+
+%----------------------------------------------------------------------------------------
+%   TWO-COLUMN LAYOUT - ADJUSTED TO REMOVE WHITE SPACE
+%----------------------------------------------------------------------------------------
+\begin{minipage}[t]{0.63\textwidth}\vspace{0pt}
+    % Work Experience
+    \section{Work Experience}
+    \workposition{Research Assistant}{Sep 2022 - Present}{Harvard Business School}{Boston, USA (Remote)}
+    \small{
+    Collaborate with Professor Jorge Tamayo's research team on advanced projects in corporate strategy and organizational economics:
+    \begin{itemize}
+        \item Developed analytical frameworks inspired by economic models for studying knowledge organization
+        \item Formalized mathematical concepts through rigorous proofs
+        \item Conducted numerical simulations in Python and C for dynamic optimization
+        \item Applied machine learning techniques for large organizational datasets
+    \end{itemize}
+    }
+    
+    \vspace{0.2cm} % Reduced space between jobs
+    
+    \workposition{Data Scientist}{Feb 2024 - Jan 2025}{Ipsos}{Bogotá D.C., Colombia (Hybrid)}
+    \small{
+    Led the transformation of the Statistics department:
+    \begin{itemize}
+        \item Built a georeferencing platform using R Shiny/Leaflet
+        \item Developed automated pharmacy classification system
+        \item Created "TextInsight" NLP library for text analysis
+        \item Implemented scalable machine learning API infrastructure
+    \end{itemize}
+    }
+
+    % Education
+    \section{Education}
+    \workposition{B.S. in Computer Science}{2019 - 2023}{Universidad Nacional de Colombia}{GPA: 4.7/5.0}
+    \small{Emphasis on Machine Learning}
+    
+    \vspace{0.2cm} % Reduced space between education entries
+    
+    \workposition{B.S. in Mathematics}{2018 - 2022}{Universidad Nacional de Colombia}{GPA: 4.7/5.0}
+    \small{Emphasis on Applied Mathematics}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.34\textwidth}
+    % Technical Skills
+    \begin{tcolorbox}[title={\textbf{\textcolor{primary}{Technical Skills}}}, fonttitle=\normalsize]
+        \textbf{Mathematics}
+        \small
+        \begin{itemize}
+            \item Optimization
+            \item Statistical Modeling
+            \item Numerical Analysis
+        \end{itemize}
+        
+        \textbf{Programming}
+        \small
+        \begin{itemize}
+            \item Python, R, SQL
+            \item C++, Bash
+        \end{itemize}
+        
+        \textbf{ML \& AI}
+        \small
+        \begin{itemize}
+            \item TensorFlow, PyTorch
+            \item Deep Learning
+            \item NLP, Computer Vision
+        \end{itemize}
+    \end{tcolorbox}
+    
+    \vspace{0.25cm} % Reduced space between boxes
+    
+    % Certifications
+    \begin{tcolorbox}[title={\textbf{\textcolor{primary}{Certifications}}}, fonttitle=\normalsize]
+        \small
+        \textbf{AI Expert (CAIEC)} \hfill 2024\\
+        Certiprof\\[0.3em]
+        
+        \textbf{DevOps Certification} \hfill 2024\\
+        Platzi\\[0.3em]
+        
+        \textbf{Algorithmic Toolbox} \hfill 2023\\
+        Coursera
+    \end{tcolorbox}
+    
+    \vspace{0.25cm} % Reduced space between boxes
+    
+    % Languages
+    \begin{tcolorbox}[title={\textbf{\textcolor{primary}{Languages}}}, fonttitle=\normalsize]
+        \begin{tabular}{@{}ll@{}}
+            \cvitem{Spanish}{Native}
+            \cvitem{English}{Advanced}
+        \end{tabular}
+    \end{tcolorbox}
+    
+    \vspace{0.25cm} % Reduced space between boxes
+    
+    % Achievements
+    \begin{tcolorbox}[title={\textbf{\textcolor{primary}{Distinctions}}}, fonttitle=\normalsize]
+        \small
+        \textbf{Best Averages Scholarship}\\
+        10 consecutive semesters\\[0.3em]
+        \textbf{Total Ops Star Employee}\\
+        Ipsos LATAM, 2024
+    \end{tcolorbox}
+\end{minipage}
+
+\end{document}
