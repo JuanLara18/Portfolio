@@ -1,0 +1,487 @@
+% =============================================================================
+% TEMPLATE CV PROFESIONAL AVANZADO - OPTIMIZADO PARA JUAN LARA
+% =============================================================================
+% Plantilla profesional con diseño moderno, estructura flexible y optimizada
+% para profesionales en tecnología/IA con fuentes personalizables
+% =============================================================================
+
+\documentclass[a4paper,11pt]{article}
+
+% =============================================================================
+% PAQUETES BÁSICOS
+% =============================================================================
+\usepackage[T1]{fontenc}      % Codificación de fuentes
+\usepackage{geometry}         % Control de márgenes y dimensiones
+\usepackage{xcolor}           % Gestión de colores
+\usepackage{titlesec}         % Personalización de títulos
+\usepackage{enumitem}         % Listas personalizadas
+\usepackage{fontawesome5}     % Iconos
+\usepackage{tabularx}         % Tablas flexibles
+\usepackage{hyperref}         % Enlaces
+\usepackage{multicol}         % Columnas múltiples
+\usepackage{graphicx}         % Manejo de imágenes
+\usepackage{fancyhdr}         % Encabezados y pies de página
+\usepackage{lastpage}         % Referencia a última página
+\usepackage{tikz}             % Gráficos vectoriales
+\usepackage{calc}             % Cálculos
+\usepackage{ragged2e}         % Mejor alineación de texto
+\usepackage{changepage}
+
+% =============================================================================
+% CONFIGURACIÓN DE FUENTES (CONDICIONAL)
+% =============================================================================
+% Configuración que permite compilación con o sin Fontin
+\usepackage{ifxetex,ifluatex}
+\newif\ifxetexorluatex
+\ifxetex
+  \xetexorluatextrue
+\else
+  \ifluatex
+    \xetexorluatextrue
+  \else
+    \xetexorluatexfalse
+  \fi
+\fi
+
+\ifxetexorluatex
+  % Configuración para XeLaTeX o LuaLaTeX
+  \usepackage{fontspec}
+  \IfFileExists{Fontin-Regular.otf}{
+    % Si Fontin está disponible, úsala
+    \setmainfont{Fontin-Regular.otf}[
+      BoldFont=Fontin-Bold.otf,
+      ItalicFont=Fontin-Italic.otf,
+      SmallCapsFont=Fontin-SmallCaps.otf
+    ]
+  }{
+    % Si no, usa una fuente similar
+    \setmainfont{LibertinusSerif}[
+      BoldFont=LibertinusSerif-Bold,
+      ItalicFont=LibertinusSerif-Italic
+    ]
+  }
+\else
+  % Configuración para pdfLaTeX (fallback)
+  \usepackage{libertine}
+\fi
+
+% =============================================================================
+% PALETA DE COLORES (PERSONALIZABLE)
+% =============================================================================
+\definecolor{primary}{RGB}{45, 79, 112}      % Azul profundo - color principal
+\definecolor{secondary}{RGB}{95, 129, 162}   % Azul medio - color secundario
+\definecolor{accent}{RGB}{210, 125, 30}      % Naranja - color de acento
+\definecolor{lightgray}{RGB}{230, 230, 230}  % Gris claro - fondos, barras
+\definecolor{darkgray}{RGB}{55, 55, 55}      % Gris oscuro - texto secundario
+\definecolor{white}{RGB}{255, 255, 255}      % Blanco - contraste
+
+% =============================================================================
+% CONFIGURACIÓN DE PÁGINA
+% =============================================================================
+\geometry{
+  left=1cm,
+  right=2cm,
+  top=2cm,
+  bottom=2cm,
+  headheight=0.75cm,
+  footskip=0.75cm,
+  nomarginpar
+}
+
+% Configuración de hipervínculos
+\hypersetup{
+  colorlinks=true,
+  linkcolor=primary,
+  filecolor=primary,
+  urlcolor=primary,
+  pdftitle={Juan Lara - Curriculum Vitae},
+  pdfauthor={Juan Lara},
+  pdfsubject={CV},
+  pdfkeywords={CV, resume, Juan Lara, computer science, mathematics, AI, machine learning}
+}
+
+% Configuración de cabecera y pie de página
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\textcolor{secondary}{Juan Lara}}
+\fancyfoot[C]{\textcolor{darkgray}{\thepage/\pageref{LastPage}}}
+\fancyfoot[R]{\textcolor{secondary}{\today}}
+
+% =============================================================================
+% COMANDOS PARA ELEMENTOS DEL CV
+% =============================================================================
+% Nombre del candidato (grande y destacado)
+\newcommand{\cvname}[1]{
+  \begin{center}
+    \fontsize{28pt}{32pt}\selectfont\textcolor{primary}{\textbf{#1}}
+  \end{center}
+  \vspace{-0.2cm}
+}
+
+% Título profesional (debajo del nombre)
+\newcommand{\cvtitle}[1]{
+  \begin{center}
+    \fontsize{14pt}{16pt}\selectfont\textcolor{secondary}{#1}
+  \end{center}
+  \vspace{0.1cm}
+}
+
+% Información de contacto
+\newcommand{\cvcontact}[6]{
+  \begin{center}
+    \begin{tabular}{@{}c@{\hspace{0.5em}}l@{\hspace{1.5em}}c@{\hspace{0.5em}}l@{\hspace{1.5em}}c@{\hspace{0.5em}}l@{}}
+      \textcolor{accent}{\faEnvelope} & \href{mailto:#1}{\textcolor{darkgray}{#1}} &
+      \textcolor{accent}{\faPhone} & \textcolor{darkgray}{#2} &
+      \textcolor{accent}{\faMapMarker} & \textcolor{darkgray}{#3} \\[0.3em]
+      \textcolor{accent}{\faLinkedin} & \href{#4}{\textcolor{darkgray}{julara}} &
+      \textcolor{accent}{\faGithub} & \href{https://github.com/#5}{\textcolor{darkgray}{#5}} &
+      \textcolor{accent}{\faGlobe} & \href{#6}{\textcolor{darkgray}{Web Page}} \\
+    \end{tabular}
+  \end{center}
+  \vspace{0.3cm}
+}
+
+% Secciones principales del CV 
+\newcommand{\cvsection}[1]{
+  \vspace{0.4cm} % Aumentado para mejor separación antes de cada sección
+  \begin{tikzpicture}
+    \draw[fill=primary] (0,0) rectangle (-0.15,0.6);
+    \node[anchor=west, xshift=0.3cm] at (0.2,0.3) {\textcolor{primary}{\Large\textbf{#1}}};
+    \draw[primary, line width=1.2pt] (0.65,-0.1) -- (\textwidth,-0.1); 
+  \end{tikzpicture}
+  \vspace{0.1cm} % Ajustado para mejor separación después de la línea
+}
+
+% Subsecciones del CV
+\newcommand{\cvsubsection}[1]{
+  \vspace{0.2cm}
+  \textcolor{darkgray}{\large\textbf{#1}}
+  \vspace{0.1cm}
+}
+
+% Enhanced cveducation command with director info
+\newcommand{\cveducation}[9]{
+  \begin{tabularx}{\textwidth}{X r}
+    {\large{\textbf{#1}}} & \textcolor{secondary}{\textbf{#2}} \\
+    {\textit{#3}}, #4 & \\
+    {Emphasis on #5} & GPA: #6 \\
+    Director: \href{mailto:#8}{#9} & \textcolor{primary}{Detailed List of Exams}
+  \end{tabularx} 
+  \vspace{0.4cm}
+}
+
+% Entrada específica para experiencia profesional con supervisor 
+% (empresa, período, cargo, ubicación, descripción, supervisor)
+\newcommand{\cvexperience}[7]{
+  \begin{tabularx}{\textwidth}{X r}
+    {\large{\textbf{#1}}} & \textcolor{secondary}{\textbf{#2}} \\
+    {\large{\textit{#3}}} & \textit{#4} \\
+  \end{tabularx}
+  \begin{adjustwidth}{2.5em}{0em}
+    {\small
+    #5 \\
+    {\textbf{Supervisor:} \href{mailto:#6}{#7}}
+    }
+  \end{adjustwidth}
+  \vspace{0.4cm}
+}
+
+% Descripción de responsabilidades/logros (con viñetas)
+\newcommand{\cvdescription}[1]{
+  \begin{itemize}[leftmargin=*, itemsep=1pt, parsep=1pt, topsep=1pt]
+    #1
+  \end{itemize}
+  \vspace{0.2cm}
+}
+
+% Etiqueta individual para habilidades
+\newcommand{\cvtag}[2][]{
+  \tikz[baseline]{
+    \node[anchor=base, draw=secondary!70, fill=secondary!10, rounded corners=3pt, 
+          inner xsep=6pt, inner ysep=1pt, text height=1.5ex, text depth=.25ex] {#2};
+    \ifx&#1&%
+    \else
+      % Add tooltip functionality if provided
+      \node[anchor=base, text width=3cm, align=center, rounded corners=2pt,
+            inner sep=2pt, draw=accent!50, fill=white!90, font=\tiny\sffamily,
+            opacity=0.9] at (0,0.5) {#1};
+    \fi
+  } \hspace{1pt}
+}
+
+% Proyecto (título, tecnologías, descripción)
+\newcommand{\cvproject}[3]{
+  \cvsubsection{#1}
+  \textcolor{accent}{\textbf{Tecnologías:}} #2
+  \begin{itemize}[leftmargin=*, itemsep=1pt, parsep=0pt, topsep=2pt]
+    \item #3
+  \end{itemize}
+  \vspace{0.2cm}
+}
+
+% Barra de progreso para habilidades
+\newcommand{\progressbar}[1]{
+  \begin{tikzpicture}[baseline]
+    \fill[lightgray, rounded corners=2pt] (0,0) rectangle (5,0.25);
+    \fill[primary, rounded corners=2pt] (0,0) rectangle (#1*5,0.25);
+  \end{tikzpicture}
+}
+
+% Nuevos comandos para la sección de habilidades técnicas
+% Categoría de habilidades con título y descripción
+\newcommand{\cvskillcategory}[2]{
+  \vspace{0.2cm}
+  \textbf{\textcolor{primary}{#1}} \\
+  \textit{\small #2} \\[0.2cm]
+}
+
+% Habilidad con barra de progreso y nivel textual
+\newcommand{\cvskill}[3]{
+  \textbf{#1} & 
+  \begin{tikzpicture}[baseline]
+    \fill[lightgray, rounded corners=2pt] (0,0) rectangle (5,0.25);
+    \fill[primary, rounded corners=2pt] (0,0) rectangle (#2*5,0.25);
+  \end{tikzpicture} & 
+  \textit{\small \textcolor{darkgray}{#3}} \\[0.3cm]
+}
+
+% Grupo de etiquetas con título de categoría
+\newcommand{\cvtaggroup}[2]{
+  \textbf{\textcolor{secondary}{#1:}} \\[0.1cm]
+  #2 \\[0.3cm]
+}
+
+% Habilidad destacada con icono y descripción breve
+\newcommand{\cvkeytechskill}[3]{
+  \begin{minipage}{0.48\textwidth}
+    \begin{tabularx}{\linewidth}{l X}
+      \textcolor{accent}{#1} & \textbf{#2} \\
+      & \textit{\small #3} \\
+    \end{tabularx}
+  \end{minipage}
+  \hfill
+}
+
+% =============================================================================
+% DOCUMENTO PRINCIPAL
+% =============================================================================
+\begin{document}
+
+% Disable page numbering for page 1
+\thispagestyle{empty}
+
+% Header text
+\vspace{0.5cm}
+\cvname{Juan Lara}
+\cvtitle{Computer Scientist \& Applied Mathematician}
+\cvcontact{larajuand@outlook.com}{+57 315 512 8464}{Bogotá, Colombia}{https://linkedin.com/in/julara/?locale=en\_US\&profileId=ACoAACIpjk4BS78qvk7wafpNlgUjRQPCRBMrjdM}{JuanLara18}{https://juanlara18.github.io/Portafolio}
+
+\vspace{0.2cm}
+
+%---------------------------------------------------------------------------------
+%	SUMMARY
+%---------------------------------------------------------------------------------
+\cvsection{Professional Summary}
+
+\begin{adjustwidth}{2.5em}{0em}
+I am a Computer Scientist and Mathematician trained at the Universidad Nacional de Colombia, with an emphasis on Machine Learning. I am currently collaborating on applied research at Harvard Business School, where I merge theoretical rigor with computational solutions to optimize organizational and business strategy.
+
+Throughout my career, I have developed advanced mathematical models, implemented numerical simulations, and applied machine-learning techniques to transform data into strategic insights. My interdisciplinary approach enables me to turn complex theories into practical and efficient tools.
+
+Proactive, creative, and problem-solving-oriented, I enjoy collaborating and communicating ideas clearly. I am open to research projects and consulting engagements that require integrating mathematical foundations with computational solutions to address real-world challenges.
+\end{adjustwidth}
+
+%---------------------------------------------------------------------------------
+%	EDUCATION
+%---------------------------------------------------------------------------------
+\cvsection{Education}
+
+\cveducation{B.S. in Computer Science}{Feb 2019 - Nov 2023}{Universidad Nacional de Colombia}{Bogotá D.C.}{Machine Learning}{4.7/5.0}{https://drive.google.com/file/d/1bp6QKeEqpOeCBIBKsst0IwQpr48nmjoi/view?usp=sharing}{oduqueg@unal.edu.co}{Omar Duque Gomez}
+
+\cveducation{B.S. in Mathematics}{Feb 2018 - Jun 2022}{Universidad Nacional de Colombia}{Bogotá D.C.}{Applied Mathematics}{4.7/5.0}{https://drive.google.com/file/d/1RW4Q3Kca8rfMUJpejdwlmtTTiA5YgYwU/view?usp=sharing}{oduqueg@unal.edu.co}{Omar Duque Gomez}
+
+\cveducation{Technical Baccalaureate in Business Administration}{Feb 2015 - Nov 2017}{Centro Educativo los Andes}{Bogotá D.C.}{Entrepreneurship and Innovation}{}{}{}{} 
+
+\cveducation{Technician in Maintenance of Computer Equipment}{Nov 2015 - Dec 2016}{Servicio Nacional de Aprendizaje - SENA}{Bogotá D.C.}{Corrective Software}{4.6/5.0}{https://drive.google.com/file/d/1beMFGTbBiNhCdUMJnjLYQfCetz7V3xCW/view}{Certificate}{}
+
+%---------------------------------------------------------------------------------
+%	EXPERIENCE
+%---------------------------------------------------------------------------------
+\cvsection{Professional Experience}
+
+\cvexperience{Research Assistant}{Sep 2022 - Present}{Harvard Business School}{Boston, USA (Remote)}{
+summary
+}{jtamayo@hbs.edu}{Jorge Tamayo}
+
+\cvexperience{Data Scientist}{Feb 2024 - Jan 2025}{Ipsos}{Bogota, D.C., Colombia (Hybrid)}{summary
+}{sandra.pastran@ipsos.com}{Sandra Pastrán}
+
+%---------------------------------------------------------------------------------
+%	TECHNICAL SKILLS
+%---------------------------------------------------------------------------------
+\cvsection{Technical Skills}
+
+% Descripción introductoria de las habilidades técnicas
+\begin{adjustwidth}{2.5em}{0em}
+Mi formación dual en Ciencias de la Computación y Matemáticas me ha permitido desarrollar un conjunto único de habilidades técnicas que combina rigor matemático con implementación práctica. Tengo especial expertise en el desarrollo e implementación de modelos matemáticos y algoritmos para resolver problemas complejos.
+\end{adjustwidth}
+
+\vspace{0.3cm}
+
+% Competencias centrales con íconos
+\cvskillcategory{Core Competencies}{Áreas de expertise técnico donde tengo mayor profundidad y experiencia}
+\begin{tabularx}{\textwidth}{X X}
+  \cvkeytechskill{\faCode}{Advanced Programming}{Extensive experience developing efficient, scalable solutions with focus on clean architecture and performance optimization}
+  \cvkeytechskill{\faChartLine}{Statistical Modeling}{Design and implementation of statistical models for data-driven decision making and predictive analytics}
+  \\[0.3cm]
+  
+  \cvkeytechskill{\faBrain}{Machine Learning}{Design, training and deployment of ML systems with emphasis on interpretability and robust performance}
+  \cvkeytechskill{\faSitemap}{Algorithm Design}{Development of novel computational approaches to solve complex mathematical and business problems}
+  \\[0.3cm]
+  
+  \cvkeytechskill{\faDatabase}{Data Engineering}{Building robust pipelines for data processing, transformation and storage at scale}
+  \cvkeytechskill{\faDesktop}{Software Architecture}{Design of modular and maintainable systems following industry best practices and design patterns}
+\end{tabularx}
+
+\vspace{0.3cm}
+
+% Dominios de conocimiento
+\cvskillcategory{Knowledge Domains}{Áreas temáticas donde aplico mis habilidades técnicas}
+\begin{tabularx}{\textwidth}{X}
+  \cvtaggroup{Mathematical Foundations}{\cvtag{Linear Algebra} \cvtag{Multivariate Calculus} \cvtag{Optimization Theory} \cvtag{Numerical Analysis} \cvtag{Differential Equations} \cvtag{Discrete Mathematics} \cvtag{Graph Theory} \cvtag{Probability Theory} \cvtag{Mathematical Statistics}}
+  
+  \cvtaggroup{Machine Learning}{\cvtag{Supervised Learning} \cvtag{Unsupervised Learning} \cvtag{Reinforcement Learning} \cvtag{Deep Learning} \cvtag{Natural Language Processing} \cvtag{Computer Vision} \cvtag{Time Series Analysis} \cvtag{Anomaly Detection} \cvtag{Feature Engineering} \cvtag{Model Evaluation} \cvtag{Hyperparameter Tuning}}
+  
+  \cvtaggroup{Software Engineering}{\cvtag{OOP} \cvtag{Functional Programming} \cvtag{Web Development} \cvtag{API Design} \cvtag{System Design} \cvtag{Performance Optimization} \cvtag{Documentation} \cvtag{Testing} \cvtag{CI/CD} \cvtag{DevOps} \cvtag{Cloud Architecture}}
+\end{tabularx}
+
+\vspace{0.3cm}
+
+% Habilidades técnicas con nivel de dominio
+\cvskillcategory{Technical Proficiency}{Lenguajes, frameworks y herramientas donde tengo mayor experiencia}
+\begin{tabularx}{\textwidth}{X c X}
+  \textbf{Programming Languages} & & \\[0.1cm]
+  \cvskill{Python}{0.95}{Expert (5+ years)} \\
+  \cvskill{R}{0.90}{Advanced (4+ years)} \\
+  \cvskill{SQL}{0.85}{Advanced (3+ years)} \\
+  \cvskill{C++}{0.75}{Intermediate (2+ years)} \\
+  \cvskill{Bash}{0.70}{Intermediate (2+ years)} \\
+  
+  \textbf{Frameworks \& Libraries} & & \\[0.1cm]
+  \cvskill{Scikit-learn}{0.95}{Expert (Core ML workflows)} \\
+  \cvskill{TensorFlow/PyTorch}{0.85}{Advanced (Deep learning models)} \\
+  \cvskill{Pandas/NumPy}{0.95}{Expert (Data manipulation)} \\
+  \cvskill{Shiny/Streamlit}{0.90}{Advanced (Interactive dashboards)} \\
+  \cvskill{MLflow/Weights \& Biases}{0.80}{Advanced (Experiment tracking)} \\
+  
+  \textbf{Tools \& Infrastructure} & & \\[0.1cm]
+  \cvskill{Docker/Kubernetes}{0.85}{Advanced (Containerization)} \\
+  \cvskill{Git/GitHub}{0.90}{Advanced (Version control)} \\
+  \cvskill{AWS/GCP}{0.80}{Advanced (Cloud computing)} \\
+  \cvskill{Spark/Hadoop}{0.75}{Intermediate (Big data)} \\
+  \cvskill{CI/CD Pipelines}{0.80}{Advanced (Automated workflows)} \\
+\end{tabularx}
+
+\vspace{0.3cm}
+
+% Experiencia con modelos específicos
+\cvskillcategory{Model Experience}{Experiencia específica con algoritmos y arquitecturas de ML/AI}
+\begin{tabularx}{\textwidth}{X}
+  \cvtaggroup{Classical ML}{\cvtag{Linear/Logistic Regression} \cvtag{Decision Trees} \cvtag{Random Forests} \cvtag{Gradient Boosting} \cvtag{SVM} \cvtag{K-means} \cvtag{DBSCAN} \cvtag{PCA} \cvtag{t-SNE}}
+  
+  \cvtaggroup{Deep Learning}{\cvtag{CNNs} \cvtag{RNNs} \cvtag{LSTMs} \cvtag{Transformers} \cvtag{Autoencoders} \cvtag{GANs} \cvtag{Attention Mechanisms} \cvtag{Transfer Learning}}
+  
+  \cvtaggroup{Advanced Models}{\cvtag{BERT} \cvtag{GPT} \cvtag{LlaMA} \cvtag{YOLO} \cvtag{UNet} \cvtag{ResNet} \cvtag{Vision Transformers} \cvtag{Graph Neural Networks}}
+\end{tabularx}
+
+\vspace{0.3cm}
+
+% Metodologías
+\cvskillcategory{Methodologies \& Practices}{Enfoques metodológicos que aplico en mi trabajo}
+\begin{tabularx}{\textwidth}{X}
+  \cvtaggroup{Research}{\cvtag{Literature Review} \cvtag{Experimental Design} \cvtag{Hypothesis Testing} \cvtag{Algorithm Development} \cvtag{Model Evaluation} \cvtag{Technical Writing}}
+  
+  \cvtaggroup{Project Management}{\cvtag{Agile} \cvtag{Scrum} \cvtag{Kanban} \cvtag{Planning} \cvtag{Estimation} \cvtag{Documentation} \cvtag{Stakeholder Communication}}
+  
+  \cvtaggroup{MLOps}{\cvtag{Model Deployment} \cvtag{Version Control} \cvtag{Data Versioning} \cvtag{Model Monitoring} \cvtag{A/B Testing} \cvtag{Performance Evaluation} \cvtag{CI/CD for ML}}
+\end{tabularx}
+
+% Additional Training
+\cvsection{Additional Training}
+\begin{itemize}[leftmargin=*, itemsep=2pt, parsep=1pt]
+  \item \textbf{Artificial Intelligence Expert Certificate (CAIEC)}, Certiprof, November 2024
+  \begin{itemize}
+    \item Advanced-level certification focusing on artificial intelligence concepts, methodologies, and best practices
+    \item \href{https://www.credly.com/badges/TLZVDQTVTGG-XWHHHQPTQ-RDJFLDLRK}{\textcolor{primary}{Credential ID: TLZVDQTVTGG-XWHHHQPTQ-RDJFLDLRK}}
+  \end{itemize}
+  
+  \item \textbf{Artificial Intelligence Bootcamp (159 hours)}, Talento Tech Cymetria, May-October 2024
+  \begin{itemize}
+    \item Intensive training in AI and machine learning, covering cutting-edge algorithms and deep learning model construction
+    \item \href{https://certificados.talentotech.co/?cert=2518458921#pdf}{\textcolor{primary}{Credential ID: 2518458921}}
+  \end{itemize}
+  
+  \item \textbf{DevOps Certification}, Platzi, October 2024
+  \begin{itemize}
+    \item Comprehensive DevOps program covering Docker, Swarm, GitHub Actions, GitLab, Jenkins, Azure DevOps, and MLOps
+    \item \href{https://platzi.com/p/larajuan/learning-path/8353-cloud-devops/diploma/detalle/}{\textcolor{primary}{Credential ID: cc4cfe8a-d78a-4883-8a75-ca90931151f6}}
+  \end{itemize}
+  
+  \item \textbf{Coursera Certifications}, 2023
+  \begin{itemize}
+    \item Algorithmic Toolbox [\href{https://www.coursera.org/account/accomplishments/certificate/8GR62BCT499V}{\textcolor{primary}{8GR62BCT499V}}]
+    \item Linux and Bash for Data Engineering [\href{https://www.coursera.org/account/accomplishments/certificate/CAZUJPW6D4BP}{\textcolor{primary}{CAZUJPW6D4BP}}]
+    \item Python and Pandas for Data Engineering [\href{https://www.coursera.org/account/accomplishments/certificate/72QS5JSBC67L}{\textcolor{primary}{72QS5JSBC67L}}]
+  \end{itemize}
+\end{itemize}
+
+% Projects
+\cvsection{Key Projects}
+\cvproject{TextInsight - AI-Powered Text Analysis Tool}{\cvtag{Python} \cvtag{NLP} \cvtag{BERT} \cvtag{GPT} \cvtag{NetworkX}}{
+  Developed a comprehensive Python library for text analysis that leverages advanced NLP techniques including BERT and GPT models. The library features efficient batch processing capabilities for analyzing large volumes of text data, along with network visualization tools for mapping semantic relationships. Implemented at Ipsos to transform unstructured textual data into actionable insights and received company-wide recognition.
+}
+
+\cvproject{Georeferencing Platform for Commercial Analysis}{\cvtag{R Shiny} \cvtag{Leaflet} \cvtag{Geospatial Analysis} \cvtag{SQL} \cvtag{Dashboard Design}}{
+  Built an interactive geospatial analytics platform for analyzing commercial establishments and gas stations. The solution features dynamic maps, real-time KPI tracking, custom filters, and comprehensive visualization tools. This platform enabled stakeholders to make data-driven location decisions and identify regional market patterns across Colombia.
+}
+
+\cvproject{Automated Pharmacy Classification System}{\cvtag{R Shiny} \cvtag{Google Cloud Storage} \cvtag{Random Forest} \cvtag{Authentication} \cvtag{API Development}}{
+  Designed and implemented a web application for automated pharmacy classification with an intuitive user interface. Integrated machine learning models to categorize pharmacies based on various parameters with high accuracy. The system features real-time data validation, user authentication, and secure cloud storage integration. Reduced manual classification time by 80\% while improving consistency and accuracy.
+}
+
+% Distinctions
+\cvsection{Distinctions \& Awards}
+\begin{itemize}[leftmargin=*, itemsep=2pt, parsep=1pt]
+  \item \textbf{Total Ops Star Employee - LATAM}, Ipsos, April 2024
+  \begin{itemize}
+    \item For developing TextInsight, demonstrating exceptional initiative, technical expertise, and commitment to operational excellence
+  \end{itemize}
+  
+  \item \textbf{Best Averages Scholarship}, Universidad Nacional de Colombia, 2018-2023 (10 consecutive semesters)
+  \begin{itemize}
+    \item Awarded each semester to the top 15 students with highest academic performance in the program
+  \end{itemize}
+\end{itemize}
+
+% Research Interests
+\cvsection{Research Interests}
+\begin{itemize}[leftmargin=*, itemsep=2pt, parsep=1pt]
+  \item Advanced AI and Machine Learning, with a focus on virtual agent systems and multi-agent simulations.
+  \item Development of interpretable deep learning models and integration of large language models for strategic decision-making.
+\end{itemize}
+
+% Languages
+\cvsection{Languages}
+\begin{tabularx}{\textwidth}{X X}
+  \textbf{Spanish} & Native \\
+  \textbf{English} & Advanced \\
+\end{tabularx}
+
+\vspace{0.5cm}
+\begin{center}
+  \textcolor{accent}{\faCalendar} Last Updated: \today
+\end{center}
+
+\end{document}
