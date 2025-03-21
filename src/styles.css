@@ -2269,13 +2269,6 @@ body {
     }
 }
 
-.theme-switcher {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    z-index: 100;
-}
-
 .theme-toggle {
     width: 48px;
     height: 48px;
@@ -2308,13 +2301,6 @@ body {
     }
 }
 
-.theme-switcher {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    z-index: 100;
-}
-
 .theme-toggle {
     width: 48px;
     height: 48px;
@@ -2345,3 +2331,4 @@ body {
         height: 42px;
     }
 }
+
