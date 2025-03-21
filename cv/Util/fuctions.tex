@@ -1,0 +1,233 @@
+% =============================================================================
+% COMANDOS PARA ELEMENTOS DEL CV
+% =============================================================================
+
+% Nombre del candidato 
+\newcommand{\cvname}[1]{
+  \begin{center}
+    \fontsize{28pt}{32pt}\selectfont\textcolor{primary}{\textbf{#1}}
+  \end{center}
+  \vspace{-0.2cm}
+}
+
+% Título profesional
+\newcommand{\cvtitle}[1]{
+  \begin{center}
+    \fontsize{14pt}{16pt}\selectfont\textcolor{secondary}{#1}
+  \end{center}
+  \vspace{0.1cm}
+}
+
+% Información de contacto
+\newcommand{\cvcontact}[6]{
+  \begin{center}
+    \begin{tabular}{@{}c@{\hspace{0.5em}}l@{\hspace{1.5em}}c@{\hspace{0.5em}}l@{\hspace{1.5em}}c@{\hspace{0.5em}}l@{}}
+      \textcolor{accent}{\faEnvelope} & \href{mailto:#1}{\textcolor{darkgray}{#1}} &
+      \textcolor{accent}{\faGlobe} & \href{#6}{\textcolor{darkgray}{Web Page}} &
+      \textcolor{accent}{\faMapMarker} & \textcolor{darkgray}{#3} \\[0.3em]
+      \textcolor{accent}{\faPhone} & \textcolor{darkgray}{#2} &
+      \textcolor{accent}{\faLinkedin} & \href{#4}{\textcolor{darkgray}{julara}} &
+      \textcolor{accent}{\faGithub} & \href{https://github.com/#5}{\textcolor{darkgray}{#5}} \\
+    \end{tabular}
+  \end{center}
+  \vspace{0.3cm}
+}
+
+% Secciones principales del CV 
+\newcommand{\cvsection}[1]{
+  \vspace{0.4cm}
+  \begin{tikzpicture}
+    \draw[fill=primary] (0,0) rectangle (0.15,0.6);
+    \node[anchor=west, xshift=0.3cm] at (0.2,0.3) {\textcolor{primary}{\Large\textbf{#1}}};
+    \draw[primary, line width=1.2pt] (0.65,-0.1) -- (\textwidth,-0.1); 
+  \end{tikzpicture}
+  \vspace{0.1cm}
+}
+
+% Subsecciones del CV
+\newcommand{\cvsubsection}[1]{
+  \vspace{0.2cm}
+  \textcolor{darkgray}{\large\textbf{#1}}
+  \vspace{0.1cm}
+}
+
+% Carta de educación
+\newcommand{\cveducation}[9]{
+  \begin{tabularx}{\textwidth}{X r}
+    {\qquad \large{\textbf{#1}}} & \textcolor{secondary}{\textbf{#2}} \\
+    {\qquad \textit{#3}}, #4 & \\
+    \qquad{Emphasis on #5} & GPA: #6 \\
+    \qquad Director: \href{mailto:#8}{#9} & \textcolor{primary}{Detailed List of Exams}
+  \end{tabularx}
+  \vspace{0.4cm}
+}
+
+% Carta de experiencia
+\newcommand{\cvexperience}[7]{
+  \begin{tabularx}{\textwidth}{X r}
+    {\qquad \large{\textbf{#1}}} & \textcolor{secondary}{\textbf{#2}} \\
+    {\qquad \large{\textit{#3}}} & \textit{#4} \\
+  \end{tabularx}
+  \vspace{0.2em}
+  \begin{adjustwidth}{2.5em}{2.5em}
+    
+    #5
+    
+    \vspace{0.5em}
+    \textbf{Supervisor:} \href{mailto:#6}{#7}
+  \end{adjustwidth}
+  \vspace{0.5cm}
+}
+
+% Carta de cursos
+\newcommand{\cvtraining}[7]{
+  \begin{tabularx}{\textwidth}{X r}
+    {\qquad {\textbf{#1}}} & \textcolor{secondary}{\textbf{#2}} \\
+    {\qquad {\textit{#3}}} & \textit{#4} \\
+  \end{tabularx}
+  \vspace{0.1em}
+  \begin{adjustwidth}{2.5em}{2.5em}
+    
+    #5
+    
+    \vspace{0.5em}
+    {\small \textbf{Credential ID:} \href{#6}{\textcolor{primary}{#7}}}
+  \end{adjustwidth}
+  \vspace{0.6cm}
+}
+
+% Etiqueta individual para habilidades
+\newcommand{\cvtag}[2][]{
+  \tikz[baseline]{
+    \node[anchor=base, draw=secondary!70, fill=secondary!10, rounded corners=3pt, 
+          inner xsep=6pt, inner ysep=1pt, text height=1.5ex, text depth=.25ex] {#2};
+    \ifx&#1&%
+    \else
+      % Add tooltip functionality if provided
+      \node[anchor=base, text width=3cm, align=center, rounded corners=2pt,
+            inner sep=2pt, draw=accent!50, fill=white!90, font=\tiny\sffamily,
+            opacity=0.9] at (0,0.5) {#1};
+    \fi
+  } \hspace{1pt}
+}
+
+% Mantener compatibilidad con el comando anterior
+\renewcommand{\cvtag}[1]{\cvtaglevel[0]{#1}}
+
+% Enhanced project command with date, role, technologies, and description
+\newcommand{\cvproject}[5]{
+    \vspace{0.1cm}
+  \begin{tabularx}{\textwidth}{X r}
+    {\qquad \large{\textbf{#1}}} & \textcolor{secondary}{\textbf{#2}} \\
+    {\qquad {\textit{#3}}} & \\
+  \end{tabularx}
+  \vspace{0.1em}
+  \begin{adjustwidth}{2.5em}{2.5em}
+    \textbf{\textcolor{accent}{Technologies:}} #4
+    
+    \vspace{0.5em}
+    #5
+  \end{adjustwidth}
+  \vspace{0.6cm}
+}
+
+% Habilidad con barra de progreso y nivel textual
+\newcommand{\cvskill}[3]{
+  \textbf{#1} & 
+  \begin{tikzpicture}[baseline]
+    \fill[lightgray, rounded corners=2pt] (0,0) rectangle (5,0.25);
+    \fill[primary, rounded corners=2pt] (0,0) rectangle (#2*5,0.25);
+  \end{tikzpicture} & 
+  \textit{\small \textcolor{darkgray}{#3}} \\[0.3cm]
+}
+
+% Key technical skill with icon and brief description
+\newcommand{\cvkeytechskill}[3]{
+  \begin{minipage}{0.48\textwidth}
+    \begin{tabularx}{\linewidth}{l X}
+      \textcolor{primary}{#1} & \textbf{#2} \\
+      & \textit{\small #3} \\
+    \end{tabularx}
+  \end{minipage}
+  \hfill
+}
+
+% Create category function with consistent styling
+\newcommand{\cvtechcategory}[2]{
+  \begin{adjustwidth}{2.5em}{0em}
+    {\large\textbf{\textcolor{primary}{#1}}}
+    \begin{adjustwidth}{0em}{0em}
+      \textit{#2}
+    \end{adjustwidth}
+    \vspace{0.5cm}
+  \end{adjustwidth}
+}
+
+% Modified version of cvtaggroup with better spacing and alignment
+\newcommand{\cvskilltags}[2]{
+  \begin{adjustwidth}{2.5em}{3em}
+    \textbf{\textcolor{secondary}{#1:}} \\[0.2cm]
+    #2 \\[0.3cm]
+  \end{adjustwidth}
+}
+
+\newcommand{\cvskillsection}[1]{
+  \begin{adjustwidth}{2.5em}{0em}
+    \textbf{#1} & & \\[0.1cm]
+  \end{adjustwidth}
+}
+
+% Grupo de etiquetas con título de categoría
+\newcommand{\cvtaggroup}[2]{
+  \textbf{\textcolor{secondary}{#1:}} \\[0.1cm]
+  #2 \\[0.3cm]
+}
+
+% Award entry with organization, date, and description
+\newcommand{\cvaward}[4]{
+  \begin{tabularx}{\textwidth}{X r}
+    {\qquad \large{\textbf{#1}}} & \textcolor{secondary}{\textbf{#3}} \\
+    {\qquad \textit{#2}} & \\
+  \end{tabularx}
+  \vspace{0.1em}
+  \begin{adjustwidth}{2.5em}{2.5em}
+    #4
+  \end{adjustwidth}
+  \vspace{0.4cm}
+}
+
+% Tag con nivel de intensidad (0=normal, 3=máxima importancia)
+\newcommand{\cvtaglevel}[2][0]{
+  \tikz[baseline]{
+    \ifcase#1
+      % Nivel 0 (predeterminado)
+      \node[anchor=base, draw=tag-bg-0!70, fill=tag-bg-0!30, rounded corners=3pt, 
+          inner xsep=6pt, inner ysep=2pt, text height=1.5ex, text depth=.25ex, 
+          text=darkgray] {#2};
+    \or
+      % Nivel 1
+      \node[anchor=base, draw=tag-bg-1!80, fill=tag-bg-1!70, rounded corners=3pt, 
+          inner xsep=6pt, inner ysep=2pt, text height=1.5ex, text depth=.25ex, 
+          text=primary] {#2};
+    \or
+      % Nivel 2
+      \node[anchor=base, draw=tag-bg-2!90, fill=tag-bg-2!80, rounded corners=3pt, 
+          inner xsep=6pt, inner ysep=2pt, text height=1.5ex, text depth=.25ex, 
+          text=primary, font=\bfseries] {#2};
+    \or
+      % Nivel 3 (máximo)
+      \node[anchor=base, draw=secondary!90, fill=secondary!90, rounded corners=3pt, 
+          inner xsep=6pt, inner ysep=2pt, text height=1.5ex, text depth=.25ex, 
+          text=white, font=\bfseries] {#2};
+    \fi
+  } \hspace{3pt}
+}
+
+\newcommand{\cvresearchinterest}[2]{
+  \vspace{0.1cm}
+  \textcolor{primary}{\faSearch} \textbf{#1}
+  \begin{adjustwidth}{1.5em}{0em}
+    \textit{\small #2}
+  \end{adjustwidth}
+  \vspace{0.3cm}
+}
