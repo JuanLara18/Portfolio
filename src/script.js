@@ -357,13 +357,13 @@ const Portfolio = {
         init() {
             const themeToggle = document.querySelector('.theme-toggle');
             if (!themeToggle) return;
-
+    
             // Load saved theme
             const savedTheme = localStorage.getItem('portfolio-theme');
             if (savedTheme) {
                 document.documentElement.setAttribute('data-theme', savedTheme);
             }
-
+    
             // Toggle theme
             themeToggle.addEventListener('click', () => {
                 const currentTheme = document.documentElement.getAttribute('data-theme');
@@ -437,6 +437,7 @@ const Portfolio = {
         }
     },
 
+    
 };
 
 // Initialize when DOM is ready
