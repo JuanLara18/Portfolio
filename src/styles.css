@@ -2332,3 +2332,10 @@ body {
     }
 }
 
+.theme-toggle {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 999;
+    /* Keep your existing styling for width, height, etc. */
+}
