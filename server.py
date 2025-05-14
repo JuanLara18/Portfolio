@@ -9,6 +9,11 @@ from pathlib import Path
 import sqlite3
 from collections import defaultdict
 import hashlib
+import markdown
+import glob
+
+# Blog posts directory
+BLOG_DIR = os.path.join(BASE_DIR, 'blog_posts')
 
 class PortfolioAnalytics:
     def __init__(self, db_path='analytics.db'):
@@ -237,6 +242,68 @@ def add_header(response):
 @app.errorhandler(404)
 def not_found(e):
     return f"Archivo no encontrado: {request.path}", 404
+
+# --- For the blog posts ---
+@app.route('/blog')
+def blog_index():
+    """Show list of blog posts"""
+    posts = []
+    for post_path in glob.glob(os.path.join(BLOG_DIR, '*.md')):
+        filename = os.path.basename(post_path)
+        slug = os.path.splitext(filename)[0]
+        
+        with open(post_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+            # Simple title extraction (first line)
+            title = content.splitlines()[0].replace('# ', '')
+            # Get creation time as date
+            post_date = os.path.getctime(post_path)
+            
+            posts.append({
+                'slug': slug,
+                'title': title,
+                'date': post_date,
+                'path': post_path
+            })
+    
+    # Sort posts by date (newest first)
+    posts.sort(key=lambda x: x['date'], reverse=True)
+    
+    # Send a simple HTML template with posts list
+    html = '<html><head><title>Blog | Juan Lara</title>'
+    html += '<link href="styles.css" rel="stylesheet">'
+    html += '</head><body>'
+    html += '<h1>My Blog</h1><div class="blog-list">'
+    
+    for post in posts:
+        html += f'<div class="blog-item"><h2><a href="/blog/{post["slug"]}">{post["title"]}</a></h2>'
+        html += f'<p class="date">{post["date"]}</p></div>'
+    
+    html += '</div></body></html>'
+    
+    return html
+
+@app.route('/blog/<slug>')
+def blog_post(slug):
+    """Display a single blog post"""
+    post_path = os.path.join(BLOG_DIR, f'{slug}.md')
+    
+    if not os.path.exists(post_path):
+        abort(404)
+        
+    with open(post_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+        html_content = markdown.markdown(content, extensions=['extra'])
+    
+    # Simple HTML wrapper
+    html = '<html><head><title>Blog Post | Juan Lara</title>'
+    html += '<link href="/styles.css" rel="stylesheet">'
+    html += '</head><body>'
+    html += f'<div class="blog-post">{html_content}</div>'
+    html += '<a href="/blog">Back to Blog List</a>'
+    html += '</body></html>'
+    
+    return html
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8000))

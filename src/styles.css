@@ -2339,3 +2339,79 @@ body {
     z-index: 999;
     /* Keep your existing styling for width, height, etc. */
 }
+
+
+
+
+
+/* Simple Blog Styles */
+
+.blog-list {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.blog-item {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.blog-item h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.blog-item .date {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.blog-post {
+    max-width: 800px;
+    margin: 40px auto;
+    line-height: 1.8;
+    padding: 0 20px;
+}
+
+.blog-post h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.blog-post h2 {
+    font-size: 1.8rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.blog-post p {
+    margin-bottom: 1.5rem;
+}
+
+.blog-post code {
+    background: var(--background-alt);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.9em;
+}
+
+.blog-post pre {
+    background: var(--background-alt);
+    padding: 1rem;
+    border-radius: 5px;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+}
+
+.blog-post blockquote {
+    border-left: 4px solid var(--accent-primary);
+    padding-left: 1rem;
+    font-style: italic;
+    margin: 1.5rem 0;
+    color: var(--text-secondary);
+}
