@@ -1,4 +1,4 @@
-from flask import Flask, request, send_from_directory, send_file, abort, jsonify
+from flask import Flask, request, send_from_directory, send_file, abort, jsonify, render_template_string
 import os
 import pandas as pd
 from datetime import datetime
@@ -11,9 +11,16 @@ from collections import defaultdict
 import hashlib
 import markdown
 import glob
+import re
+from datetime import datetime
 
+app = Flask(__name__, static_folder=None)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # Blog posts directory
 BLOG_DIR = os.path.join(BASE_DIR, 'blog_posts')
+
+# Ensure blog directory exists
+os.makedirs(BLOG_DIR, exist_ok=True)
 
 class PortfolioAnalytics:
     def __init__(self, db_path='analytics.db'):
@@ -149,8 +156,7 @@ class PortfolioAnalytics:
             )
             geo_fig.write_html(output_dir / 'geographical_distribution.html')
 
-app = Flask(__name__, static_folder=None)
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 analytics = PortfolioAnalytics()
 
 @app.before_request
@@ -243,68 +249,540 @@ def add_header(response):
 def not_found(e):
     return f"Archivo no encontrado: {request.path}", 404
 
-# --- For the blog posts ---
-@app.route('/blog')
-def blog_index():
-    """Show list of blog posts"""
+# --- Blog functionality ---
+def parse_markdown_metadata(content):
+    """
+    Parse markdown content to extract metadata and content.
+    Metadata should be in YAML-like format at the top of the file:
+    
+    ---
+    title: Post Title
+    date: 2025-05-01
+    description: Short description of the post
+    tags: tag1, tag2, tag3
+    ---
+    
+    Content starts here...
+    """
+    metadata = {
+        'title': 'Untitled Post',
+        'date': datetime.now().strftime('%Y-%m-%d'),
+        'description': '',
+        'tags': []
+    }
+    
+    # Check if content starts with metadata section
+    match = re.match(r'^---\s*\n(.*?)\n---\s*\n', content, re.DOTALL)
+    
+    if match:
+        metadata_text = match.group(1)
+        content = content[match.end():]
+        
+        # Parse each metadata line
+        for line in metadata_text.strip().split('\n'):
+            if ':' in line:
+                key, value = line.split(':', 1)
+                key = key.strip().lower()
+                value = value.strip()
+                
+                if key == 'tags':
+                    metadata[key] = [tag.strip() for tag in value.split(',')]
+                else:
+                    metadata[key] = value
+    else:
+        # If no metadata block, try to extract title from first heading
+        title_match = re.match(r'^#\s+(.+)$', content.split('\n')[0])
+        if title_match:
+            metadata['title'] = title_match.group(1).strip()
+    
+    return metadata, content
+
+def format_date(date_str):
+    """Format date in a readable format"""
+    try:
+        date_obj = datetime.strptime(date_str, '%Y-%m-%d')
+        return date_obj.strftime('%B %d, %Y')
+    except ValueError:
+        return date_str
+
+def get_blog_posts():
+    """Get all blog posts with metadata"""
     posts = []
+    
+    if not os.path.exists(BLOG_DIR):
+        return posts
+        
     for post_path in glob.glob(os.path.join(BLOG_DIR, '*.md')):
         filename = os.path.basename(post_path)
         slug = os.path.splitext(filename)[0]
         
-        with open(post_path, 'r', encoding='utf-8') as f:
-            content = f.read()
-            # Simple title extraction (first line)
-            title = content.splitlines()[0].replace('# ', '')
-            # Get creation time as date
-            post_date = os.path.getctime(post_path)
-            
-            posts.append({
-                'slug': slug,
-                'title': title,
-                'date': post_date,
-                'path': post_path
-            })
+        try:
+            with open(post_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+                metadata, post_content = parse_markdown_metadata(content)
+                
+                # If no date in metadata, use file creation time
+                if metadata.get('date') == datetime.now().strftime('%Y-%m-%d'):
+                    file_date = datetime.fromtimestamp(os.path.getctime(post_path))
+                    metadata['date'] = file_date.strftime('%Y-%m-%d')
+                
+                posts.append({
+                    'slug': slug,
+                    'title': metadata.get('title', 'Untitled'),
+                    'date': metadata.get('date'),
+                    'formatted_date': format_date(metadata.get('date')),
+                    'description': metadata.get('description', ''),
+                    'tags': metadata.get('tags', []),
+                    'content': post_content
+                })
+        except Exception as e:
+            print(f"Error processing {post_path}: {str(e)}")
     
     # Sort posts by date (newest first)
     posts.sort(key=lambda x: x['date'], reverse=True)
+    return posts
+
+@app.route('/blog')
+def blog_index():
+    """Show list of blog posts"""
+    posts = get_blog_posts()
+    theme = request.cookies.get('portfolio-theme', 'light')
     
-    # Send a simple HTML template with posts list
-    html = '<html><head><title>Blog | Juan Lara</title>'
-    html += '<link href="styles.css" rel="stylesheet">'
-    html += '</head><body>'
-    html += '<h1>My Blog</h1><div class="blog-list">'
+    # HTML template for the blog index page
+    html_template = '''
+    <!DOCTYPE html>
+    <html lang="en" data-theme="{{ theme }}">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Blog | Juan Lara</title>
+        
+        <!-- Favicons -->
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+        <link rel="manifest" href="/assets/icons/site.webmanifest">
+        
+        <!-- Font Awesome para íconos -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        
+        <!-- Hojas de estilo -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+        <link href="/styles.css" rel="stylesheet">
+        
+        <!-- Fuentes -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <!-- Header -->
+        <header>
+            <nav class="container">
+                <div class="nav-content">
+                    <h1>Juan Lara</h1>
+                    
+                    <button class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                
+                    <nav class="nav-links">
+                        <a href="/#about">About</a>
+                        <a href="/#experience">Experience</a>
+                        <a href="/#education">Education</a>
+                        <a href="/#projects">Projects</a>
+                        <a href="/blog" class="active">Blog</a>
+                        <a href="/#contact">Contact</a>
+                    </nav>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Blog Header -->
+        <div class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>My Blog</h1>
+                    <p>Thoughts, insights, and technical deep-dives on AI, mathematics, and programming</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Blog List -->
+        <section id="blog-posts">
+            <div class="container">
+                <div class="blog-list">
+                    {% if posts %}
+                        {% for post in posts %}
+                        <div class="blog-item">
+                            <h2><a href="/blog/{{ post.slug }}">{{ post.title }}</a></h2>
+                            <div class="post-meta">
+                                <span class="date">{{ post.formatted_date }}</span>
+                                {% if post.tags %}
+                                <span class="tags">
+                                    {% for tag in post.tags %}
+                                    <span class="tag">{{ tag }}</span>
+                                    {% endfor %}
+                                </span>
+                                {% endif %}
+                            </div>
+                            {% if post.description %}
+                            <p class="description">{{ post.description }}</p>
+                            {% endif %}
+                            <a href="/blog/{{ post.slug }}" class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="empty-state">
+                            <p>No blog posts found. Check back soon!</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <p class="copyright">© 2025 Juan Lara. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+        
+        <!-- Theme switcher -->
+        <div class="theme-switcher">
+            <button class="theme-toggle" aria-label="Toggle dark mode">
+                <svg width="" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Scripts -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"></script>
+        <script>
+            feather.replace();
+            
+            // Theme toggle functionality
+            document.addEventListener('DOMContentLoaded', function() {
+                const themeToggle = document.querySelector('.theme-toggle');
+                
+                if (themeToggle) {
+                    themeToggle.addEventListener('click', function() {
+                        const currentTheme = document.documentElement.getAttribute('data-theme');
+                        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                        
+                        document.documentElement.setAttribute('data-theme', newTheme);
+                        localStorage.setItem('portfolio-theme', newTheme);
+                        
+                        // Update icon
+                        const themeIcon = document.querySelector('.theme-toggle svg');
+                        if (themeIcon) {
+                            if (newTheme === 'dark') {
+                                themeIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+                            } else {
+                                themeIcon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>';
+                            }
+                        }
+                    });
+                    
+                    // Set initial icon
+                    const currentTheme = document.documentElement.getAttribute('data-theme');
+                    const themeIcon = document.querySelector('.theme-toggle svg');
+                    if (themeIcon && currentTheme === 'dark') {
+                        themeIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+                    }
+                }
+                
+                // Mobile menu
+                const hamburger = document.querySelector('.hamburger');
+                const navLinks = document.querySelector('.nav-links');
+                
+                if (hamburger && navLinks) {
+                    hamburger.addEventListener('click', function() {
+                        hamburger.classList.toggle('active');
+                        navLinks.classList.toggle('active');
+                        document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+                    });
+                    
+                    navLinks.querySelectorAll('a').forEach(link => {
+                        link.addEventListener('click', function() {
+                            if (navLinks.classList.contains('active')) {
+                                hamburger.classList.remove('active');
+                                navLinks.classList.remove('active');
+                                document.body.style.overflow = '';
+                            }
+                        });
+                    });
+                }
+            });
+        </script>
+    </body>
+    </html>
+    '''
     
-    for post in posts:
-        html += f'<div class="blog-item"><h2><a href="/blog/{post["slug"]}">{post["title"]}</a></h2>'
-        html += f'<p class="date">{post["date"]}</p></div>'
-    
-    html += '</div></body></html>'
-    
-    return html
+    # Replace template variables
+    return render_template_string(
+        html_template,
+        posts=posts,
+        theme=theme
+    )
 
 @app.route('/blog/<slug>')
 def blog_post(slug):
     """Display a single blog post"""
-    post_path = os.path.join(BLOG_DIR, f'{slug}.md')
+    posts = get_blog_posts()
+    post = next((p for p in posts if p['slug'] == slug), None)
+    theme = request.cookies.get('portfolio-theme', 'light')
     
-    if not os.path.exists(post_path):
+    if not post:
         abort(404)
+    
+    # Convert Markdown to HTML with extras for code highlighting, tables, etc.
+    post_html = markdown.markdown(
+        post['content'], 
+        extensions=[
+            'markdown.extensions.extra',
+            'markdown.extensions.codehilite',
+            'markdown.extensions.toc'
+        ]
+    )
+    
+    # Get related posts based on tags
+    related_posts = []
+    if post['tags']:
+        for p in posts:
+            if p['slug'] != post['slug'] and any(tag in p['tags'] for tag in post['tags']):
+                related_posts.append(p)
+                if len(related_posts) >= 3:  # Limit to 3 related posts
+                    break
+    
+    # Get next and previous posts
+    post_index = next((i for i, p in enumerate(posts) if p['slug'] == slug), None)
+    prev_post = posts[post_index + 1] if post_index < len(posts) - 1 else None
+    next_post = posts[post_index - 1] if post_index > 0 else None
+    
+    # HTML template for the blog post page
+    html_template = '''
+    <!DOCTYPE html>
+    <html lang="en" data-theme="{{ theme }}">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ post.title }} | Juan Lara</title>
         
-    with open(post_path, 'r', encoding='utf-8') as f:
-        content = f.read()
-        html_content = markdown.markdown(content, extensions=['extra'])
+        <!-- Favicons -->
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+        <link rel="manifest" href="/assets/icons/site.webmanifest">
+        
+        <!-- Font Awesome para íconos -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        
+        <!-- Hojas de estilo -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+        <link href="/styles.css" rel="stylesheet">
+        
+        <!-- Code highlighting -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/github.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
+        
+        <!-- Fuentes -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <!-- Header -->
+        <header>
+            <nav class="container">
+                <div class="nav-content">
+                    <h1>Juan Lara</h1>
+                    
+                    <button class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                
+                    <nav class="nav-links">
+                        <a href="/#about">About</a>
+                        <a href="/#experience">Experience</a>
+                        <a href="/#education">Education</a>
+                        <a href="/#projects">Projects</a>
+                        <a href="/blog" class="active">Blog</a>
+                        <a href="/#contact">Contact</a>
+                    </nav>
+                </div>
+            </nav>
+        </header>
+        
+        <!-- Blog Post -->
+        <section id="blog-post">
+            <div class="container">
+                <div class="blog-navigation">
+                    <a href="/blog" class="back-link"><i class="fas fa-arrow-left"></i> Back to Blog</a>
+                </div>
+                
+                <article class="blog-post">
+                    <header class="post-header">
+                        <h1>{{ post.title }}</h1>
+                        <div class="post-meta">
+                            <span class="date">{{ post.formatted_date }}</span>
+                            {% if post.tags %}
+                            <span class="tags">
+                                {% for tag in post.tags %}
+                                <span class="tag">{{ tag }}</span>
+                                {% endfor %}
+                            </span>
+                            {% endif %}
+                        </div>
+                    </header>
+                    
+                    <div class="post-content">
+                        {{ post_html|safe }}
+                    </div>
+                </article>
+                
+                <!-- Post Navigation -->
+                <div class="post-navigation">
+                    {% if prev_post %}
+                    <a href="/blog/{{ prev_post.slug }}" class="prev-post">
+                        <span class="nav-label"><i class="fas fa-arrow-left"></i> Previous</span>
+                        <span class="post-title">{{ prev_post.title }}</span>
+                    </a>
+                    {% else %}
+                    <div class="prev-post empty"></div>
+                    {% endif %}
+                    
+                    {% if next_post %}
+                    <a href="/blog/{{ next_post.slug }}" class="next-post">
+                        <span class="nav-label">Next <i class="fas fa-arrow-right"></i></span>
+                        <span class="post-title">{{ next_post.title }}</span>
+                    </a>
+                    {% else %}
+                    <div class="next-post empty"></div>
+                    {% endif %}
+                </div>
+                
+                <!-- Related Posts -->
+                {% if related_posts %}
+                <div class="related-posts">
+                    <h3>Related Posts</h3>
+                    <div class="related-posts-grid">
+                        {% for related in related_posts %}
+                        <a href="/blog/{{ related.slug }}" class="related-post">
+                            <h4>{{ related.title }}</h4>
+                            <span class="date">{{ related.formatted_date }}</span>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <p class="copyright">© 2025 Juan Lara. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+        
+        <!-- Theme switcher -->
+        <div class="theme-switcher">
+            <button class="theme-toggle" aria-label="Toggle dark mode">
+                <svg width="" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Scripts -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"></script>
+        <script>
+            feather.replace();
+            
+            // Code highlighting
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightBlock(block);
+                });
+                
+                // Theme toggle functionality
+                const themeToggle = document.querySelector('.theme-toggle');
+                
+                if (themeToggle) {
+                    themeToggle.addEventListener('click', function() {
+                        const currentTheme = document.documentElement.getAttribute('data-theme');
+                        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                        
+                        document.documentElement.setAttribute('data-theme', newTheme);
+                        localStorage.setItem('portfolio-theme', newTheme);
+                        
+                        // Update icon
+                        const themeIcon = document.querySelector('.theme-toggle svg');
+                        if (themeIcon) {
+                            if (newTheme === 'dark') {
+                                themeIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+                            } else {
+                                themeIcon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>';
+                            }
+                        }
+                    });
+                    
+                    // Set initial icon
+                    const currentTheme = document.documentElement.getAttribute('data-theme');
+                    const themeIcon = document.querySelector('.theme-toggle svg');
+                    if (themeIcon && currentTheme === 'dark') {
+                        themeIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+                    }
+                }
+                
+                // Mobile menu
+                const hamburger = document.querySelector('.hamburger');
+                const navLinks = document.querySelector('.nav-links');
+                
+                if (hamburger && navLinks) {
+                    hamburger.addEventListener('click', function() {
+                        hamburger.classList.toggle('active');
+                        navLinks.classList.toggle('active');
+                        document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+                    });
+                    
+                    navLinks.querySelectorAll('a').forEach(link => {
+                        link.addEventListener('click', function() {
+                            if (navLinks.classList.contains('active')) {
+                                hamburger.classList.remove('active');
+                                navLinks.classList.remove('active');
+                                document.body.style.overflow = '';
+                            }
+                        });
+                    });
+                }
+            });
+        </script>
+    </body>
+    </html>
+    '''
     
-    # Simple HTML wrapper
-    html = '<html><head><title>Blog Post | Juan Lara</title>'
-    html += '<link href="/styles.css" rel="stylesheet">'
-    html += '</head><body>'
-    html += f'<div class="blog-post">{html_content}</div>'
-    html += '<a href="/blog">Back to Blog List</a>'
-    html += '</body></html>'
-    
-    return html
+    # Replace template variables
+    return render_template_string(
+        html_template,
+        post=post,
+        post_html=post_html,
+        related_posts=related_posts,
+        prev_post=prev_post,
+        next_post=next_post,
+        theme=theme
+    )
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port, debug=True)
