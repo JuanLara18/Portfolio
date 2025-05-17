@@ -12,6 +12,13 @@ import ProjectsPage from './pages/ProjectsPage';
 function App() {
   // Dark mode state
   const [darkMode, setDarkMode] = useState(false);
+  // Mobile menu state
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Toggle mobile menu
+  const toggleMobileMenu = (isOpen) => {
+    setMobileMenuOpen(isOpen);
+  };
   
   // Initialize darkMode based on user preference or localStorage
   useEffect(() => {
@@ -22,7 +29,7 @@ function App() {
       setDarkMode(savedTheme === 'dark');
     } else {
       // Check if user prefers dark mode
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const prefersDark = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
       setDarkMode(prefersDark);
     }
   }, []);
@@ -46,10 +53,15 @@ function App() {
   return (
     <Router basename={process.env.PUBLIC_URL}>
       <div className="App min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-        <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+        <Navbar 
+          darkMode={darkMode} 
+          toggleDarkMode={toggleDarkMode} 
+          mobileMenuOpen={mobileMenuOpen}
+          toggleMobileMenu={toggleMobileMenu}
+        />
         
-        {/* Main content with top padding for navbar */}
-        <div className="pt-20">
+        {/* Main content with top padding for navbar and blur effect when menu is open */}
+        <div className={`pt-20 transition-all duration-300 ${mobileMenuOpen ? 'filter blur-[5px]' : ''}`}>
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/about" element={<AboutPage />} />

@@ -208,7 +208,7 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
             animate="open"
             exit="closed"
             variants={overlayVariants}
-            className="fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-40"
+            className="fixed inset-0 bg-gray-900/70 backdrop-blur-md z-40"
             onClick={toggleMobileMenu}
           />
         )}

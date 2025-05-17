@@ -42,9 +42,13 @@ body.menu-open {
   overflow: hidden;
 }
 
-body.menu-open .App > *:not(header) {
-  /* Optional: adds a subtle blur to all content except header */
-  filter: blur(3px);
+body.menu-open .App > div {
+  filter: blur(5px);
+  transition: filter 0.3s ease;
+}
+
+body.menu-open .App > div > div.pt-20 {
+  filter: blur(5px);
   transition: filter 0.3s ease;
 }
 
@@ -52,4 +56,9 @@ body.menu-open .App > *:not(header) {
 .backdrop-blur-sm {
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
+}
+
+.backdrop-blur-md {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px); /* For Safari */
 }
