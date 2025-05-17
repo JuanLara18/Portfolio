@@ -281,14 +281,14 @@ const ProjectCard = ({ project, inView }) => {
 
   
   return (
-  <motion.div 
-    className={`bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 h-full flex flex-col
-    ${project.featured ? 'sm:col-span-2 lg:col-span-2' : ''}`}
-    initial="rest"
-    whileHover="hover"
-    variants={cardHover}
-  >
-      <div className="relative overflow-hidden aspect-video">
+    <motion.div 
+      className={`bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 h-full flex flex-col
+      ${project.featured ? 'col-span-2' : ''}`}
+      initial="rest"
+      whileHover="hover"
+      variants={cardHover}
+    >
+      <div className="relative overflow-hidden aspect-[4/3]">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 z-10"></div>
         {project.image ? (
           <img 
@@ -406,11 +406,12 @@ export default function ProjectsPage() {
   useEffect(() => {
     let filtered = [...projects];
     
-    // Aplicar filtros primero
+    // Apply category filter first
     if (selectedCategory !== 'all') {
       filtered = filtered.filter(project => project.category === selectedCategory);
     }
     
+    // Apply search filter if there's a search term
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
       filtered = filtered.filter(project => 
@@ -420,30 +421,55 @@ export default function ProjectsPage() {
       );
     }
     
-    // Reorganizar solo si mostramos todos los proyectos sin búsqueda
+    // Reorganize only if showing all projects without search
     if (selectedCategory === 'all' && !searchTerm) {
       const featuredProjects = filtered.filter(p => p.featured);
       const regularProjects = filtered.filter(p => !p.featured);
       
-      // Crear nuevo array inteligentemente distribuido
+      // Create a layout with alternating featured projects between columns
       let reordered = [];
       
-      // Distribuir proyectos destacados cada 2 proyectos regulares
-      // Esto crea un patrón más equilibrado visualmente
-      let featIndex = 0;
-      let regIndex = 0;
+      // Initialize counters
+      let featuredIndex = 0;
+      let regularIndex = 0;
       
-      // Alternar entre regular y destacado para crear un patrón más equilibrado
-      while (regIndex < regularProjects.length || featIndex < featuredProjects.length) {
-        // Añadir 2 proyectos regulares (si quedan)
-        for (let i = 0; i < 2 && regIndex < regularProjects.length; i++) {
-          reordered.push(regularProjects[regIndex++]);
+      // Calculate total slots needed (each featured project takes 2 slots)
+      const totalSlots = regularProjects.length + (featuredProjects.length * 2);
+      
+      // Calculate ideal positions for featured projects to ensure column alternation
+      // In a 2-column grid, we want featured projects at positions 0, 3, 6, 9, etc.
+      const featuredPositions = [];
+      for (let i = 0; i < featuredProjects.length; i++) {
+        // Position each featured project to start in alternating columns
+        // This formula ensures they alternate: first in left column (0), 
+        // then right column (1), and so on
+        const position = i * 4 + (i % 2 === 0 ? 0 : 1);
+        if (position < totalSlots) {
+          featuredPositions.push(position);
         }
-        
-        // Añadir 1 proyecto destacado (si queda alguno)
-        if (featIndex < featuredProjects.length) {
-          reordered.push(featuredProjects[featIndex++]);
+      }
+      
+      // Fill the grid with regular and featured projects
+      for (let i = 0; i < totalSlots; i++) {
+        if (featuredPositions.includes(i) && featuredIndex < featuredProjects.length) {
+          // Add a featured project (takes up 2 slots)
+          reordered.push(featuredProjects[featuredIndex++]);
+          // Skip the next position as it's covered by this featured project
+          i++;
+        } else if (regularIndex < regularProjects.length) {
+          // Add a regular project
+          reordered.push(regularProjects[regularIndex++]);
         }
+      }
+      
+      // Add any remaining regular projects
+      while (regularIndex < regularProjects.length) {
+        reordered.push(regularProjects[regularIndex++]);
+      }
+      
+      // Add any remaining featured projects
+      while (featuredIndex < featuredProjects.length) {
+        reordered.push(featuredProjects[featuredIndex++]);
       }
       
       filtered = reordered;
@@ -451,7 +477,7 @@ export default function ProjectsPage() {
     
     setFilteredProjects(filtered);
   }, [selectedCategory, searchTerm, projects]);
-  
+
   // Get featured projects
   const featuredProjects = projects.filter(project => project.featured);
   
@@ -553,7 +579,7 @@ export default function ProjectsPage() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
-            className="max-w-7xl mx-auto"
+            className="max-w-6xl mx-auto"
           >
             <motion.div 
               variants={fadeInRight}
@@ -629,7 +655,7 @@ export default function ProjectsPage() {
             ) : (
               <motion.div 
                 variants={fadeInUp}
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 auto-rows-auto"
+                className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 auto-rows-auto"
               >
                 {filteredProjects.map(project => (
                   <ProjectCard key={project.id} project={project} inView={true} />
