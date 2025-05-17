@@ -2,7 +2,7 @@
   "name": "front",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://juanlara18.github.io/Portfolio",
+  "homepage": "https://juanlara18.github.io/Portafolio",
   "dependencies": {
     "@testing-library/dom": "^8.x",
     "@testing-library/jest-dom": "^6.x",
