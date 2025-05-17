@@ -46,8 +46,8 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
   // Get appropriate class for active/inactive links
   const getLinkClass = (path) => {
     const baseClass = "relative py-2 px-1 font-medium transition duration-300";
-    const activeClass = "text-blue-600 dark:text-blue-400 before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-full before:bg-blue-600 dark:before:bg-blue-400";
-    const inactiveClass = "text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-full before:scale-x-0 before:bg-blue-600 dark:before:bg-blue-400 before:origin-left before:transition-transform hover:before:scale-x-100";
+    const activeClass = "text-primary-600 dark:text-primary-500 before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-full before:bg-primary-600 dark:before:bg-primary-500";
+    const inactiveClass = "text-slate-700 dark:text-slate-300 hover:text-primary-600 dark:hover:text-primary-500 before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-full before:scale-x-0 before:bg-primary-600 dark:before:bg-primary-500 before:origin-left before:transition-transform hover:before:scale-x-100";
     
     return `${baseClass} ${isActive(path) ? activeClass : inactiveClass}`;
   };

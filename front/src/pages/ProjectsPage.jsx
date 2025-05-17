@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { 
   ExternalLink, 
@@ -353,26 +354,26 @@ const ProjectCard = ({ project, inView }) => {
         <div className="flex items-center justify-between mt-auto">
           <div className="flex items-center gap-3">
             {project.github && (
-              <a 
-                href={project.github} 
+              <Link 
+                to={project.github} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                 aria-label={`GitHub repository for ${project.name}`}
               >
                 <Github size={20} />
-              </a>
+              </Link>
             )}
             {project.demo && (
-              <a 
-                href={project.demo} 
+              <Link 
+                to ={project.demo} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                 aria-label={`Live demo for ${project.name}`}
               >
                 <ExternalLink size={20} />
-              </a>
+              </Link>
             )}
           </div>
           
@@ -715,54 +716,54 @@ export default function ProjectsPage() {
       </section>
       
       {/* Collaboration CTA */}
-      <section className="py-24 bg-gradient-to-br from-blue-600 to-indigo-700 dark:from-blue-700 dark:to-indigo-900 text-white">
-        <div className="container mx-auto px-6">
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={staggerContainer}
-            className="max-w-4xl mx-auto text-center"
+    <section className="py-24 bg-gray-900 dark:bg-gray-950 text-white">
+      <div className="container mx-auto px-6">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+          className="max-w-4xl mx-auto text-center"
+        >
+          <motion.h2 
+            variants={fadeInUp}
+            className="text-3xl md:text-4xl font-bold mb-6"
           >
-            <motion.h2 
-              variants={fadeInUp}
-              className="text-3xl md:text-4xl font-bold mb-6"
+            Let's Build Something Amazing Together
+          </motion.h2>
+          
+          <motion.p 
+            variants={fadeInUp}
+            className="text-lg md:text-xl text-gray-300 mb-10 max-w-3xl mx-auto"
+          >
+            Have a project idea or collaboration opportunity? I'm always interested in discussing new challenges and innovative solutions.
+          </motion.p>
+          
+          <motion.div 
+            variants={fadeInUp}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <Link
+              to="mailto:larajuand@outlook.com"
+              className="px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2 font-medium shadow-lg"
             >
-              Let's Build Something Amazing Together
-            </motion.h2>
-            
-            <motion.p 
-              variants={fadeInUp}
-              className="text-lg md:text-xl text-blue-100 mb-10 max-w-3xl mx-auto"
+              <Mail size={18} />
+              <span>Get in Touch</span>
+            </Link>
+
+            <Link
+              to="https://github.com/JuanLara18"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-8 py-3 bg-white text-gray-900 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors flex items-center gap-2 font-medium shadow-lg"
             >
-              Have a project idea or collaboration opportunity? I'm always interested in discussing new challenges and innovative solutions.
-            </motion.p>
-            
-            <motion.div 
-              variants={fadeInUp}
-              className="flex flex-col sm:flex-row items-center justify-center gap-4"
-            >
-              <a 
-                href="mailto:larajuand@outlook.com"
-                className="px-8 py-3 bg-white text-blue-700 rounded-lg hover:bg-blue-50 transition-colors flex items-center gap-2 font-medium"
-              >
-                <Mail size={18} />
-                <span>Get in Touch</span>
-              </a>
-              
-              <a 
-                href="https://github.com/JuanLara18"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-8 py-3 bg-blue-500 text-white border border-blue-400 rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2 font-medium"
-              >
-                <Github size={18} />
-                <span>View GitHub</span>
-              </a>
-            </motion.div>
+              <Github size={18} />
+              <span>View GitHub</span>
+            </Link>
           </motion.div>
-        </div>
-      </section>
+        </motion.div>
+      </div>
+    </section>
     </div>
   );
 }

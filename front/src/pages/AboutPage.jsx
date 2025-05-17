@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { 
   ExternalLink, 
   GraduationCap, 
@@ -831,7 +832,7 @@ export default function AboutPage() {
       </section>
       
       {/* CTA Section */}
-      <section className="py-16 bg-blue-600 dark:bg-blue-800">
+      <section className="py-16 bg-gray-900 dark:bg-gray-950">
         <div className="container mx-auto px-6">
           <motion.div 
             initial="hidden"
@@ -849,7 +850,7 @@ export default function AboutPage() {
             
             <motion.p 
               variants={fadeInUp}
-              className="text-blue-100 mb-8 max-w-2xl mx-auto"
+              className="text-gray-300 mb-8 max-w-2xl mx-auto"
             >
               I'm always open to discussing new projects, research opportunities, or creative collaborations. If you're looking for a Computer Scientist and Mathematician with expertise in Machine Learning and AI, let's connect!
             </motion.p>
@@ -860,17 +861,17 @@ export default function AboutPage() {
             >
               <a 
                 href="mailto:larajuand@outlook.com"
-                className="px-8 py-3 bg-white text-blue-700 rounded-lg hover:bg-blue-50 transition-colors flex items-center gap-2 font-medium"
+                className="px-8 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors flex items-center gap-2 font-medium shadow-lg"
               >
                 <Mail size={18} />
                 <span>Contact Me</span>
               </a>
               
-              <a 
-                href="/documents/CV___EN.pdf"
+              <Link 
+                to="/documents/CV___EN.pdf"
                 target="_blank"
                 rel="noreferrer"
-                className="px-8 py-3 bg-blue-700 text-white border border-blue-400 rounded-lg hover:bg-blue-800 transition-colors flex items-center gap-2 font-medium"
+                className="px-8 py-3 bg-white text-gray-900 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors flex items-center gap-2 font-medium shadow-lg"
               >
                 <svg 
                   className="w-5 h-5" 
@@ -882,7 +883,7 @@ export default function AboutPage() {
                   <path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17" />
                 </svg>
                 <span>Download Resume</span>
-              </a>
+              </Link >
             </motion.div>
           </motion.div>
         </div>

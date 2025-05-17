@@ -1,3 +1,43 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  /* Light mode */
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --secondary: #4338ca;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-accent: #f0f5ff;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-tertiary: #64748b;
+
+  /* Dark mode */
+  --primary-dark-mode: #3b82f6;
+  --secondary-dark-mode: #6366f1;
+  --bg-primary-dark: #0f172a;
+  --bg-secondary-dark: #1e293b;
+  --bg-accent-dark: #1e3a8a;
+  --text-primary-dark: #f1f5f9;
+  --text-secondary-dark: #cbd5e1;
+  --text-tertiary-dark: #94a3b8;
+}
+
+/* Optional: Add these utility classes if you want to use the CSS variables directly */
+.text-primary-custom {
+  color: var(--primary);
+}
+
+.dark .text-primary-custom {
+  color: var(--primary-dark-mode);
+}
+
+.bg-primary-custom {
+  background-color: var(--bg-primary);
+}
+
+.dark .bg-primary-custom {
+  background-color: var(--bg-primary-dark);
+}
