@@ -109,9 +109,9 @@ const ExperienceCard = ({
       
       <div className="relative z-10">
         <div className="flex flex-col md:flex-row md:items-center mb-4 gap-4">
-          <div className="w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden flex-shrink-0 bg-white p-2 shadow-md">
+          <div className="w-24 h-24 md:w-24 md:h-24 rounded-lg overflow-hidden flex-shrink-0 bg-white p-2 shadow-md">
             <img 
-              src={`../assets/images/company-logos/${logo}`} 
+              src={`/images/company-logos/${logo}`} 
               alt={company} 
               className="w-full h-full object-contain"
             />
@@ -184,9 +184,9 @@ const EducationCard = ({
       
       <div className="relative z-10">
         <div className="flex flex-col md:flex-row md:items-center mb-6 gap-4">
-          <div className="w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden flex-shrink-0 bg-white p-2 shadow-md">
+          <div className="w-24 h-24 md:w-24 md:h-24 rounded-lg overflow-hidden flex-shrink-0 bg-white p-2 shadow-md">
             <img 
-              src={`../assets/images/institutions/${logo}`} 
+              src={`/images/institutions/${logo}`} 
               alt={institution} 
               className="w-full h-full object-contain"
             />
@@ -262,9 +262,9 @@ const CourseCard = ({
       
       <div className="relative z-10">
         <div className="flex items-start gap-3 mb-3">
-          <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-white p-1 shadow-sm">
+          <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-white p-1 shadow-sm">
             <img 
-              src={`../assets/images/institutions/${logo}`} 
+              src={`/images/institutions/${logo}`} 
               alt={provider} 
               className="w-full h-full object-contain"
             />
@@ -385,25 +385,25 @@ export default function AboutPage() {
       certificateLink: "https://drive.google.com/file/d/1RW4Q3Kca8rfMUJpejdwlmtTTiA5YgYwU/view?usp=sharing",
       logo: "unal-logo.png"
     },
-    {
-      degree: "Technical Baccalaureate in Business Administration",
-      institution: "Centro Educativo los Andes",
-      period: "Feb 2015 - Nov 2017",
-      location: "Bogotá D.C.",
-      focus: "Entrepreneurship and Investigation",
-      gpa: "4.5",
-      logo: "school-logo.png" // You'll need to add an appropriate logo or use a placeholder
-    },
-    {
-      degree: "Technician in Maintenance of Computer Equipment",
-      institution: "Servicio Nacional de Aprendizaje - SENA",
-      period: "Nov 2015 - Dec 2016",
-      location: "Bogotá D.C.",
-      focus: "Corrective Software",
-      gpa: "4.6/5.0",
-      certificateLink: "https://drive.google.com/file/d/1beMFGTbBiNhCdUMJnjLYQfCetz7V3xCW/view",
-      logo: "sena-logo.png" // You'll need to add an appropriate logo or use a placeholder
-    }
+    // {
+    //   degree: "Technical Baccalaureate in Business Administration",
+    //   institution: "Centro Educativo los Andes",
+    //   period: "Feb 2015 - Nov 2017",
+    //   location: "Bogotá D.C.",
+    //   focus: "Entrepreneurship and Investigation",
+    //   gpa: "4.5",
+    //   logo: "school-logo.png" // You'll need to add an appropriate logo or use a placeholder
+    // },
+    // {
+    //   degree: "Technician in Maintenance of Computer Equipment",
+    //   institution: "Servicio Nacional de Aprendizaje - SENA",
+    //   period: "Nov 2015 - Dec 2016",
+    //   location: "Bogotá D.C.",
+    //   focus: "Corrective Software",
+    //   gpa: "4.6/5.0",
+    //   certificateLink: "https://drive.google.com/file/d/1beMFGTbBiNhCdUMJnjLYQfCetz7V3xCW/view",
+    //   logo: "sena-logo.png" // You'll need to add an appropriate logo or use a placeholder
+    // }
   ];
   
   // Courses/Training data
@@ -553,7 +553,7 @@ export default function AboutPage() {
                 
                 <div className="relative w-56 h-56 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-white dark:border-gray-800 shadow-xl z-10">
                   <img 
-                    src="../assets/images/profile.png" 
+                    src="/images/profile.png" 
                     alt="Juan Lara" 
                     className="w-full h-full object-cover"
                   />
@@ -770,7 +770,7 @@ export default function AboutPage() {
             
             <motion.div 
               variants={fadeInUp}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6"
             >
               {courses.map((course, index) => (
                 <CourseCard key={index} {...course} />
@@ -867,7 +867,7 @@ export default function AboutPage() {
               </a>
               
               <a 
-                href="/assets/documents/CV___EN.pdf"
+                href="/documents/CV___EN.pdf"
                 target="_blank"
                 rel="noreferrer"
                 className="px-8 py-3 bg-blue-700 text-white border border-blue-400 rounded-lg hover:bg-blue-800 transition-colors flex items-center gap-2 font-medium"
