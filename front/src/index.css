@@ -3,10 +3,17 @@
 @tailwind utilities;
 
 :root {
-  /* Light mode */
+  /* Light mode - enhanced color palette */
   --primary: #2563eb;
   --primary-dark: #1d4ed8;
+  --primary-light: #60a5fa;
+  --primary-shadow: rgba(37, 99, 235, 0.2);
+  
   --secondary: #4338ca;
+  --secondary-dark: #3730a3;
+  --secondary-light: #818cf8;
+  --secondary-shadow: rgba(67, 56, 202, 0.2);
+  
   --bg-primary: #ffffff;
   --bg-secondary: #f8fafc;
   --bg-accent: #f0f5ff;
@@ -14,30 +21,143 @@
   --text-secondary: #334155;
   --text-tertiary: #64748b;
 
-  /* Dark mode */
+  /* Dark mode - enhanced color palette */
   --primary-dark-mode: #3b82f6;
+  --primary-dark-mode-dark: #2563eb;
+  --primary-dark-mode-light: #93c5fd;
+  --primary-shadow-dark: rgba(59, 130, 246, 0.5);
+  
   --secondary-dark-mode: #6366f1;
+  --secondary-dark-mode-dark: #4f46e5;
+  --secondary-dark-mode-light: #a5b4fc;
+  --secondary-shadow-dark: rgba(99, 102, 241, 0.5);
+  
   --bg-primary-dark: #0f172a;
   --bg-secondary-dark: #1e293b;
   --bg-accent-dark: #1e3a8a;
   --text-primary-dark: #f1f5f9;
   --text-secondary-dark: #cbd5e1;
   --text-tertiary-dark: #94a3b8;
+  
+  /* Animation timing */
+  --transition-slow: 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  --transition-medium: 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  --transition-fast: 300ms cubic-bezier(0.22, 1, 0.36, 1);
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-focus: 0 0 0 3px var(--primary-shadow);
+  
+  /* Dark mode shadows */
+  --shadow-sm-dark: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md-dark: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --shadow-lg-dark: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-xl-dark: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+  --shadow-focus-dark: 0 0 0 3px var(--primary-shadow-dark);
 }
 
-/* Optional: Add these utility classes if you want to use the CSS variables directly */
-.text-primary-custom {
-  color: var(--primary);
+/* Enhanced utilities */
+.shadow-glass {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
-.dark .text-primary-custom {
-  color: var(--primary-dark-mode);
+.dark .shadow-glass {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
-.bg-primary-custom {
-  background-color: var(--bg-primary);
+/* Enhanced animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
 }
 
-.dark .bg-primary-custom {
-  background-color: var(--bg-primary-dark);
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes pulse-subtle {
+  0% { opacity: 0.7; }
+  50% { opacity: 1; }
+  100% { opacity: 0.7; }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 3s ease-in-out infinite;
+}
+
+/* Shimmer effect for text */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(to right, 
+    rgba(255, 255, 255, 0) 0%, 
+    rgba(255, 255, 255, 0.2) 50%, 
+    rgba(255, 255, 255, 0) 100%);
+  transform: translateX(-100%);
+  animation: shimmer 3s infinite;
+}
+
+.dark .shimmer::after {
+  background: linear-gradient(to right, 
+    rgba(255, 255, 255, 0) 0%, 
+    rgba(255, 255, 255, 0.1) 50%, 
+    rgba(255, 255, 255, 0) 100%);
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Glass morphism for cards and UI elements */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Enhanced focus styles for accessibility */
+*:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.dark *:focus-visible {
+  box-shadow: var(--shadow-focus-dark);
+}
+
+/* Additional CRT scan line effect for terminal */
+.bg-scan-lines {
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  background-size: 100% 2px;
+  pointer-events: none;
 }

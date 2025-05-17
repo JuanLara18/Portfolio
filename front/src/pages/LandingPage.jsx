@@ -3,12 +3,14 @@ import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-mot
 import { ChevronDown, Github, Linkedin, Mail, ExternalLink, Code, Terminal, Database, Server, Cpu, TerminalSquare, FileCode, Braces, Layers } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-// Technical particle animation constants
-const GRID_SIZE = 30;
-const DOT_SIZE = 1;
+// Import enhanced components
+import EnhancedTypingTerminal from '../components/EnhancedTypingTerminal';
+import EnhancedTechIcon from '../components/EnhancedTechIcon';
+import ParticleGridBackground from '../components/ParticleGridBackground';
 
 // Animation variants
 const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
   visible: { 
     opacity: 1, 
     y: 0,
@@ -54,77 +56,25 @@ const scaleUp = {
   }
 };
 
-// Terminal text typing animation component
-const TypingTerminal = ({ text }) => {
-  const [displayText, setDisplayText] = useState('');
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [showCursor, setShowCursor] = useState(true);
-
-  useEffect(() => {
-    if (currentIndex < text.length) {
-      const timeout = setTimeout(() => {
-        setDisplayText(prev => prev + text[currentIndex]);
-        setCurrentIndex(prev => prev + 1);
-      }, 60 + Math.random() * 40); // Varying typing speed for realism
-      
-      return () => clearTimeout(timeout);
-    } else {
-      // Blink cursor after typing is complete
-      const blinkInterval = setInterval(() => {
-        setShowCursor(prev => !prev);
-      }, 530);
-      
-      return () => clearInterval(blinkInterval);
-    }
-  }, [currentIndex, text]);
-
-  return (
-    <div className="font-mono p-4 bg-gray-900 text-green-400 rounded-md overflow-hidden shadow-xl border border-gray-800">
-      <div className="flex items-center gap-2 mb-2 pb-2 border-b border-gray-700">
-        <div className="w-3 h-3 rounded-full bg-red-500" />
-        <div className="w-3 h-3 rounded-full bg-yellow-500" />
-        <div className="w-3 h-3 rounded-full bg-green-500" />
-        <span className="ml-2 text-gray-400 text-sm">juan@lara ~ terminal</span>
-      </div>
-      <div className="flex">
-        <span className="text-blue-400 mr-2">$</span>
-        <div>
-          {displayText}
-          {showCursor && <span className="inline-block w-2 h-4 bg-green-400 ml-1 animate-pulse"></span>}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Animated tech icon component
-const TechIcon = ({ icon: Icon, label, delay = 0 }) => (
-  <motion.div 
-    className="flex flex-col items-center justify-center p-4"
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ delay: delay, duration: 0.5 }}
-  >
-    <div className="w-12 h-12 flex items-center justify-center rounded-lg bg-blue-50 dark:bg-blue-900/30 mb-2 text-blue-600 dark:text-blue-400">
-      <Icon size={24} />
-    </div>
-    <span className="text-sm text-gray-700 dark:text-gray-300">{label}</span>
-  </motion.div>
-);
-
 // Main landing page component
 export default function LandingPage() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const heroRef = useRef(null);
-  const gridRef = useRef(null);
+  const titleRef = useRef(null);
   const { scrollY } = useScroll();
   
-  // Transform values based on scroll position
+  // Enhanced transform values based on scroll position for parallax effects
   const headerOpacity = useTransform(scrollY, [0, 50], [0.6, 1]);
   const heroScale = useTransform(scrollY, [0, 300], [1, 0.95]);
   const heroOpacity = useTransform(scrollY, [0, 300], [1, 0.6]);
+  const heroY = useTransform(scrollY, [0, 300], [0, 40]); // Parallax effect
+  const headingY = useTransform(scrollY, [0, 300], [0, -15]); // Counter-parallax for heading
+  
+  // Parallax for decorative elements
+  const bgElement1Y = useTransform(scrollY, [0, 300], [0, 30]);
+  const bgElement2Y = useTransform(scrollY, [0, 300], [0, -20]);
   
   // Handle scroll events
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -142,77 +92,54 @@ export default function LandingPage() {
     }
   });
   
-  // Handle mouse movement for technical grid effect
+  // Handle mouse movement with debounce for better performance
   useEffect(() => {
+    let timeoutId;
+    
     const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      clearTimeout(timeoutId);
+      
+      timeoutId = setTimeout(() => {
+        setMousePosition({ x: e.clientX, y: e.clientY });
+      }, 10); // Slight debounce for smoother experience
     };
     
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      clearTimeout(timeoutId);
+    };
   }, []);
   
-  // Animate particles in the grid based on mouse position
-  useEffect(() => {
-    if (!gridRef.current) return;
-    
-    // Create grid dots elements if not already created
-    if (gridRef.current.children.length === 0) {
-      for (let i = 0; i < GRID_SIZE; i++) {
-        for (let j = 0; j < GRID_SIZE; j++) {
-          const dot = document.createElement('div');
-          dot.className = 'absolute rounded-full bg-blue-600/10 dark:bg-blue-400/10 transform transition-all duration-700';
-          dot.style.width = `${DOT_SIZE}px`;
-          dot.style.height = `${DOT_SIZE}px`;
-          dot.style.left = `${(j * 100) / GRID_SIZE}%`;
-          dot.style.top = `${(i * 100) / GRID_SIZE}%`;
-          gridRef.current.appendChild(dot);
-        }
-      }
-    }
-    
-    // Animate dots based on mouse position
-    const dots = gridRef.current.children;
-    const rect = gridRef.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    
-    for (let i = 0; i < dots.length; i++) {
-      const dot = dots[i];
-      const dotRect = dot.getBoundingClientRect();
-      const dotCenterX = dotRect.left + dotRect.width / 2;
-      const dotCenterY = dotRect.top + dotRect.height / 2;
-      
-      // Calculate distance from mouse
-      const dx = mousePosition.x - dotCenterX;
-      const dy = mousePosition.y - dotCenterY;
-      const distance = Math.sqrt(dx * dx + dy * dy);
-      const maxDistance = 150;
-      
-      if (distance < maxDistance) {
-        // Scale dot based on proximity to mouse
-        const scale = 1 + (1 - distance / maxDistance) * 3;
-        // Move dot away from mouse
-        const translateX = (dx / distance) * (maxDistance - distance) * 0.15;
-        const translateY = (dy / distance) * (maxDistance - distance) * 0.15;
-        dot.style.transform = `translate(${-translateX}px, ${-translateY}px) scale(${scale})`;
-        dot.style.backgroundColor = `rgba(59, 130, 246, ${0.1 + (1 - distance / maxDistance) * 0.2})`;
-        dot.style.zIndex = "10";
-      } else {
-        // Reset dot
-        dot.style.transform = 'translate(0, 0) scale(1)';
-        dot.style.backgroundColor = '';
-        dot.style.zIndex = "1";
-      }
-    }
-  }, [mousePosition]);
-  
-  // Scroll to content function
+  // Enhanced scroll to content function with smooth acceleration
   const scrollToContent = () => {
-    window.scrollTo({
-      top: window.innerHeight - 80,
-      behavior: 'smooth'
-    });
+    const targetPosition = window.innerHeight - 80;
+    const startPosition = window.scrollY;
+    const distance = targetPosition - startPosition;
+    const duration = 1000;
+    let start = null;
+    
+    // Easing function for smooth acceleration/deceleration
+    const easeInOutCubic = (t) => {
+      return t < 0.5
+        ? 4 * t * t * t
+        : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    };
+    
+    const animate = (timestamp) => {
+      if (!start) start = timestamp;
+      const elapsed = timestamp - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeInOutCubic(progress);
+      
+      window.scrollTo(0, startPosition + distance * eased);
+      
+      if (progress < 1) {
+        window.requestAnimationFrame(animate);
+      }
+    };
+    
+    window.requestAnimationFrame(animate);
   };
 
   // Determine active nav link class
@@ -225,22 +152,32 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100">
       
-      {/* Hero Section with Technical Grid */}
+      {/* Hero Section with Enhanced Technical Grid */}
       <motion.section 
         ref={heroRef}
         style={{
           scale: heroScale,
-          opacity: heroOpacity
+          opacity: heroOpacity,
+          y: heroY // Apply parallax effect on scroll
         }}
         className="relative min-h-screen flex items-center justify-center overflow-hidden"
       >
-        <div 
-          ref={gridRef}
-          className="absolute inset-0 bg-gradient-to-br from-blue-50/80 to-indigo-50/80 dark:from-gray-900 dark:to-gray-900"
-        ></div>
+        {/* Enhanced Particle Grid Background */}
+        <ParticleGridBackground mousePosition={mousePosition} />
         
-        <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-white dark:from-gray-900"></div>
-        <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-white dark:from-gray-900"></div>
+        {/* Floating decorative elements with parallax effect */}
+        <motion.div 
+          className="absolute top-20 right-10 w-96 h-96 rounded-full bg-blue-200/20 dark:bg-blue-900/10 blur-3xl -z-10"
+          style={{ y: bgElement1Y }}
+        />
+        <motion.div 
+          className="absolute bottom-40 left-10 w-64 h-64 rounded-full bg-indigo-200/30 dark:bg-indigo-900/10 blur-3xl -z-10"
+          style={{ y: bgElement2Y }}
+        />
+        
+        {/* Gradient overlays for smooth fading */}
+        <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-white dark:from-gray-900 to-transparent z-0"></div>
+        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white dark:from-gray-900 to-transparent z-0"></div>
         
         <div className="container mx-auto px-6 py-12 md:py-24 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
@@ -249,28 +186,41 @@ export default function LandingPage() {
               animate="visible"
               variants={staggerContainer}
               className="lg:col-span-3 text-left"
+              style={{ y: headingY }} // Counter-parallax for content
             >
               <motion.div variants={fadeInUp} className="mb-4">
-                <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 text-sm font-medium mb-4">
+                <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 text-sm font-medium mb-4 backdrop-blur-sm">
                   <Code size={14} className="mr-1.5" /> Research Assistant at Harvard Business School
                 </div>
               </motion.div>
               
+              {/* Enhanced text reveal animation */}
               <motion.h1 
+                ref={titleRef}
                 variants={fadeInUp}
                 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
               >
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
+                <motion.span 
+                  className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 inline-block"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                >
                   Merging Mathematics 
-                </span>
-                <span className="block mt-1 text-gray-800 dark:text-gray-100">
+                </motion.span>
+                <motion.span 
+                  className="block mt-1 text-gray-800 dark:text-gray-100"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                >
                   with Code
-                </span>
+                </motion.span>
               </motion.h1>
               
               <motion.p 
                 variants={fadeInUp}
-                className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl"
+                className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl leading-relaxed"
               >
                 Computer Scientist and Applied Mathematician solving complex organizational challenges through computational solutions. Specializing in Machine Learning, AI Agents, and NLP systems.
               </motion.p>
@@ -279,41 +229,68 @@ export default function LandingPage() {
                 variants={fadeInUp}
                 className="flex flex-wrap gap-3 mb-8"
               >
-                <span className="px-4 py-2 rounded-lg text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                <motion.span 
+                  whileHover={{ y: -3, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.5)" }}
+                  className="px-4 py-2 rounded-lg text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 border border-blue-200 dark:border-blue-800 backdrop-blur-sm transition-all duration-300"
+                >
                   Machine Learning
-                </span>
-                <span className="px-4 py-2 rounded-lg text-sm font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900/50 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+                </motion.span>
+                <motion.span 
+                  whileHover={{ y: -3, boxShadow: "0 10px 25px -5px rgba(67, 56, 202, 0.5)" }}
+                  className="px-4 py-2 rounded-lg text-sm font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900/50 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 backdrop-blur-sm transition-all duration-300"
+                >
                   AI Agents
-                </span>
-                <span className="px-4 py-2 rounded-lg text-sm font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300 border border-purple-200 dark:border-purple-800">
+                </motion.span>
+                <motion.span 
+                  whileHover={{ y: -3, boxShadow: "0 10px 25px -5px rgba(147, 51, 234, 0.5)" }}
+                  className="px-4 py-2 rounded-lg text-sm font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300 border border-purple-200 dark:border-purple-800 backdrop-blur-sm transition-all duration-300"
+                >
                   NLP
-                </span>
-                <span className="px-4 py-2 rounded-lg text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                </motion.span>
+                <motion.span 
+                  whileHover={{ y: -3, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.5)" }}
+                  className="px-4 py-2 rounded-lg text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 border border-blue-200 dark:border-blue-800 backdrop-blur-sm transition-all duration-300"
+                >
                   Computational Modeling
-                </span>
+                </motion.span>
               </motion.div>
               
+              {/* Enhanced CTA buttons */}
               <motion.div 
                 variants={fadeInUp}
                 className="flex flex-wrap gap-4 mb-8"
               >
                 <Link 
                   to="/projects" 
-                  className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 relative overflow-hidden group shadow-md"
+                  className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-300 flex items-center gap-2 relative overflow-hidden group shadow-lg"
                 >
                   <span className="z-10 relative">View Projects</span>
-                  <ExternalLink size={16} className="z-10 relative" />
-                  <div className="absolute inset-0 bg-blue-500 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                </Link >
+                  <ExternalLink size={16} className="z-10 relative transition-transform duration-300 group-hover:translate-x-1" />
+                  <div className="absolute inset-0 bg-blue-500 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                  {/* Add subtle light reflection effect */}
+                  <motion.div 
+                    className="absolute inset-0 opacity-0 group-hover:opacity-30 bg-gradient-to-r from-transparent via-white to-transparent skew-x-20 transition-opacity duration-1000"
+                    animate={{ 
+                      x: ["200%", "-200%"],
+                      transition: { 
+                        repeat: Infinity, 
+                        repeatType: "loop", 
+                        duration: 2.5,
+                        ease: "easeInOut",
+                        repeatDelay: 0.5
+                      } 
+                    }}
+                  />
+                </Link>
                 <Link 
                   to="/documents/CV___EN.pdf" 
-                  className="px-6 py-3 border-2 border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 rounded-lg group hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors flex items-center gap-2 shadow-sm"
+                  className="px-6 py-3 border-2 border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 rounded-lg group hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-all duration-300 flex items-center gap-2 shadow-sm relative overflow-hidden"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <span>Download CV</span>
+                  <span className="relative z-10">Download CV</span>
                   <svg 
-                    className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" 
+                    className="w-4 h-4 transform transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1 relative z-10" 
                     viewBox="0 0 24 24" 
                     fill="none" 
                     stroke="currentColor" 
@@ -321,45 +298,108 @@ export default function LandingPage() {
                   >
                     <path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17" />
                   </svg>
-                </Link >
+                  {/* Add subtle glow on hover */}
+                  <motion.div 
+                    className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-blue-300 dark:bg-blue-700 rounded-lg transition-opacity duration-300"
+                  />
+                </Link>
               </motion.div>
             </motion.div>
             
+            {/* Enhanced Terminal Card */}
             <motion.div 
               variants={scaleUp}
               initial="hidden"
               animate="visible"
               className="lg:col-span-2"
+              whileHover={{ y: -5, transition: { duration: 0.3 } }}
             >
               <div className="relative">
-                <div className="absolute -top-10 -left-10 w-40 h-40 bg-blue-200/30 dark:bg-blue-900/20 rounded-lg transform rotate-12 z-0"></div>
-                <div className="absolute -bottom-14 -right-14 w-60 h-60 bg-indigo-200/40 dark:bg-indigo-900/20 rounded-lg transform -rotate-12 z-0"></div>
+                {/* Animated decorative shapes */}
+                <motion.div 
+                  className="absolute -top-10 -left-10 w-40 h-40 bg-blue-200/30 dark:bg-blue-900/20 rounded-lg z-0"
+                  initial={{ rotate: 12, scale: 0.9 }}
+                  animate={{ 
+                    rotate: [12, 15, 12, 9, 12],
+                    scale: [0.9, 1, 0.95, 1, 0.9],
+                    transition: { 
+                      duration: 10, 
+                      repeat: Infinity,
+                      repeatType: "reverse"
+                    }
+                  }}
+                />
+                <motion.div 
+                  className="absolute -bottom-14 -right-14 w-60 h-60 bg-indigo-200/40 dark:bg-indigo-900/20 rounded-lg z-0"
+                  initial={{ rotate: -12, scale: 0.95 }}
+                  animate={{ 
+                    rotate: [-12, -9, -12, -15, -12],
+                    scale: [0.95, 1.05, 1, 0.98, 0.95],
+                    transition: { 
+                      duration: 12, 
+                      repeat: Infinity,
+                      repeatType: "reverse"
+                    }
+                  }}
+                />
                 
-                <div className="relative z-10 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl border border-gray-100 dark:border-gray-700">
-                  <TypingTerminal text="const profile = {\n  name: 'Juan Lara',\n  role: 'Computer Scientist & Mathematician',\n  expertise: ['Machine Learning', 'AI Agents', 'NLP'],\n  research: 'Harvard Business School',\n  education: [\n    'B.S. Computer Science',\n    'B.S. Mathematics'\n  ],\n  passion: 'Solving complex challenges with code'\n};" />
+                {/* Enhanced terminal card with improved shadow */}
+                <div className="relative z-10 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-[0_10px_40px_-15px_rgba(0,0,0,0.3)] dark:shadow-[0_10px_40px_-15px_rgba(0,0,0,0.7)] border border-gray-100 dark:border-gray-700 transition-all duration-500">
+                  <EnhancedTypingTerminal text="const profile = {\n  name: 'Juan Lara',\n  role: 'Computer Scientist & Mathematician',\n  expertise: ['Machine Learning', 'AI Agents', 'NLP'],\n  research: 'Harvard Business School',\n  education: [\n    'B.S. Computer Science',\n    'B.S. Mathematics'\n  ],\n  passion: 'Solving complex challenges with code'\n};" />
                   
                   <div className="mt-8 grid grid-cols-3 gap-2">
-                    <TechIcon icon={Cpu} label="ML Systems" delay={0.2} />
-                    <TechIcon icon={Braces} label="Algorithms" delay={0.4} />
-                    <TechIcon icon={Database} label="Data Analysis" delay={0.6} />
+                    <EnhancedTechIcon icon={Cpu} label="ML Systems" delay={0.2} />
+                    <EnhancedTechIcon icon={Braces} label="Algorithms" delay={0.4} />
+                    <EnhancedTechIcon icon={Database} label="Data Analysis" delay={0.6} />
                   </div>
                 </div>
               </div>
             </motion.div>
           </div>
           
+          {/* Enhanced scroll indicator */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.8, duration: 1, repeat: Infinity, repeatType: "reverse" }}
+            transition={{ 
+              delay: 1.8, 
+              duration: 0.8
+            }}
             className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer"
             onClick={scrollToContent}
           >
             <div className="flex flex-col items-center">
               <span className="text-sm text-gray-500 dark:text-gray-400 mb-2 font-medium">Explore More</span>
-              <ChevronDown size={24} className="text-blue-600 dark:text-blue-400 animate-bounce" />
+              <motion.div
+                animate={{ 
+                  y: [0, 8, 0],
+                  transition: { 
+                    duration: 1.5, 
+                    repeat: Infinity,
+                    repeatType: "loop"
+                  }
+                }}
+              >
+                <ChevronDown size={24} className="text-blue-600 dark:text-blue-400" />
+              </motion.div>
             </div>
           </motion.div>
+          
+          {/* Subtle cursor effect for desktop only */}
+          {window.innerWidth >= 768 && (
+            <motion.div 
+              className="fixed w-6 h-6 rounded-full border-2 border-blue-400/30 dark:border-blue-500/30 pointer-events-none z-50 hidden md:block"
+              style={{ 
+                x: mousePosition.x - 12, 
+                y: mousePosition.y - 12,
+                opacity: scrolled ? 0 : 0.6
+              }}
+              animate={{ 
+                scale: [1, 1.2, 1],
+                transition: { duration: 1, repeat: Infinity }
+              }}
+            />
+          )}
         </div>
       </motion.section>
       
@@ -448,6 +488,7 @@ export default function LandingPage() {
             <motion.div 
               variants={fadeInUp}
               className="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 relative overflow-hidden"
+              whileHover={{ y: -5, transition: { duration: 0.3 } }}
             >
               <div className="absolute top-0 right-0 w-40 h-40 bg-blue-100/50 dark:bg-blue-900/20 rounded-full -mr-20 -mt-20 z-0"></div>
               <div className="relative z-10">
@@ -480,6 +521,20 @@ export default function LandingPage() {
                     <span className="z-10 relative">Visit Blog</span>
                     <ExternalLink size={16} className="z-10 relative transform group-hover:translate-x-1 transition-transform duration-300" />
                     <div className="absolute inset-0 bg-blue-500 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                    {/* Light reflection effect */}
+                    <motion.div 
+                      className="absolute inset-0 opacity-0 group-hover:opacity-30 bg-gradient-to-r from-transparent via-white to-transparent skew-x-20 transition-opacity duration-1000"
+                      animate={{ 
+                        x: ["200%", "-200%"],
+                        transition: { 
+                          repeat: Infinity, 
+                          repeatType: "loop", 
+                          duration: 2.5,
+                          ease: "easeInOut",
+                          repeatDelay: 0.5
+                        } 
+                      }}
+                    />
                   </a>
                 </div>
               </div>
@@ -508,6 +563,7 @@ export default function LandingPage() {
             <motion.div 
               variants={scaleUp}
               className="bg-gray-800 p-8 rounded-xl shadow-xl border border-gray-700 mb-8"
+              whileHover={{ y: -5, transition: { duration: 0.3 } }}
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                 <div>
@@ -527,31 +583,73 @@ export default function LandingPage() {
                 
                 <div>
                   <div className="flex flex-col space-y-4">
-                    <a 
+                    <motion.a 
                       href="https://github.com/JuanLara18" 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className="flex items-center px-4 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
+                      className="flex items-center px-4 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors relative overflow-hidden group"
+                      whileHover={{ y: -2, transition: { duration: 0.2 } }}
                     >
                       <Github className="mr-3 text-white" size={20} />
                       <span>Github Projects</span>
-                    </a>
-                    <a 
+                      <motion.div 
+                        className="absolute inset-0 opacity-0 group-hover:opacity-10 bg-gradient-to-r from-transparent via-white to-transparent skew-x-20"
+                        animate={{ 
+                          x: ["200%", "-200%"],
+                          transition: { 
+                            repeat: Infinity, 
+                            repeatType: "loop", 
+                            duration: 2,
+                            ease: "easeInOut",
+                            repeatDelay: 0.2
+                          } 
+                        }}
+                      />
+                    </motion.a>
+                    <motion.a 
                       href="https://www.linkedin.com/in/julara/?locale=en_US" 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className="flex items-center px-4 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
+                      className="flex items-center px-4 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors relative overflow-hidden group"
+                      whileHover={{ y: -2, transition: { duration: 0.2 } }}
                     >
                       <Linkedin className="mr-3 text-white" size={20} />
                       <span>LinkedIn Profile</span>
-                    </a>
-                    <a 
+                      <motion.div 
+                        className="absolute inset-0 opacity-0 group-hover:opacity-10 bg-gradient-to-r from-transparent via-white to-transparent skew-x-20"
+                        animate={{ 
+                          x: ["200%", "-200%"],
+                          transition: { 
+                            repeat: Infinity, 
+                            repeatType: "loop", 
+                            duration: 2,
+                            ease: "easeInOut",
+                            repeatDelay: 0.2
+                          } 
+                        }}
+                      />
+                    </motion.a>
+                    <motion.a 
                       href="mailto:larajuand@outlook.com" 
-                      className="flex items-center px-4 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+                      className="flex items-center px-4 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors relative overflow-hidden group"
+                      whileHover={{ y: -2, transition: { duration: 0.2 } }}
                     >
                       <Mail className="mr-3 text-white" size={20} />
                       <span>Send Email</span>
-                    </a>
+                      <motion.div 
+                        className="absolute inset-0 opacity-0 group-hover:opacity-10 bg-gradient-to-r from-transparent via-white to-transparent skew-x-20"
+                        animate={{ 
+                          x: ["200%", "-200%"],
+                          transition: { 
+                            repeat: Infinity, 
+                            repeatType: "loop", 
+                            duration: 2,
+                            ease: "easeInOut",
+                            repeatDelay: 0.2
+                          } 
+                        }}
+                      />
+                    </motion.a>
                   </div>
                 </div>
               </div>
