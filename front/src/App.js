@@ -44,7 +44,7 @@ function App() {
   }, [darkMode]);
 
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <div className="App min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
         <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
         
@@ -61,6 +61,7 @@ function App() {
             <Route path="*" element={<LandingPage />} />
           </Routes>
         </div>
+        {/* <Footer /> */}
       </div>
     </Router>
   );
