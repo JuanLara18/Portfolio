@@ -279,14 +279,15 @@ const ProjectCard = ({ project, inView }) => {
     return category ? category.color : 'gray';
   };
 
+  
   return (
-    <motion.div 
-      className={`bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 h-full max-w-[520px]
-      ${project.featured ? 'md:col-span-2' : ''}`}
-      initial="rest"
-      whileHover="hover"
-      variants={cardHover}
-    >
+  <motion.div 
+    className={`bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 h-full flex flex-col
+    ${project.featured ? 'sm:col-span-2 lg:col-span-2' : ''}`}
+    initial="rest"
+    whileHover="hover"
+    variants={cardHover}
+  >
       <div className="relative overflow-hidden aspect-video">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 z-10"></div>
         {project.image ? (
@@ -403,14 +404,13 @@ export default function ProjectsPage() {
   
   // Filter projects based on category and search term
   useEffect(() => {
-    let filtered = projects;
+    let filtered = [...projects];
     
-    // Filter by category
+    // Aplicar filtros primero
     if (selectedCategory !== 'all') {
       filtered = filtered.filter(project => project.category === selectedCategory);
     }
     
-    // Filter by search term
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
       filtered = filtered.filter(project => 
@@ -420,8 +420,37 @@ export default function ProjectsPage() {
       );
     }
     
+    // Reorganizar solo si mostramos todos los proyectos sin búsqueda
+    if (selectedCategory === 'all' && !searchTerm) {
+      const featuredProjects = filtered.filter(p => p.featured);
+      const regularProjects = filtered.filter(p => !p.featured);
+      
+      // Crear nuevo array inteligentemente distribuido
+      let reordered = [];
+      
+      // Distribuir proyectos destacados cada 2 proyectos regulares
+      // Esto crea un patrón más equilibrado visualmente
+      let featIndex = 0;
+      let regIndex = 0;
+      
+      // Alternar entre regular y destacado para crear un patrón más equilibrado
+      while (regIndex < regularProjects.length || featIndex < featuredProjects.length) {
+        // Añadir 2 proyectos regulares (si quedan)
+        for (let i = 0; i < 2 && regIndex < regularProjects.length; i++) {
+          reordered.push(regularProjects[regIndex++]);
+        }
+        
+        // Añadir 1 proyecto destacado (si queda alguno)
+        if (featIndex < featuredProjects.length) {
+          reordered.push(featuredProjects[featIndex++]);
+        }
+      }
+      
+      filtered = reordered;
+    }
+    
     setFilteredProjects(filtered);
-  }, [selectedCategory, searchTerm]);
+  }, [selectedCategory, searchTerm, projects]);
   
   // Get featured projects
   const featuredProjects = projects.filter(project => project.featured);
@@ -600,7 +629,7 @@ export default function ProjectsPage() {
             ) : (
               <motion.div 
                 variants={fadeInUp}
-                className="grid grid-cols-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 auto-rows-auto"
               >
                 {filteredProjects.map(project => (
                   <ProjectCard key={project.id} project={project} inView={true} />
