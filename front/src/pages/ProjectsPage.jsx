@@ -105,7 +105,6 @@ const projects = [
     github: "https://github.com/JuanLara18/TextInsight",
     demo: "https://textinsight-ipsos.streamlit.app/",
     category: "ml",
-    featured: true
   },
   {
     id: 2,
@@ -143,17 +142,18 @@ const projects = [
     image: "classification.png",
     tags: ["nlp", "unsupervised-learning", "tfidf", "text-clustering"],
     github: "https://github.com/JuanLara18/Classification",
-    category: "ml"
-  },
-  {
-    id: 6,
-    name: "Pharmacy Segmentation Application",
-    description: "Responsive mobile field application for pharmacy segmentation using R Shiny with Google Cloud Storage integration. Features geolocation mapping with Leaflet, route management, and real-time ML classification, reducing manual segmentation effort by 85%.",
-    image: "pharmacy-app.png",
-    tags: ["R Shiny", "Google Cloud", "Random Forest", "Leaflet"],
-    category: "data",
+    category: "ml",
     featured: true
   },
+  // {
+  //   id: 6,
+  //   name: "Pharmacy Segmentation Application",
+  //   description: "Responsive mobile field application for pharmacy segmentation using R Shiny with Google Cloud Storage integration. Features geolocation mapping with Leaflet, route management, and real-time ML classification, reducing manual segmentation effort by 85%.",
+  //   image: "pharmacy-app.png",
+  //   tags: ["R Shiny", "Google Cloud", "Random Forest", "Leaflet"],
+  //   category: "data",
+  //   featured: true
+  // },
   {
     id: 7,
     name: "QuizApp",
@@ -252,7 +252,6 @@ const projects = [
     image: "food-economy.png",
     tags: ["web-scraping", "data-analysis", "price-prediction", "react", "python"],
     category: "upcoming",
-    featured: true
   }
 ];
 
