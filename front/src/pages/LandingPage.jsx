@@ -297,16 +297,16 @@ export default function LandingPage() {
                 variants={fadeInUp}
                 className="flex flex-wrap gap-4 mb-8"
               >
-                <a 
-                  href="#projects" 
+                <Link 
+                  to="/projects" 
                   className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 relative overflow-hidden group shadow-md"
                 >
                   <span className="z-10 relative">View Projects</span>
                   <ExternalLink size={16} className="z-10 relative" />
                   <div className="absolute inset-0 bg-blue-500 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                </a>
-                <a 
-                  href="/assets/documents/CV___EN.pdf" 
+                </Link >
+                <Link 
+                  to="/documents/CV___EN.pdf" 
                   className="px-6 py-3 border-2 border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 rounded-lg group hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors flex items-center gap-2 shadow-sm"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -321,7 +321,7 @@ export default function LandingPage() {
                   >
                     <path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17" />
                   </svg>
-                </a>
+                </Link >
               </motion.div>
             </motion.div>
             
