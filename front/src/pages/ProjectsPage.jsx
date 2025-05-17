@@ -291,7 +291,7 @@ const ProjectCard = ({ project, inView }) => {
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 z-10"></div>
         {project.image ? (
           <img 
-            src={`../assets/images/project-previews/${project.image}`} 
+            src={`/images/project-previews/${project.image}`} 
             alt={project.name} 
             className="w-full h-full object-cover transform transition-transform duration-700 hover:scale-105"
           />
