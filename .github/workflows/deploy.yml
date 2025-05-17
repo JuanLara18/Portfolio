@@ -1,0 +1,55 @@
+name: Deploy React Portfolio
+
+# Controla cuándo se ejecutará el workflow
+on:
+  # Se ejecuta en push a la rama principal
+  push:
+    branches: [ main ]
+    paths:
+      - 'front/**'  # Solo se activa cuando hay cambios en la carpeta front
+  
+  # Permite ejecutar este workflow manualmente desde la pestaña Actions
+  workflow_dispatch:
+
+# Permisos necesarios para acciones de GitHub
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Paso 1: Checkout del código
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+      
+      # Paso 2: Configurar Node.js
+      - name: Setup Node.js ⚙️
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: 'front/package-lock.json'
+      
+      # Paso 3: Navegar a la carpeta front e instalar dependencias
+      - name: Install Dependencies 📦
+        run: |
+          cd front
+          npm ci
+      
+      # Paso 4: Construir la aplicación
+      - name: Build 🔧
+        run: |
+          cd front
+          npm run build
+        env:
+          CI: false  # Evita que los warnings detengan la compilación
+      
+      # Paso 5: Desplegar a GitHub Pages
+      - name: Deploy to GitHub Pages 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: front/build  # La carpeta que contiene los archivos compilados
+          branch: gh-pages     # La rama donde se desplegará
+          clean: true          # Elimina archivos de despliegues anteriores
