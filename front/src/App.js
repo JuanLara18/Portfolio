@@ -6,19 +6,9 @@ import LandingPage from './pages/LandingPage';
 import AboutPage from './pages/AboutPage';
 import ProjectsPage from './pages/ProjectsPage';
 
-// Import other pages when they're created
-// import ContactPage from './pages/ContactPage';
-
 function App() {
   // Dark mode state
   const [darkMode, setDarkMode] = useState(false);
-  // Mobile menu state
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  // Toggle mobile menu
-  const toggleMobileMenu = (isOpen) => {
-    setMobileMenuOpen(isOpen);
-  };
   
   // Initialize darkMode based on user preference or localStorage
   useEffect(() => {
@@ -29,7 +19,7 @@ function App() {
       setDarkMode(savedTheme === 'dark');
     } else {
       // Check if user prefers dark mode
-      const prefersDark = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       setDarkMode(prefersDark);
     }
   }, []);
@@ -56,18 +46,14 @@ function App() {
         <Navbar 
           darkMode={darkMode} 
           toggleDarkMode={toggleDarkMode} 
-          mobileMenuOpen={mobileMenuOpen}
-          toggleMobileMenu={toggleMobileMenu}
         />
         
-        {/* Main content with top padding for navbar and blur effect when menu is open */}
-        <div className={`pt-20 transition-all duration-300 ${mobileMenuOpen ? 'filter blur-[5px]' : ''}`}>
+        {/* Main content with top padding for navbar */}
+        <div className="pt-20">
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/projects" element={<ProjectsPage />} />
-            {/* Add routes for other pages as they are created */}
-            {/* <Route path="/contact" element={<ContactPage />} /> */}
             
             {/* Fallback route redirects to home */}
             <Route path="*" element={<LandingPage />} />
