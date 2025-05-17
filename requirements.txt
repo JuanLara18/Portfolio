@@ -1,8 +1,0 @@
-flask
-pandas
-user-agents
-plotly
-pandas
-nump
-gunicorn
-markdown
