@@ -402,7 +402,7 @@ export default function ProjectsPage() {
   const heroOpacity = useTransform(scrollY, [0, 300], [1, 0.6]);
   const heroScale = useTransform(scrollY, [0, 300], [1, 0.95]);
   
-  // Filter projects based on category and search term
+  // Filter projects based on category and search term with optimized visual layout
   useEffect(() => {
     let filtered = [...projects];
     
@@ -421,58 +421,107 @@ export default function ProjectsPage() {
       );
     }
     
-    // Reorganize only if showing all projects without search
+    // Only reorganize if showing all projects without search
     if (selectedCategory === 'all' && !searchTerm) {
       const featuredProjects = filtered.filter(p => p.featured);
       const regularProjects = filtered.filter(p => !p.featured);
       
-      // Create a layout with alternating featured projects between columns
-      let reordered = [];
-      
-      // Initialize counters
-      let featuredIndex = 0;
-      let regularIndex = 0;
-      
-      // Calculate total slots needed (each featured project takes 2 slots)
-      const totalSlots = regularProjects.length + (featuredProjects.length * 2);
-      
-      // Calculate ideal positions for featured projects to ensure column alternation
-      // In a 2-column grid, we want featured projects at positions 0, 3, 6, 9, etc.
-      const featuredPositions = [];
-      for (let i = 0; i < featuredProjects.length; i++) {
-        // Position each featured project to start in alternating columns
-        // This formula ensures they alternate: first in left column (0), 
-        // then right column (1), and so on
-        const position = i * 4 + (i % 2 === 0 ? 0 : 1);
-        if (position < totalSlots) {
-          featuredPositions.push(position);
+      // Create grid-aware layout that fills space efficiently
+      const createOptimalLayout = () => {
+        // Constants for our grid layouts
+        const DESKTOP_COLUMNS = 4;
+        const MOBILE_COLUMNS = 2;
+        // A featured project takes 2 columns in both layouts
+        const FEATURED_WIDTH = 2;
+        
+        // Calculate how many slots we have to fill
+        const totalRegularSlots = regularProjects.length;
+        const totalFeaturedSlots = featuredProjects.length * FEATURED_WIDTH;
+        const totalSlots = totalRegularSlots + totalFeaturedSlots;
+        
+        // Initialize arrays to track our grid
+        const result = [];
+        let currentGridState = []; // Represents the state of the current row being built
+        let regularIndex = 0;
+        let featuredIndex = 0;
+        
+        // Function to add a project to the result and update grid state
+        const addToGrid = (project, width) => {
+          result.push(project);
+          
+          // Update grid state (desktop layout)
+          for (let i = 0; i < width; i++) {
+            currentGridState.push(true);
+          }
+          
+          // If we've filled a row or more, reset the grid state
+          while (currentGridState.length >= DESKTOP_COLUMNS) {
+            currentGridState = currentGridState.slice(DESKTOP_COLUMNS);
+          }
+        };
+        
+        // Distribute projects optimally across the grid
+        while (regularIndex < regularProjects.length || featuredIndex < featuredProjects.length) {
+          // Check if we can place a featured project in the current row
+          const canPlaceFeatured = 
+            featuredIndex < featuredProjects.length && 
+            (currentGridState.length + FEATURED_WIDTH <= DESKTOP_COLUMNS);
+          
+          // Check if placing a featured project would minimize gaps
+          const shouldPlaceFeatured = 
+            canPlaceFeatured && 
+            (
+              // Place featured at start of row
+              currentGridState.length === 0 ||
+              // Place featured at end of row if it fits perfectly
+              currentGridState.length === DESKTOP_COLUMNS - FEATURED_WIDTH ||
+              // Place featured at strategic positions or if we're running out of regular projects
+              regularIndex === regularProjects.length ||
+              // Place featured after every ~6 regular projects for visual rhythm
+              (featuredIndex < featuredProjects.length - 1 && 
+              regularIndex > 0 && 
+              regularIndex % 6 === 0)
+            );
+            
+          if (shouldPlaceFeatured) {
+            // Place a featured project
+            addToGrid(featuredProjects[featuredIndex], FEATURED_WIDTH);
+            featuredIndex++;
+          } else if (regularIndex < regularProjects.length) {
+            // Place a regular project
+            addToGrid(regularProjects[regularIndex], 1);
+            regularIndex++;
+          } else if (featuredIndex < featuredProjects.length) {
+            // Force place remaining featured projects at the beginning of the next row
+            if (currentGridState.length !== 0) {
+              // Fill the current row with regular projects if available
+              while (currentGridState.length < DESKTOP_COLUMNS && regularIndex < regularProjects.length) {
+                addToGrid(regularProjects[regularIndex], 1);
+                regularIndex++;
+              }
+              // Reset to start a new row
+              currentGridState = [];
+            }
+            
+            // Now place the featured project at the start of a row
+            addToGrid(featuredProjects[featuredIndex], FEATURED_WIDTH);
+            featuredIndex++;
+          }
         }
-      }
-      
-      // Fill the grid with regular and featured projects
-      for (let i = 0; i < totalSlots; i++) {
-        if (featuredPositions.includes(i) && featuredIndex < featuredProjects.length) {
-          // Add a featured project (takes up 2 slots)
-          reordered.push(featuredProjects[featuredIndex++]);
-          // Skip the next position as it's covered by this featured project
-          i++;
-        } else if (regularIndex < regularProjects.length) {
-          // Add a regular project
-          reordered.push(regularProjects[regularIndex++]);
+        
+        // If we still have incomplete row, fill it with any remaining projects
+        // This should rarely happen with the logic above, but just in case
+        if (regularIndex < regularProjects.length && currentGridState.length > 0) {
+          while (currentGridState.length < DESKTOP_COLUMNS && regularIndex < regularProjects.length) {
+            addToGrid(regularProjects[regularIndex], 1);
+            regularIndex++;
+          }
         }
-      }
+        
+        return result;
+      };
       
-      // Add any remaining regular projects
-      while (regularIndex < regularProjects.length) {
-        reordered.push(regularProjects[regularIndex++]);
-      }
-      
-      // Add any remaining featured projects
-      while (featuredIndex < featuredProjects.length) {
-        reordered.push(featuredProjects[featuredIndex++]);
-      }
-      
-      filtered = reordered;
+      filtered = createOptimalLayout();
     }
     
     setFilteredProjects(filtered);
