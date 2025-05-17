@@ -198,10 +198,10 @@ export default function LandingPage() {
               <motion.h1 
                 ref={titleRef}
                 variants={fadeInUp}
-                className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
+                className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-normal"
               >
                 <motion.span 
-                  className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 inline-block"
+                  className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 inline-block  pb-1"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.2 }}
