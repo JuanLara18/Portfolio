@@ -554,7 +554,7 @@ export default function AboutPage() {
                 
                 <div className="relative w-56 h-56 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-white dark:border-gray-800 shadow-xl z-10">
                   <img 
-                    src={`${process.env.PUBLIC_URL}/images/profile.png`} 
+                    src={`${process.env.PUBLIC_URL}/images/Profile.png`} 
                     alt="Juan Lara" 
                     className="w-full h-full object-cover"
                   />
