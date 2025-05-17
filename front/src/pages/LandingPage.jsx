@@ -206,7 +206,7 @@ export default function LandingPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.2 }}
                 >
-                  Merging Mathematics 
+                  Transforming Numbers
                 </motion.span>
                 <motion.span 
                   className="block mt-1 text-gray-800 dark:text-gray-100"
@@ -214,7 +214,7 @@ export default function LandingPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.4 }}
                 >
-                  with Code
+                  into Action
                 </motion.span>
               </motion.h1>
               
@@ -222,7 +222,7 @@ export default function LandingPage() {
                 variants={fadeInUp}
                 className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl leading-relaxed"
               >
-                Computer Scientist and Applied Mathematician solving complex organizational challenges through computational solutions. Specializing in Machine Learning, AI Agents, and NLP systems.
+                I’m Juan Lara, a Computer Scientist and Mathematician passionate about solving real-world problems with code, data science, and AI.
               </motion.p>
               
               <motion.div 
@@ -345,8 +345,8 @@ export default function LandingPage() {
                 
                 {/* Enhanced terminal card with improved shadow */}
                 <div className="relative z-10 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-[0_10px_40px_-15px_rgba(0,0,0,0.3)] dark:shadow-[0_10px_40px_-15px_rgba(0,0,0,0.7)] border border-gray-100 dark:border-gray-700 transition-all duration-500">
-                  <EnhancedTypingTerminal text="const profile = {\n  name: 'Juan Lara',\n  role: 'Computer Scientist & Mathematician',\n  expertise: ['Machine Learning', 'AI Agents', 'NLP'],\n  research: 'Harvard Business School',\n  education: [\n    'B.S. Computer Science',\n    'B.S. Mathematics'\n  ],\n  passion: 'Solving complex challenges with code'\n};" />
-                  
+                  <EnhancedTypingTerminal text="const profile = {\n  name: 'Juan Lara',\n  role: 'Research Assistant at Harvard Business School',\n  expertise: ['Machine Learning', 'Problem Solving'],\n education: [\n    'B.S. Computer Science',\n    'B.S. Mathematics'\n  ],\n  passion: 'Solve problems using ML systems'\n};" />
+
                   <div className="mt-8 grid grid-cols-3 gap-2">
                     <EnhancedTechIcon icon={Cpu} label="ML Systems" delay={0.2} />
                     <EnhancedTechIcon icon={Braces} label="Algorithms" delay={0.4} />
