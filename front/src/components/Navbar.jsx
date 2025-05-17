@@ -240,7 +240,7 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
               </a>
               
               <a 
-                href="/assets/documents/CV___EN.pdf"
+                href={`${process.env.PUBLIC_URL}/documents/CV___EN.pdf`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-gray-800 dark:text-gray-200"

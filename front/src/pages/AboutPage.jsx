@@ -112,7 +112,7 @@ const ExperienceCard = ({
         <div className="flex flex-col md:flex-row md:items-center mb-4 gap-4">
           <div className="w-24 h-24 md:w-24 md:h-24 rounded-lg overflow-hidden flex-shrink-0 bg-white p-2 shadow-md">
             <img 
-              src={`/images/company-logos/${logo}`} 
+              src={`${process.env.PUBLIC_URL}/images/company-logos/${logo}`} 
               alt={company} 
               className="w-full h-full object-contain"
             />
@@ -187,7 +187,7 @@ const EducationCard = ({
         <div className="flex flex-col md:flex-row md:items-center mb-6 gap-4">
           <div className="w-24 h-24 md:w-24 md:h-24 rounded-lg overflow-hidden flex-shrink-0 bg-white p-2 shadow-md">
             <img 
-              src={`/images/institutions/${logo}`} 
+              src={`${process.env.PUBLIC_URL}/images/institutions/${logo}`} 
               alt={institution} 
               className="w-full h-full object-contain"
             />
@@ -265,7 +265,7 @@ const CourseCard = ({
         <div className="flex items-start gap-3 mb-3">
           <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-white p-1 shadow-sm">
             <img 
-              src={`/images/institutions/${logo}`} 
+              src={`${process.env.PUBLIC_URL}/images/institutions/${logo}`} 
               alt={provider} 
               className="w-full h-full object-contain"
             />
@@ -554,7 +554,7 @@ export default function AboutPage() {
                 
                 <div className="relative w-56 h-56 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-white dark:border-gray-800 shadow-xl z-10">
                   <img 
-                    src="/images/profile.png" 
+                    src={`${process.env.PUBLIC_URL}/images/profile.png`} 
                     alt="Juan Lara" 
                     className="w-full h-full object-cover"
                   />
