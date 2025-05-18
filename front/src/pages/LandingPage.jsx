@@ -425,7 +425,7 @@ export default function LandingPage() {
                 <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200">About Me</h3>
               </div>
               <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                Computer scientist and mathematician focused on creating computational solutions to complex organizational challenges. Trained at Universidad Nacional de Colombia with expertise in theoretical and applied approaches.
+                I’m a computer scientist & mathematician who loves turning complex theories into clean, battle-tested code. Trained at Universidad Nacional de Colombia, I’m currently diving deep into applied research at Harvard Business School, building ML systems that tackle real organizational challenges.
               </p>
               <Link to="/about" className="text-blue-600 dark:text-blue-400 font-medium inline-flex items-center group">
                 <span>Read more</span>
@@ -448,7 +448,7 @@ export default function LandingPage() {
                 <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200">Projects</h3>
               </div>
               <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                Featured projects including TextInsight library, Pharmacy Segmentation Application, and Cunservicios Platform. Each demonstrates my approach to solving real-world problems.
+                Through my projects, I harness machine learning and generative AI to build data pipelines, train predictive models, and automate analyses—always emphasizing transparency, reliability, and real-world impact.
               </p>
               <Link to="/projects" className="text-blue-600 dark:text-blue-400 font-medium inline-flex items-center group">
                 <span>Explore projects</span>
@@ -482,7 +482,7 @@ export default function LandingPage() {
               variants={fadeInUp}
               className="text-lg text-gray-600 dark:text-gray-300 mb-10 text-center"
             >
-              Explore my thoughts on AI agents, computational organizational theory, and the intersection of mathematics and code.
+              Coming soon: reflections on machine intelligence, computational organization theory, and the logic that connects math with code.
             </motion.p>
             
             <motion.div 
@@ -499,7 +499,7 @@ export default function LandingPage() {
                   </div>
                 </div>
                 
-                <div className="mb-6 pb-6 border-b border-gray-100 dark:border-gray-700">
+                {/* <div className="mb-6 pb-6 border-b border-gray-100 dark:border-gray-700">
                   <h4 className="text-lg font-medium mb-2">Multi-Agent Environments for Decision Support</h4>
                   <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
                     Exploring how multi-agent simulations can help model complex organizational dynamics.
@@ -509,7 +509,7 @@ export default function LandingPage() {
                     <span className="mx-2">•</span>
                     <span>10 min read</span>
                   </div>
-                </div>
+                </div> */}
                 
                 <div>
                   <a 
