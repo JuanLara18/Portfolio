@@ -69,17 +69,64 @@ const SkillBar = ({ name, level, icon: Icon, color = "blue" }) => {
   // Convert level (0-5) to percentage
   const percentage = (level / 5) * 100;
   
+  // Color mappings for different UI elements
+  const colorClasses = {
+    blue: {
+      iconBg: "bg-blue-100 dark:bg-blue-900/30",
+      iconText: "text-blue-600 dark:text-blue-400",
+      progressBar: "bg-blue-600 dark:bg-blue-500"
+    },
+    indigo: {
+      iconBg: "bg-indigo-100 dark:bg-indigo-900/30",
+      iconText: "text-indigo-600 dark:text-indigo-400",
+      progressBar: "bg-indigo-600 dark:bg-indigo-500"
+    },
+    green: {
+      iconBg: "bg-green-100 dark:bg-green-900/30",
+      iconText: "text-green-600 dark:text-green-400",
+      progressBar: "bg-green-600 dark:bg-green-500"
+    },
+    red: {
+      iconBg: "bg-red-100 dark:bg-red-900/30",
+      iconText: "text-red-600 dark:text-red-400",
+      progressBar: "bg-red-600 dark:bg-red-500"
+    },
+    yellow: {
+      iconBg: "bg-yellow-100 dark:bg-yellow-900/30",
+      iconText: "text-yellow-600 dark:text-yellow-400",
+      progressBar: "bg-yellow-600 dark:bg-yellow-500"
+    },
+    teal: {
+      iconBg: "bg-teal-100 dark:bg-teal-900/30",
+      iconText: "text-teal-600 dark:text-teal-400",
+      progressBar: "bg-teal-600 dark:bg-teal-500"
+    },
+    orange: {
+      iconBg: "bg-orange-100 dark:bg-orange-900/30", 
+      iconText: "text-orange-600 dark:text-orange-400",
+      progressBar: "bg-orange-600 dark:bg-orange-500"
+    },
+    purple: {
+      iconBg: "bg-purple-100 dark:bg-purple-900/30",
+      iconText: "text-purple-600 dark:text-purple-400",
+      progressBar: "bg-purple-600 dark:bg-purple-500"
+    }
+  };
+  
+  // Get color classes or fallback to blue if color is not in our mapping
+  const classes = colorClasses[color] || colorClasses.blue;
+  
   return (
     <div className="mb-6" ref={ref}>
       <div className="flex items-center mb-2">
-        <div className={`w-8 h-8 rounded-md bg-${color}-100 dark:bg-${color}-900/30 flex items-center justify-center mr-3`}>
-          <Icon size={18} className={`text-${color}-600 dark:text-${color}-400`} />
+        <div className={`w-8 h-8 rounded-md ${classes.iconBg} flex items-center justify-center mr-3`}>
+          <Icon size={18} className={classes.iconText} />
         </div>
         <span className="text-gray-800 dark:text-gray-200 font-medium">{name}</span>
       </div>
       <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
         <motion.div 
-          className={`h-full bg-${color}-600 dark:bg-${color}-500 rounded-full`}
+          className={`h-full ${classes.progressBar} rounded-full`}
           initial={{ width: 0 }}
           animate={{ width: isInView ? `${percentage}%` : 0 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
@@ -580,81 +627,81 @@ export default function AboutPage() {
             variants={staggerContainer}
             className="max-w-4xl mx-auto"
           >
-<motion.h2 
-  variants={fadeInUp}
-  className="text-3xl font-bold mb-10 text-center"
->
-  Technical Expertise
-</motion.h2>
+            <motion.h2 
+              variants={fadeInUp}
+              className="text-3xl font-bold mb-10 text-center"
+            >
+              Technical Expertise
+            </motion.h2>
 
-<motion.div 
-  variants={fadeInUp}
-  className="grid md:grid-cols-2 gap-x-12 gap-y-8"
->
-  {/* Analytics & Modeling */}
-  <div>
-    <h3 className="text-xl font-semibold mb-6 text-gray-800 dark:text-gray-200">
-      Data Science & Machine Learning
-    </h3>
-    <SkillBar 
-      name="Machine Learning & AI" 
-      level={4.5} 
-      icon={BrainCircuit} 
-      color="blue" 
-    />
-    <SkillBar 
-      name="Statistical & Mathematical Modeling" 
-      level={4.5} 
-      icon={BarChart} 
-      color="indigo" 
-    />
-    <SkillBar 
-      name="Natural Language Processing" 
-      level={4.5} 
-      icon={Terminal} 
-      color="green" 
-    />
-    <SkillBar 
-      name="Data Analysis & Visualization" 
-      level={4} 
-      icon={Database} 
-      color="red" 
-    />
-  </div>
-
-  {/* Development & Deployment */}
-  <div>
-    <h3 className="text-xl font-semibold mb-6 text-gray-800 dark:text-gray-200">
-      Software Development & Engineering
-    </h3>
-    <SkillBar 
-      name="Python & Programming" 
-      level={5} 
-      icon={Code} 
-      color="yellow" 
-    />
-    <SkillBar 
-      name="Web & Interactive Applications" 
-      level={4.5} 
-      icon={Globe} 
-      color="teal" 
-    />
-    <SkillBar 
-      name="DevOps & Automation" 
-      level={4} 
-      icon={Github} 
-      color="orange" 
-    />
-    <SkillBar 
-      name="Cloud Computing & Infrastructure" 
-      level={4} 
-      icon={Cloud} 
-      color="red" 
-    />
-  </div>
-</motion.div>
-            
             <motion.div 
+              variants={fadeInUp}
+              className="grid md:grid-cols-2 gap-x-12 gap-y-8"
+            >
+              {/* Analytics & Modeling */}
+              <div>
+                <h3 className="text-xl font-semibold mb-6 text-gray-800 dark:text-gray-200">
+                  Data Science & Machine Learning
+                </h3>
+                <SkillBar 
+                  name="Machine Learning & AI" 
+                  level={4.5} 
+                  icon={BrainCircuit} 
+                  color="blue" 
+                />
+                <SkillBar 
+                  name="Statistical & Mathematical Modeling" 
+                  level={4.5} 
+                  icon={BarChart} 
+                  color="indigo" 
+                />
+                <SkillBar 
+                  name="Natural Language Processing" 
+                  level={4.5} 
+                  icon={Terminal} 
+                  color="green" 
+                />
+                <SkillBar 
+                  name="Data Analysis & Visualization" 
+                  level={4} 
+                  icon={Database} 
+                  color="red" 
+                />
+              </div>
+
+              {/* Development & Deployment */}
+              <div>
+                <h3 className="text-xl font-semibold mb-6 text-gray-800 dark:text-gray-200">
+                  Software Development & Engineering
+                </h3>
+                <SkillBar 
+                  name="Python & Programming" 
+                  level={5} 
+                  icon={Code} 
+                  color="yellow" 
+                />
+                <SkillBar 
+                  name="Web & Interactive Applications" 
+                  level={4.5} 
+                  icon={Globe} 
+                  color="teal" 
+                />
+                <SkillBar 
+                  name="DevOps & Automation" 
+                  level={4} 
+                  icon={Github} 
+                  color="orange" 
+                />
+                <SkillBar 
+                  name="Cloud Computing & Infrastructure" 
+                  level={4} 
+                  icon={Cloud} 
+                  color="red" 
+                />
+              </div>
+            </motion.div>
+            
+            {/* <motion.div 
               variants={fadeInUp}
               className="mt-16 bg-white dark:bg-gray-900 rounded-xl p-8 shadow-lg border border-gray-100 dark:border-gray-700"
             >
@@ -675,7 +722,7 @@ export default function AboutPage() {
                   </p>
                 </div>
               </div>
-            </motion.div>
+            </motion.div> */}
           </motion.div>
         </div>
       </section>
