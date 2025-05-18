@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { TransitionProvider } from './components/TransitionProvider';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import LandingPage from './pages/LandingPage';
@@ -42,27 +43,28 @@ function App() {
 
   return (
     <Router basename={process.env.PUBLIC_URL}>
-      <div className="App min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-        <Navbar 
-          darkMode={darkMode} 
-          toggleDarkMode={toggleDarkMode} 
-        />
-        
-        {/* Main content with top padding for navbar */}
-        <div className="pt-20">
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/projects" element={<ProjectsPage />} />
-            
-            {/* Fallback route redirects to home */}
-            <Route path="*" element={<LandingPage />} />
-          </Routes>
+      <TransitionProvider>
+        <div className="App min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+          <Navbar 
+            darkMode={darkMode} 
+            toggleDarkMode={toggleDarkMode} 
+          />
+          
+          {/* Main content with top padding for navbar */}
+          <div className="pt-20">
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/projects" element={<ProjectsPage />} />
+              
+              {/* Fallback route redirects to home */}
+              <Route path="*" element={<LandingPage />} />
+            </Routes>
+          </div>
+          {/* <Footer /> */}
         </div>
-        {/* <Footer /> */}
-      </div>
+      </TransitionProvider>
     </Router>
   );
 }
-
 export default App;
