@@ -536,80 +536,216 @@ export default function AboutPage() {
   
   return (
     <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+      
       {/* Hero Section */}
       <motion.section 
         ref={heroRef}
         style={{ opacity: heroOpacity, scale: heroScale }}
         className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden"
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-50 to-white dark:from-gray-800 dark:to-gray-900 -z-10"></div>
+        {/* Enhanced background with multiple layers */}
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-50 via-blue-50/80 to-white dark:from-gray-800/90 dark:via-gray-800/70 dark:to-gray-900 -z-10"></div>
         
-        {/* Decorative elements */}
-        <div className="absolute top-20 right-0 w-64 h-64 rounded-full bg-blue-100/50 dark:bg-blue-900/20 blur-3xl -z-10"></div>
-        <div className="absolute bottom-10 left-10 w-72 h-72 rounded-full bg-indigo-100/30 dark:bg-indigo-900/10 blur-3xl -z-10"></div>
+        {/* Animated decorative elements */}
+        <motion.div 
+          className="absolute top-20 right-0 w-80 h-80 rounded-full bg-blue-100/50 dark:bg-blue-900/20 blur-3xl -z-10"
+          animate={{ 
+            scale: [1, 1.05, 1],
+            opacity: [0.5, 0.6, 0.5]
+          }}
+          transition={{ 
+            duration: 8, 
+            repeat: Infinity,
+            repeatType: "reverse" 
+          }}
+        ></motion.div>
         
-        <div className="container mx-auto px-6">
+        <motion.div 
+          className="absolute -bottom-10 left-10 w-96 h-96 rounded-full bg-indigo-100/40 dark:bg-indigo-900/20 blur-3xl -z-10"
+          animate={{ 
+            scale: [1, 0.95, 1],
+            opacity: [0.4, 0.5, 0.4]
+          }}
+          transition={{ 
+            duration: 10, 
+            repeat: Infinity,
+            repeatType: "reverse",
+            delay: 1
+          }}
+        ></motion.div>
+        
+        {/* Additional floating elements */}
+        <motion.div 
+          className="absolute top-1/2 left-1/4 w-32 h-32 rounded-full bg-green-100/30 dark:bg-green-900/10 blur-2xl -z-10"
+          animate={{ 
+            y: [-10, 10, -10],
+            opacity: [0.3, 0.4, 0.3]
+          }}
+          transition={{ 
+            duration: 12, 
+            repeat: Infinity,
+            repeatType: "reverse" 
+          }}
+        ></motion.div>
+        
+        <motion.div 
+          className="absolute bottom-1/3 right-1/4 w-24 h-24 rounded-full bg-purple-100/20 dark:bg-purple-900/10 blur-xl -z-10"
+          animate={{ 
+            y: [5, -5, 5],
+            opacity: [0.2, 0.3, 0.2]
+          }}
+          transition={{ 
+            duration: 15, 
+            repeat: Infinity,
+            repeatType: "reverse" 
+          }}
+        ></motion.div>
+        
+        {/* Subtle geometric patterns */}
+        <div className="absolute inset-0 opacity-5 dark:opacity-10 bg-grid-pattern -z-10"></div>
+        
+        <div className="container mx-auto px-4 md:px-10 lg:px-16 xl:px-20 max-w-7xl">
           <div className="flex flex-col-reverse md:flex-row items-center md:items-start gap-10">
+            {/* Content Column */}
             <motion.div 
               initial="hidden"
               animate="visible"
               variants={staggerContainer}
-              className="md:w-2/3"
+              className="md:w-3/5"
             >
-              <motion.div variants={fadeInRight} className="mb-4">
-                <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 text-sm font-medium mb-4">
-                  <Code size={14} className="mr-1.5" /> About Me
+              {/* Enhanced badge */}
+              <motion.div variants={fadeInRight} className="mb-6">
+                <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-100 to-blue-50 dark:from-blue-900/50 dark:to-blue-800/30 text-blue-800 dark:text-blue-300 text-sm font-medium backdrop-blur-sm border border-blue-200/50 dark:border-blue-700/30 shadow-sm">
+                  <Code size={14} className="mr-2" /> About Me
                 </div>
               </motion.div>
               
-              <motion.h1 
-                variants={fadeInRight}
-                className="text-4xl md:text-5xl font-bold mb-6 leading-tight"
-              >
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
-                  Juan Lara
-                </span>
-              </motion.h1>
+              {/* Enhanced name heading with animated underline */}
+              <motion.div variants={fadeInRight} className="relative mb-4">
+                <h1 className="text-4xl md:text-6xl font-bold mb-2 leading-tight">
+                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 dark:from-blue-400 dark:via-blue-300 dark:to-indigo-400">
+                    Juan Lara
+                  </span>
+                </h1>
+                <motion.div 
+                  className="h-1 w-24 bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 rounded-full"
+                  animate={{ 
+                    width: ["0%", "18%", "16%"],
+                    opacity: [0, 1, 0.9]
+                  }}
+                  transition={{ 
+                    duration: 2, 
+                    delay: 0.5 
+                  }}
+                />
+              </motion.div>
               
+              {/* Enhanced subtitle with better styling */}
               <motion.h2 
                 variants={fadeInRight}
-                className="text-2xl md:text-3xl text-gray-800 dark:text-gray-200 mb-6 font-medium"
+                className="text-2xl md:text-3xl text-gray-800 dark:text-gray-200 mb-8 font-medium"
               >
                 Computer Scientist & Applied Mathematician
               </motion.h2>
               
+              {/* Content paragraphs with enhanced styling */}
               <motion.div 
                 variants={fadeInRight}
-                className="space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed"
+                className="space-y-5 text-gray-700 dark:text-gray-300 leading-relaxed max-w-3xl"
               >
-                <p>
-                  Computer Scientist and Mathematician trained at the Universidad Nacional de Colombia, with specialized expertise in Machine Learning. Currently collaborating on applied research at Harvard Business School, where I merge theoretical rigor with computational solutions to study the structure of firms.
+                <p className="text-lg">
+                  Computer Scientist and Mathematician trained at the Universidad Nacional de Colombia, with specialized expertise in <span className="text-blue-600 dark:text-blue-400 font-medium">Machine Learning</span>. Currently collaborating on applied research at <span className="text-indigo-600 dark:text-indigo-400 font-medium">Harvard Business School</span>, where I merge theoretical rigor with computational solutions to study the structure of firms.
                 </p>
-                <p>
-                  Throughout my career, I have developed advanced mathematical models, implemented numerical simulations, and applied machine learning techniques to transform data into strategic insights. My interdisciplinary approach enables me to turn complex theories into practical and efficient tools that drive real-world impact.
-                </p>
+                
+                <div className="py-1 border-l-2 border-blue-500/30 dark:border-blue-700/50 pl-4">
+                  <p>
+                    Throughout my career, I have developed advanced mathematical models, implemented numerical simulations, and applied machine learning techniques to transform data into strategic insights. My interdisciplinary approach enables me to turn complex theories into practical and efficient tools that drive real-world impact.
+                  </p>
+                </div>
+                
                 <p>
                   Proactive, creative, and problem-solving-oriented, I excel at collaborating and communicating complex ideas clearly. I am particularly interested in research projects and consulting engagements that integrate mathematical foundations with computational solutions to address challenging organizational and strategic problems.
                 </p>
               </motion.div>
             </motion.div>
             
+            {/* Enhanced Profile Image with more sophisticated decorative elements */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="md:w-1/3 flex justify-center"
+              className="md:w-2/5 flex justify-center"
+              whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
             >
               <div className="relative">
-                <div className="absolute -top-6 -left-6 w-full h-full bg-blue-200/30 dark:bg-blue-900/20 rounded-full transform rotate-12 z-0"></div>
-                <div className="absolute -bottom-6 -right-6 w-full h-full bg-indigo-200/30 dark:bg-indigo-900/20 rounded-full transform -rotate-12 z-0"></div>
+                {/* Animated decorative circles */}
+                <motion.div 
+                  className="absolute -top-8 -left-8 w-full h-full bg-blue-200/40 dark:bg-blue-800/30 rounded-full z-0"
+                  animate={{ 
+                    rotate: [12, 15, 12],
+                    scale: [1, 1.05, 1]
+                  }}
+                  transition={{ 
+                    duration: 10, 
+                    repeat: Infinity,
+                    repeatType: "reverse" 
+                  }}
+                ></motion.div>
                 
-                <div className="relative w-56 h-56 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-white dark:border-gray-800 shadow-xl z-10">
+                <motion.div 
+                  className="absolute -bottom-8 -right-8 w-full h-full bg-indigo-200/40 dark:bg-indigo-800/30 rounded-full z-0"
+                  animate={{ 
+                    rotate: [-12, -10, -12],
+                    scale: [1, 0.98, 1]
+                  }}
+                  transition={{ 
+                    duration: 8, 
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    delay: 1
+                  }}
+                ></motion.div>
+                
+                {/* Subtle glow effect */}
+                <div className="absolute inset-0 bg-blue-400/10 dark:bg-blue-400/5 blur-3xl rounded-full transform scale-90 z-5"></div>
+                
+                {/* Enhanced image container with better shadows and border */}
+                <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-white/90 dark:border-gray-800/90 shadow-[0_0_30px_rgba(37,99,235,0.2)] dark:shadow-[0_0_30px_rgba(37,99,235,0.15)] z-10">
                   <img 
                     src={`${process.env.PUBLIC_URL}/images/Profile.png`} 
                     alt="Juan Lara" 
                     className="w-full h-full object-cover"
                   />
+                  
+                  {/* Subtle overlay for better image integration */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-blue-900/10 to-transparent dark:from-blue-900/20 mix-blend-overlay"></div>
+                </div>
+                
+                {/* Animated dots decoration */}
+                <div className="absolute -bottom-4 -right-4 z-20">
+                  <motion.div 
+                    className="flex space-x-1.5"
+                    animate={{ 
+                      y: [0, -3, 0],
+                      opacity: [0.7, 1, 0.7]
+                    }}
+                    transition={{ 
+                      duration: 4, 
+                      repeat: Infinity,
+                      repeatType: "reverse" 
+                    }}
+                  >
+                    {[0, 1, 2].map(i => (
+                      <div 
+                        key={i}
+                        className="w-2 h-2 rounded-full bg-blue-500 dark:bg-blue-400"
+                        style={{ 
+                          animationDelay: `${i * 0.2}s`,
+                          opacity: 1 - (i * 0.2)
+                        }}
+                      ></div>
+                    ))}
+                  </motion.div>
                 </div>
               </div>
             </motion.div>
