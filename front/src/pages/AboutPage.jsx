@@ -19,7 +19,9 @@ import {
   Github,
   BarChart,
   Terminal,
-  Cloud
+  Cloud,
+  Layers,
+  Box
 } from 'lucide-react';
 
 // Animation variants
@@ -385,36 +387,39 @@ export default function AboutPage() {
   const heroOpacity = useTransform(scrollY, [0, 300], [1, 0.6]);
   const heroScale = useTransform(scrollY, [0, 300], [1, 0.95]);
   
-  // Experience data
-  const experiences = [
-    {
-      role: "Research Assistant",
-      company: "Harvard Business School",
-      period: "Sep 2022 - Present",
-      location: "Boston, USA (Remote)",
-      description: "Conduct advanced research in organizational economics with Professor Jorge Tamayo, focusing on theoretical modeling and computational implementation.",
-      responsibilities: [
-        "Formalized organizational hierarchies and resource optimization through economic frameworks, creating rigorous mathematical proofs to analyze policy impacts on productivity.",
-        "Translated theoretical concepts into actionable insights by developing ML models (XGBoost, clustering), implementing NLP pipelines, and building modular data architectures with visualization techniques."
-      ],
-      skills: ["Machine Learning", "NLP", "Data Architecture", "Visualization", "XGBoost"],
-      logo: "hbs-logo.png"
-    },
-    {
-      role: "Data Scientist",
-      company: "Ipsos",
-      period: "Feb 2024 - Jan 2025",
-      location: "Bogota, D.C., Colombia (Hybrid)",
-      description: "Transformed market research operations through strategic data science implementations, earning recognition as Total Ops Star Employee for LATAM.",
-      responsibilities: [
-        "Developed a mobile R Shiny application with embedded ML models for pharmacy segmentation, integrating geospatial mapping (Leaflet) with cloud storage, reducing manual classification work by 85%.",
-        "Created TextInsight, a comprehensive Python library using transformer models (BERT) and network visualization for multilingual survey analysis, reducing processing time by 60%.",
-        "Designed dynamic dashboards and visualization tools that streamlined decision-making processes across Latin American operations."
-      ],
-      skills: ["R Shiny", "Leaflet", "BERT", "Cloud Storage", "NetworkX"],
-      logo: "ipsos-logo.jpg"
-    }
-  ];
+// Experience data
+const experiences = [
+  {
+    role: "Research Assistant",
+    company: "Harvard Business School",
+    period: "Sep 2022 - Present",
+    location: "Boston, USA (Remote)",
+    description:
+      "Integrated machine learning into research workflows and co-designed rigorous mathematical frameworks for organizational economics, in collaboration with the Digital Reskilling Lab.",
+    responsibilities: [
+      "Integrated clustering techniques, XGBoost models, and NLP pipelines to empirically validate theoretical frameworks using extensive company datasets.",
+      "Collaborated with the Digital Reskilling Lab to bridge quantitative research and practical business applications, generating actionable insights for reskilling strategies and organizational decision-making.",
+      "Co-designed economic models of firm behavior—covering organizational hierarchies, exclusive contract dynamics, and technology shocks—and produced proofs and simulations for an upcoming working paper."
+    ],
+    // Skills: ["Python", "Machine Learning", "NLP", "XGBoost"],
+    logo: "hbs-logo.png"
+  },
+  {
+    role: "Data Scientist",
+    company: "Ipsos",
+    period: "Feb 2024 - Jan 2025",
+    location: "Bogota, D.C., Colombia (Hybrid)",
+    description:
+      "Developed multi-platform ML applications and led the creation of TextInsight, earning recognition as Total Ops Star Employee for LATAM.",
+    responsibilities: [
+      "Developed multi-platform applications embedding machine learning models for segmentation tasks, leveraging geospatial data and deploying scalable solutions on Google Cloud Platform to enhance field operations efficiency.",
+      "Streamlined analytical workflows and reporting with user-friendly tools, reducing manual effort, improving operational decision-making, and securing the Total Ops Star Employee award for LATAM.",
+      "Led the design and implementation of TextInsight, a Python library for automated multilingual text analysis using LLMs and advanced NetworkX visualizations, enabling faster, more accurate survey insights across Latin America."
+    ],
+    logo: "ipsos-logo.jpg"
+  }
+];
+
   
   // Education data
   const education = [
@@ -645,7 +650,7 @@ export default function AboutPage() {
                 variants={fadeInRight}
                 className="text-2xl md:text-3xl text-gray-800 dark:text-gray-200 mb-8 font-medium"
               >
-                Computer Scientist & Applied Mathematician
+                Computer Scientist & Mathematician
               </motion.h2>
               
               {/* Content paragraphs with enhanced styling */}
@@ -654,18 +659,18 @@ export default function AboutPage() {
                 className="space-y-5 text-gray-700 dark:text-gray-300 leading-relaxed max-w-3xl"
               >
                 <p className="text-lg">
-                  Computer Scientist and Mathematician trained at the Universidad Nacional de Colombia, with specialized expertise in <span className="text-blue-600 dark:text-blue-400 font-medium">Machine Learning</span>. Currently collaborating on applied research at <span className="text-indigo-600 dark:text-indigo-400 font-medium">Harvard Business School</span>, where I merge theoretical rigor with computational solutions to study the structure of firms.
+                  Passionate <span className="font-medium text-blue-600 dark:text-blue-400">Machine Learning Specialist</span> with a strong background in Computer Science and Mathematics from <span className="font-medium text-blue-600 dark:text-blue-400">Universidad Nacional de Colombia</span>, complemented by applied research experience at <span className="font-medium text-indigo-600 dark:text-indigo-400">Harvard Business School</span>.
                 </p>
                 
                 <div className="py-1 border-l-2 border-blue-500/30 dark:border-blue-700/50 pl-4">
                   <p>
-                    Throughout my career, I have developed advanced mathematical models, implemented numerical simulations, and applied machine learning techniques to transform data into strategic insights. My interdisciplinary approach enables me to turn complex theories into practical and efficient tools that drive real-world impact.
+                    Leveraging my interdisciplinary approach, I translate theoretical insights into practical business applications through scalable predictive models, adaptive generative architectures, and end-to-end data pipeline optimization.
                   </p>
                 </div>
                 
-                <p>
-                  Proactive, creative, and problem-solving-oriented, I excel at collaborating and communicating complex ideas clearly. I am particularly interested in research projects and consulting engagements that integrate mathematical foundations with computational solutions to address challenging organizational and strategic problems.
-                </p>
+                {/* <p>
+                  I am committed to transforming complex data into strategic decisions that drive organizational impact.
+                </p> */}
               </motion.div>
             </motion.div>
             
@@ -756,112 +761,128 @@ export default function AboutPage() {
       {/* Skills Section */}
       <section className="py-16 bg-gray-50 dark:bg-gray-800">
         <div className="container mx-auto px-6">
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
             className="max-w-4xl mx-auto"
           >
-            <motion.h2 
+            <motion.h2
               variants={fadeInUp}
-              className="text-3xl font-bold mb-10 text-center"
+              className="text-3xl font-bold mb-2 text-center text-gray-800 dark:text-gray-200"
             >
-              Technical Expertise
+              Technical Proficiency
             </motion.h2>
-
-            <motion.div 
+            <motion.p
               variants={fadeInUp}
-              className="grid md:grid-cols-2 gap-x-12 gap-y-8"
+              className="italic text-center mb-10 text-gray-600 dark:text-gray-400"
             >
-              {/* Analytics & Modeling */}
+              Languages, frameworks, and tools with proven experience and impact
+            </motion.p>
+
+            <motion.div
+              variants={fadeInUp}
+              className="grid gap-x-12 gap-y-8 md:grid-cols-2"
+            >
+              {/* ML & AI Frameworks */}
               <div>
-                <h3 className="text-xl font-semibold mb-6 text-gray-800 dark:text-gray-200">
-                  Data Science & Machine Learning
+                <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
+                  ML & AI Frameworks
                 </h3>
-                <SkillBar 
-                  name="Machine Learning & AI" 
-                  level={4.5} 
-                  icon={BrainCircuit} 
-                  color="blue" 
+                <SkillBar
+                  name="Generative AI"
+                  level={4.5}
+                  icon={BrainCircuit}
+                  color="blue"
                 />
-                <SkillBar 
-                  name="Statistical & Mathematical Modeling" 
-                  level={4.5} 
-                  icon={BarChart} 
-                  color="indigo" 
+                <SkillBar
+                  name="Natural Language Processing"
+                  level={4.5}
+                  icon={Terminal}
+                  color="green"
                 />
-                <SkillBar 
-                  name="Natural Language Processing" 
-                  level={4.5} 
-                  icon={Terminal} 
-                  color="green" 
-                />
-                <SkillBar 
-                  name="Data Analysis & Visualization" 
-                  level={4} 
-                  icon={Database} 
-                  color="red" 
+                <SkillBar
+                  name="ML Frameworks"
+                  level={4.5}
+                  icon={Code}
+                  color="indigo"
                 />
               </div>
 
-              {/* Development & Deployment */}
+              {/* DevOps & Tools */}
               <div>
-                <h3 className="text-xl font-semibold mb-6 text-gray-800 dark:text-gray-200">
-                  Software Development & Engineering
+                <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
+                  DevOps & Tools
                 </h3>
-                <SkillBar 
-                  name="Python & Programming" 
-                  level={5} 
-                  icon={Code} 
-                  color="yellow" 
+                <SkillBar
+                  name="Version Control"
+                  level={4.5}
+                  icon={Github}
+                  color="orange"
                 />
-                <SkillBar 
-                  name="Web & Interactive Applications" 
-                  level={4.5} 
-                  icon={Globe} 
-                  color="teal" 
+                <SkillBar
+                  name="Deployment"
+                  level={4}
+                  icon={Server}
+                  color="red"
                 />
-                <SkillBar 
-                  name="DevOps & Automation" 
-                  level={4} 
-                  icon={Github} 
-                  color="orange" 
+                <SkillBar
+                  name="Automation & Agentic AI"
+                  level={4}
+                  icon={Layers}
+                  color="teal"
                 />
-                <SkillBar 
-                  name="Cloud Computing & Infrastructure" 
-                  level={4} 
-                  icon={Cloud} 
-                  color="red" 
+              </div>
+
+              {/* Automation & Agentic AI */}
+              <div>
+                <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
+                  Cloud & Agentic AI
+                </h3>
+                <SkillBar
+                  name="Cloud Platforms"
+                  level={4}
+                  icon={Cloud}
+                  color="cyan"
+                />
+                <SkillBar
+                  name="Agent Frameworks"
+                  level={4}
+                  icon={Layers}
+                  color="teal"
+                />
+              </div>
+
+              {/* Visualization & Web Dev */}
+              <div>
+                <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
+                  Visualization & Web Dev
+                </h3>
+                <SkillBar
+                  name="Data Visualization"
+                  level={4}
+                  icon={BarChart}
+                  color="purple"
+                />
+                <SkillBar
+                  name="Interactive Applications"
+                  level={4}
+                  icon={Globe}
+                  color="emerald"
+                />
+                <SkillBar
+                  name="Web Development"
+                  level={4}
+                  icon={Box}
+                  color="blueGray"
                 />
               </div>
             </motion.div>
-            
-            {/* <motion.div 
-              variants={fadeInUp}
-              className="mt-16 bg-white dark:bg-gray-900 rounded-xl p-8 shadow-lg border border-gray-100 dark:border-gray-700"
-            >
-              <h3 className="text-xl font-semibold mb-6 text-center text-gray-800 dark:text-gray-200">Area of Research Interest</h3>
-              
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-blue-50 dark:bg-blue-900/30 p-6 rounded-lg">
-                  <h4 className="text-lg font-medium mb-3 text-blue-700 dark:text-blue-300">AI Agents & Multi-agent Systems</h4>
-                  <p className="text-gray-700 dark:text-gray-300">
-                    Exploring the development and optimization of autonomous AI agents and their interactions within multi-agent environments, with applications in organizational decision-making and strategic simulations.
-                  </p>
-                </div>
-                
-                <div className="bg-indigo-50 dark:bg-indigo-900/30 p-6 rounded-lg">
-                  <h4 className="text-lg font-medium mb-3 text-indigo-700 dark:text-indigo-300">Computational Organizational Theory</h4>
-                  <p className="text-gray-700 dark:text-gray-300">
-                    Investigating mathematical models of organizational structure, knowledge flows, and decision hierarchies using computational simulations and empirical validation.
-                  </p>
-                </div>
-              </div>
-            </motion.div> */}
           </motion.div>
         </div>
       </section>
+
       
       {/* Experience Section */}
       <section className="py-16">
