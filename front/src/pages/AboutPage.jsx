@@ -712,7 +712,7 @@ export default function AboutPage() {
                 {/* Enhanced image container with better shadows and border */}
                 <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-white/90 dark:border-gray-800/90 shadow-[0_0_30px_rgba(37,99,235,0.2)] dark:shadow-[0_0_30px_rgba(37,99,235,0.15)] z-10">
                   <img 
-                    src={`${process.env.PUBLIC_URL}/images/Profile.jpg`} 
+                    src={`${process.env.PUBLIC_URL}/images/Profile.JPG`} 
                     alt="Juan Lara" 
                     className="w-full h-full object-cover"
                   />
