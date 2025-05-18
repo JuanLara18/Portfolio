@@ -10,11 +10,16 @@ import {
   Database, 
   BookOpen, 
   Server, 
-  Brain, 
+  BrainCircuit, 
   LineChart, 
-  Globe,
-  Terminal, 
-  Mail 
+  Globe, 
+  Mail, 
+  Phone,
+  MapPin,
+  Github,
+  BarChart,
+  Terminal,
+  Cloud
 } from 'lucide-react';
 
 // Animation variants
@@ -575,33 +580,79 @@ export default function AboutPage() {
             variants={staggerContainer}
             className="max-w-4xl mx-auto"
           >
-            <motion.h2 
-              variants={fadeInUp}
-              className="text-3xl font-bold mb-10 text-center"
-            >
-              Technical Expertise
-            </motion.h2>
-            
-            <motion.div 
-              variants={fadeInUp}
-              className="grid md:grid-cols-2 gap-x-12 gap-y-2"
-            >
-              <div>
-                <h3 className="text-xl font-semibold mb-6 text-gray-800 dark:text-gray-200">Core Competencies</h3>
-                <SkillBar name="Machine Learning & AI" level={4.5} icon={Brain} color="blue" />
-                <SkillBar name="Mathematical Modeling" level={4.5} icon={LineChart} color="indigo" />
-                <SkillBar name="Data Science" level={4} icon={Database} color="purple" />
-                <SkillBar name="Natural Language Processing" level={4} icon={Terminal} color="green" />
-              </div>
-              
-              <div>
-                <h3 className="text-xl font-semibold mb-6 text-gray-800 dark:text-gray-200">Technical Proficiency</h3>
-                <SkillBar name="Python" level={4.5} icon={Code} color="yellow" />
-                <SkillBar name="R & SQL" level={4} icon={Server} color="red" />
-                <SkillBar name="Interactive Applications" level={4.2} icon={Globe} color="teal" />
-                <SkillBar name="Research & Problem Solving" level={4.3} icon={BookOpen} color="orange" />
-              </div>
-            </motion.div>
+<motion.h2 
+  variants={fadeInUp}
+  className="text-3xl font-bold mb-10 text-center"
+>
+  Technical Expertise
+</motion.h2>
+
+<motion.div 
+  variants={fadeInUp}
+  className="grid md:grid-cols-2 gap-x-12 gap-y-8"
+>
+  {/* Analytics & Modeling */}
+  <div>
+    <h3 className="text-xl font-semibold mb-6 text-gray-800 dark:text-gray-200">
+      Data Science & Machine Learning
+    </h3>
+    <SkillBar 
+      name="Machine Learning & AI" 
+      level={4.5} 
+      icon={BrainCircuit} 
+      color="blue" 
+    />
+    <SkillBar 
+      name="Statistical & Mathematical Modeling" 
+      level={4.5} 
+      icon={BarChart} 
+      color="indigo" 
+    />
+    <SkillBar 
+      name="Natural Language Processing" 
+      level={4.5} 
+      icon={Terminal} 
+      color="green" 
+    />
+    <SkillBar 
+      name="Data Analysis & Visualization" 
+      level={4} 
+      icon={Database} 
+      color="red" 
+    />
+  </div>
+
+  {/* Development & Deployment */}
+  <div>
+    <h3 className="text-xl font-semibold mb-6 text-gray-800 dark:text-gray-200">
+      Software Development & Engineering
+    </h3>
+    <SkillBar 
+      name="Python & Programming" 
+      level={5} 
+      icon={Code} 
+      color="yellow" 
+    />
+    <SkillBar 
+      name="Web & Interactive Applications" 
+      level={4.5} 
+      icon={Globe} 
+      color="teal" 
+    />
+    <SkillBar 
+      name="DevOps & Automation" 
+      level={4} 
+      icon={Github} 
+      color="orange" 
+    />
+    <SkillBar 
+      name="Cloud Computing & Infrastructure" 
+      level={4} 
+      icon={Cloud} 
+      color="red" 
+    />
+  </div>
+</motion.div>
             
             <motion.div 
               variants={fadeInUp}
