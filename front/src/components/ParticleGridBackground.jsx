@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
 
 // Simplified particle animation constants
-const GRID_SIZE = 20; // Reduced from 36 to 20 (64% fewer particles)
-const DOT_SIZE = 1.5; // Slightly larger to compensate for fewer particles
+const GRID_SIZE = 24; // Reduced from 36 to 20 (64% fewer particles)
+const DOT_SIZE = 5; // Slightly larger to compensate for fewer particles
 const MAX_DISTANCE = 150;
-const UPDATE_INTERVAL = 50; // Only update every 50ms instead of every frame
+const UPDATE_INTERVAL = 25; // Only update every 50ms instead of every frame
 
 const ParticleGridBackground = ({ mousePosition }) => {
   const gridRef = useRef(null);

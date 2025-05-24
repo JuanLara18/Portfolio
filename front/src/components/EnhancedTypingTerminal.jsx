@@ -13,7 +13,7 @@ const EnhancedTypingTerminal = ({ text }) => {
       // Variable typing speed for more realistic effect
       const timeout = setTimeout(() => {
         // Occasionally make "typing mistakes" with backspaces for realism
-        if (Math.random() > 0.98 && currentIndex > 2) {
+        if (Math.random() > 0.96 && currentIndex > 2) {
           // Simulate a mistake by deleting a few characters
           setDisplayText(prev => prev.slice(0, -2));
           setCurrentIndex(prev => prev - 2);
@@ -21,7 +21,7 @@ const EnhancedTypingTerminal = ({ text }) => {
           setDisplayText(prev => prev + text[currentIndex]);
           setCurrentIndex(prev => prev + 1);
         }
-      }, 40 + Math.random() * 80); // More varied typing speed
+      }, 40 + Math.random() * 85); // More varied typing speed
       
       return () => clearTimeout(timeout);
     } else {
