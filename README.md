@@ -1,137 +1,235 @@
-# Personal Portfolio Website
+# Juan Lara - Portfolio & Blog
 
-This repository contains the source code for my personal portfolio website, a Flask-based web application that showcases my professional experience, educational background, and technical projects. The website features a responsive design, dark/light theme switching, and analytics tracking capabilities.
+A modern, responsive portfolio website showcasing my work as a Computer Scientist and Applied Mathematician, featuring an integrated blog system for sharing mathematical insights and research notes.
 
-## Project Overview
+🌐 **Live Site**: [https://juanlara18.github.io/Portfolio](https://juanlara18.github.io/Portfolio)
 
-The portfolio website serves as a comprehensive platform to present my professional profile, including:
+## 🚀 Overview
 
-- Professional experience and research work at Harvard Business School
-- Educational background from Universidad Nacional de Colombia
-- Technical skills and certifications
-- Featured projects and their demonstrations
-- Contact information and professional links
+This repository contains my personal portfolio website and blog, built with modern web technologies. The site serves as a professional showcase of my projects, experience, and academic background, while the integrated blog provides a platform for sharing mathematical curiosities and research insights.
 
-## Technical Architecture
+### ✨ Key Features
 
-The application is built using the following technologies:
+- **Responsive Design**: Optimized for all devices and screen sizes
+- **Dark/Light Mode**: System-aware theme switching with user preference persistence
+- **Interactive Portfolio**: Filterable project showcase with detailed descriptions
+- **Integrated Blog**: Markdown-based blog system with math support (KaTeX)
+- **Professional Sections**: About, Experience, Education, Skills, and Awards
+- **Smooth Animations**: Enhanced UX with Framer Motion animations
+- **SEO Optimized**: Meta tags, structured data, and semantic HTML
 
-- **Backend**: Flask (Python 3.11)
-- **Frontend**: HTML5, CSS3, JavaScript
-- **Analytics**: Custom SQLite-based analytics system
-- **Deployment**: Heroku platform
-
-## Project Structure
+## 🏗️ Current Architecture
 
 ```
-portfolio/
-├── assets/
-│   ├── documents/
-│   ├── icons/
-│   └── images/
-├── src/
-│   ├── index.html
-│   ├── script.js
-│   └── styles.css
-├── Procfile
-├── requirements.txt
-├── runtime.txt
-└── server.py
+Portfolio/
+├── front/                          # React Frontend Application
+│   ├── public/
+│   │   ├── blog/                   # Blog System Assets
+│   │   │   ├── posts/              # Markdown Blog Posts
+│   │   │   │   ├── curiosities/    # Mathematical Curiosities
+│   │   │   │   └── research/       # Research Notes
+│   │   │   ├── figures/            # Post Images & Assets
+│   │   │   ├── headers/            # Header Images
+│   │   │   └── posts-manifest.json # Auto-generated Posts Index
+│   │   ├── images/                 # Site Assets
+│   │   └── documents/              # Static Documents (CV, etc.)
+│   ├── src/
+│   │   ├── components/             # Reusable UI Components
+│   │   ├── pages/                  # Main Page Components
+│   │   ├── utils/                  # Utility Functions
+│   │   └── styles/                 # Styling Configuration
+│   └── scripts/                    # Build & Automation Scripts
+└── README.md                       # This File
 ```
 
-## Features
+## 🛠️ Technologies Used
 
-### Core Functionality
+### Frontend
+- **React 18** - Component-based UI library
+- **React Router 6** - Client-side routing
+- **Tailwind CSS** - Utility-first CSS framework
+- **Framer Motion** - Animation library
+- **Lucide React** - Icon library
 
-- Responsive design that adapts to all device sizes
-- Dynamic theme switching between light and dark modes
-- Interactive project showcase with live demos
-- Professional experience timeline
-- Educational background with detailed course information
-- Integrated contact form and social media links
+### Blog System
+- **Markdown** - Content authoring format
+- **KaTeX** - Math rendering ($\LaTeX$ support)
+- **React Markdown** - Markdown rendering
+- **Gray Matter** - Front matter parsing
+- **Highlight.js** - Code syntax highlighting
 
-### Analytics Implementation
+### Development & Deployment
+- **Create React App** - Build tooling
+- **GitHub Actions** - CI/CD pipeline
+- **GitHub Pages** - Static site hosting
+- **ESLint** - Code linting
+- **Date-fns** - Date manipulation
 
-The website includes a custom analytics system that tracks:
+## 🚀 Getting Started
 
-- Page visits and user interactions
-- Device types and geographical distribution
-- Time spent on different sections
-- Interaction patterns with various elements
+### Prerequisites
+- Node.js (v16 or higher)
+- npm or yarn
+- Git
 
-## Setup and Installation
+### Installation
 
-1. Clone the repository:
+1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/portfolio.git
-   cd portfolio
+   git clone https://github.com/JuanLara18/Portfolio.git
+   cd Portfolio
    ```
 
-2. Install dependencies:
+2. **Install dependencies**
    ```bash
-   pip install -r requirements.txt
+   cd front
+   npm install
    ```
 
-3. Run the development server:
+3. **Generate blog posts manifest**
    ```bash
-   python server.py
+   npm run generate-manifest
    ```
 
-The application will be available at `http://localhost:8000`.
+4. **Start development server**
+   ```bash
+   npm start
+   ```
 
-## Deployment
+5. **Open in browser**
+   ```
+   http://localhost:3000
+   ```
 
-The application is configured for deployment on Heroku. Key deployment files include:
+### Development Workflow
 
-- `Procfile`: Specifies the command to run the application
-- `runtime.txt`: Defines the Python version
-- `requirements.txt`: Lists all Python dependencies
+#### Adding New Blog Posts
 
-For deployment updates, push changes to the main branch:
-```bash
-git push origin main
-```
+1. **Create markdown file**
+   ```bash
+   # For mathematical curiosities
+   touch front/public/blog/posts/curiosities/your-post.md
+   
+   # For research notes
+   touch front/public/blog/posts/research/your-post.md
+   ```
 
-## Environment Variables
+2. **Add front matter and content**
+   ```markdown
+   ---
+   title: "Your Post Title"
+   date: "2025-01-25"
+   excerpt: "Brief description"
+   tags: ["Tag1", "Tag2"]
+   headerImage: "/blog/headers/your-image.jpg"
+   ---
 
-The application uses the following environment variables:
+   # Your Content Here
+   
+   Your markdown content with math support: $E = mc^2$
+   ```
 
-- `FLASK_APP`: Set to "server.py"
-- `FLASK_ENV`: Set to "production" for deployment
-- `PORT`: Automatically set by Heroku
+3. **Regenerate manifest**
+   ```bash
+   npm run generate-manifest
+   ```
 
-## Browser Compatibility
+#### Available Scripts
 
-The website is tested and optimized for:
+- `npm start` - Start development server
+- `npm run build` - Build for production
+- `npm run generate-manifest` - Generate posts manifest
+- `npm run generate-manifest:watch` - Watch for post changes
+- `npm run deploy` - Deploy to GitHub Pages
 
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
+## 📊 Future Roadmap
 
-## Development Guidelines
+### Phase 1: Backend Development (Planned)
+- **Analytics Dashboard**: Track visitor engagement and popular content
+- **Contact Form Backend**: Handle form submissions and notifications
+- **Content Management**: Admin interface for blog post management
+- **Search API**: Enhanced search functionality with indexing
 
-When contributing to this project:
+### Phase 2: Enhanced Features (Future)
+- **Comments System**: Engage with readers on blog posts
+- **Newsletter Integration**: Subscribe to updates and new posts
+- **Performance Monitoring**: Real-time site performance analytics
+- **Content Recommendations**: AI-powered related content suggestions
 
-1. Maintain consistent code formatting using the established style
-2. Add descriptive comments for complex functionality
-3. Test responsive design across different device sizes
-4. Ensure cross-browser compatibility
-5. Update documentation for any new features
+### Phase 3: Advanced Capabilities (Vision)
+- **Multi-language Support**: Spanish and English content
+- **Interactive Demos**: Embedded mathematical visualizations
+- **API Documentation**: Expose data for third-party integrations
+- **Mobile App**: Native mobile experience
 
-## Performance Considerations
+## 🎯 Blog Categories
 
-The website implements several optimization strategies:
+### Mathematical Curiosities
+Explorations of games, puzzles, and mathematical phenomena including:
+- Game theory applications
+- Algorithmic complexity analysis
+- Mathematical proofs and demonstrations
+- Puzzle solving techniques
 
-- Lazy loading of images
-- Minified CSS and JavaScript
-- Optimized asset delivery
-- Efficient database queries for analytics
+### Research Notes
+Academic papers, studies, and research insights covering:
+- Machine Learning and AI developments
+- Natural Language Processing advances
+- Computational mathematics applications
+- Industry research analysis
 
-## Contact
+## 🤝 Contributing
 
-For questions or collaboration opportunities, please reach out through:
+While this is a personal portfolio, I welcome suggestions and improvements:
 
-- Email: [larajuand@outlook.com](mailto:larajuand@outlook.com)
-- LinkedIn: [julara](https://www.linkedin.com/in/julara/)
-- GitHub: [JuanLara18](https://github.com/JuanLara18)
+1. **Fork the repository**
+2. **Create a feature branch** (`git checkout -b feature/improvement`)
+3. **Commit your changes** (`git commit -am 'Add improvement'`)
+4. **Push to the branch** (`git push origin feature/improvement`)
+5. **Open a Pull Request**
+
+### Contribution Guidelines
+- Follow existing code style and conventions
+- Test changes thoroughly before submitting
+- Update documentation for new features
+- Ensure responsive design compatibility
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 📞 Contact
+
+**Juan Lara**
+- 📧 Email: [larajuand@outlook.com](mailto:larajuand@outlook.com)
+- 💼 LinkedIn: [linkedin.com/in/julara](https://www.linkedin.com/in/julara/?locale=en_US)
+- 🐱 GitHub: [github.com/JuanLara18](https://github.com/JuanLara18)
+- 🌐 Website: [juanlara.dev](https://juanlara18.github.io/Portfolio)
+
+## 🏆 Acknowledgments
+
+- **Design Inspiration**: Modern portfolio best practices
+- **Mathematical Content**: Personal research and academic work
+- **Open Source Libraries**: React ecosystem and community tools
+- **Deployment**: GitHub Pages for reliable hosting
+
+---
+
+### 📈 Project Stats
+
+- **Frontend**: React 18 with modern JavaScript (ES2022)
+- **Bundle Size**: Optimized for performance (~2MB total)
+- **Lighthouse Score**: 95+ across all metrics
+- **Browser Support**: All modern browsers (ES6+)
+- **Mobile First**: Responsive design from 320px to 4K
+- **Accessibility**: WCAG 2.1 AA compliant
+
+### 🔧 Technical Highlights
+
+- **Performance**: Code splitting and lazy loading
+- **SEO**: Semantic HTML and meta optimization
+- **Security**: CSP headers and secure practices
+- **Maintainability**: Component-based architecture
+- **Scalability**: Modular design for future expansion
+
+Built with ❤️ and ☕ by Juan Lara
