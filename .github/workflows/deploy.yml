@@ -39,7 +39,24 @@ jobs:
           cd front
           npm ci
       
-      # Paso 4: Construir la aplicación
+      # Paso 4: Generate Blog Posts Manifest 📝
+      - name: Generate Blog Posts Manifest 📝
+        run: |
+          cd front
+          npm run generate-manifest
+      
+      # Paso 5: Verify Blog Structure 🔍
+      - name: Verify Blog Structure 🔍
+        run: |
+          cd front
+          echo "=== Blog Directory Structure ==="
+          ls -la public/blog/ || echo "Blog directory not found"
+          echo "=== Posts Manifest ==="
+          cat public/blog/posts-manifest.json || echo "Manifest not found"
+          echo "=== Posts Directory ==="
+          find public/blog/posts -name "*.md" || echo "No markdown files found"
+      
+      # Paso 6: Construir la aplicación
       - name: Build 🔧
         run: |
           cd front
@@ -47,7 +64,16 @@ jobs:
         env:
           CI: false  # Evita que los warnings detengan la compilación
       
-      # Paso 5: Desplegar a GitHub Pages
+      # Paso 7: Verify Build Contents 🔍
+      - name: Verify Build Contents 🔍
+        run: |
+          cd front
+          echo "=== Build Directory Structure ==="
+          ls -la build/
+          echo "=== Blog Assets in Build ==="
+          ls -la build/blog/ || echo "Blog assets not found in build"
+      
+      # Paso 8: Desplegar a GitHub Pages
       - name: Deploy to GitHub Pages 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
