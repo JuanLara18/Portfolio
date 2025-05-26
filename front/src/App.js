@@ -6,6 +6,9 @@ import Footer from './components/Footer';
 import LandingPage from './pages/LandingPage';
 import AboutPage from './pages/AboutPage';
 import ProjectsPage from './pages/ProjectsPage';
+import BlogHomePage from './pages/BlogHomePage';
+import BlogPostPage from './pages/BlogPostPage';
+import BlogCategoryPage from './pages/BlogCategoryPage';
 
 function App() {
   // Dark mode state
@@ -57,6 +60,12 @@ function App() {
               <Route path="/about" element={<AboutPage />} />
               <Route path="/projects" element={<ProjectsPage />} />
               
+              {/* Blog routes */}
+              <Route path="/blog" element={<BlogHomePage />} />
+              <Route path="/blog/category/:category" element={<BlogCategoryPage />} />
+              <Route path="/blog/tag/:tag" element={<BlogCategoryPage />} />
+              <Route path="/blog/:category/:slug" element={<BlogPostPage />} />
+              
               {/* Fallback route redirects to home */}
               <Route path="*" element={<LandingPage />} />
             </Routes>
@@ -67,4 +76,5 @@ function App() {
     </Router>
   );
 }
+
 export default App;
