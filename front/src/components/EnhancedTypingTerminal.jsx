@@ -64,16 +64,11 @@ const EnhancedTypingTerminal = ({ text }) => {
                 animate={{ opacity: showCursor ? 1 : 0 }}
                 transition={{ duration: 0.3 }}
                 className="inline-block w-2 h-4 bg-green-400 ml-1"
-              ></motion.span>
+              />
             )}
           </div>
           
-          {/* Add occasional typing sounds */}
-          {isTyping && Math.random() > 0.7 && (
-            <audio src="/typing-sound.mp3" autoPlay style={{display: 'none'}} />
-          )}
-          
-          {/* Terminal "reflection" effect */}
+          {/* Terminal reflection effect */}
           {isComplete && (
             <motion.div 
               initial={{ opacity: 0 }}
@@ -85,7 +80,7 @@ const EnhancedTypingTerminal = ({ text }) => {
         </div>
       </div>
       
-      {/* Add subtle scan lines for CRT effect */}
+      {/* Subtle scan lines for CRT effect */}
       <div className="absolute inset-0 bg-scan-lines opacity-[0.03] pointer-events-none" 
         style={{
           backgroundImage: 'linear-gradient(0deg, transparent 0%, rgba(32, 128, 32, 0.2) 2%, transparent 5%)',
@@ -93,7 +88,7 @@ const EnhancedTypingTerminal = ({ text }) => {
         }}
       />
       
-      {/* Add subtle glow effect */}
+      {/* Subtle glow effect */}
       <div className="absolute inset-0 bg-green-500/5 blur-md pointer-events-none" />
     </motion.div>
   );

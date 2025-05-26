@@ -1,3 +1,4 @@
+// Updated blogUtils.js with better debugging
 import matter from 'gray-matter';
 import { format, parseISO } from 'date-fns';
 
@@ -27,15 +28,24 @@ const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
  * Load a markdown file and parse its content
  */
 export async function loadMarkdownFile(filePath) {
+  console.log(`🔍 Attempting to load: ${filePath}`);
+  
   try {
     const response = await fetch(filePath);
+    console.log(`📡 Response status for ${filePath}: ${response.status}`);
+    
     if (!response.ok) {
       throw new Error(`Failed to load ${filePath}: ${response.status}`);
     }
     const content = await response.text();
-    return matter(content);
+    console.log(`✅ Successfully loaded ${filePath}, content length: ${content.length}`);
+    
+    const parsed = matter(content);
+    console.log(`📋 Parsed frontmatter:`, parsed.data);
+    
+    return parsed;
   } catch (error) {
-    console.error(`Error loading markdown file ${filePath}:`, error);
+    console.error(`❌ Error loading markdown file ${filePath}:`, error);
     return null;
   }
 }
@@ -44,15 +54,23 @@ export async function loadMarkdownFile(filePath) {
  * Get list of all available posts from the manifest
  */
 export async function getPostsManifest() {
+  console.log('🔍 Loading posts manifest...');
+  
   try {
     const response = await fetch('/blog/posts-manifest.json');
+    console.log(`📡 Manifest response status: ${response.status}`);
+    
     if (!response.ok) {
-      console.warn('Posts manifest not found, using empty list');
+      console.warn('⚠️ Posts manifest not found, using empty list');
       return [];
     }
-    return await response.json();
+    
+    const manifest = await response.json();
+    console.log(`✅ Loaded manifest with ${manifest.length} posts:`, manifest);
+    
+    return manifest;
   } catch (error) {
-    console.error('Error loading posts manifest:', error);
+    console.error('❌ Error loading posts manifest:', error);
     return [];
   }
 }
@@ -61,17 +79,29 @@ export async function getPostsManifest() {
  * Load and parse all blog posts
  */
 export async function loadAllPosts() {
+  console.log('🚀 Starting to load all posts...');
+  
   // Return cached posts if still valid
   if (postsCache && lastCacheTime && Date.now() - lastCacheTime < CACHE_DURATION) {
+    console.log('📦 Returning cached posts');
     return postsCache;
   }
 
   try {
     const manifest = await getPostsManifest();
+    
+    if (manifest.length === 0) {
+      console.warn('⚠️ No posts in manifest');
+      return [];
+    }
+    
     const posts = [];
 
     for (const postInfo of manifest) {
-      const postData = await loadMarkdownFile(`/blog/posts/${postInfo.category}/${postInfo.filename}`);
+      const fullPath = `/blog/posts/${postInfo.category}/${postInfo.filename}`;
+      console.log(`📖 Processing post: ${postInfo.filename} from ${postInfo.category}`);
+      
+      const postData = await loadMarkdownFile(fullPath);
       
       if (postData) {
         const post = {
@@ -86,11 +116,16 @@ export async function loadAllPosts() {
         // Validate required fields
         if (post.title && post.date) {
           posts.push(post);
+          console.log(`✅ Added post: ${post.title}`);
         } else {
-          console.warn(`Post ${postInfo.filename} missing required fields (title, date)`);
+          console.warn(`⚠️ Post ${postInfo.filename} missing required fields (title: ${post.title}, date: ${post.date})`);
         }
+      } else {
+        console.error(`❌ Failed to load post data for ${postInfo.filename}`);
       }
     }
+
+    console.log(`🎉 Successfully loaded ${posts.length} posts`);
 
     // Sort posts by date (newest first)
     posts.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -101,14 +136,12 @@ export async function loadAllPosts() {
 
     return posts;
   } catch (error) {
-    console.error('Error loading posts:', error);
+    console.error('❌ Error loading posts:', error);
     return [];
   }
 }
 
-/**
- * Get a single post by slug and category
- */
+// ... rest of the functions remain the same
 export async function getPostBySlug(category, slug) {
   try {
     const postData = await loadMarkdownFile(`/blog/posts/${category}/${slug}.md`);
@@ -131,17 +164,11 @@ export async function getPostBySlug(category, slug) {
   }
 }
 
-/**
- * Get posts filtered by category
- */
 export async function getPostsByCategory(category) {
   const allPosts = await loadAllPosts();
   return allPosts.filter(post => post.category === category);
 }
 
-/**
- * Get posts filtered by tag
- */
 export async function getPostsByTag(tag) {
   const allPosts = await loadAllPosts();
   return allPosts.filter(post => 
@@ -151,9 +178,6 @@ export async function getPostsByTag(tag) {
   );
 }
 
-/**
- * Get all unique tags from all posts
- */
 export async function getAllTags() {
   const allPosts = await loadAllPosts();
   const tagSet = new Set();
@@ -167,9 +191,6 @@ export async function getAllTags() {
   return Array.from(tagSet).sort();
 }
 
-/**
- * Calculate estimated reading time
- */
 function calculateReadingTime(content) {
   const wordsPerMinute = 200;
   const wordCount = content.trim().split(/\s+/).length;
@@ -177,20 +198,16 @@ function calculateReadingTime(content) {
   return readingTime;
 }
 
-/**
- * Generate excerpt from content
- */
 function generateExcerpt(content, maxLength = 160) {
-  // Remove markdown syntax for excerpt
   const plainText = content
-    .replace(/#{1,6}\s+/g, '') // Headers
-    .replace(/\*\*(.*?)\*\*/g, '$1') // Bold
-    .replace(/\*(.*?)\*/g, '$1') // Italic
-    .replace(/`(.*?)`/g, '$1') // Inline code
-    .replace(/\[(.*?)\]\(.*?\)/g, '$1') // Links
-    .replace(/!\[.*?\]\(.*?\)/g, '') // Images
-    .replace(/\$\$(.*?)\$\$/g, '[Math]') // Display math
-    .replace(/\$(.*?)\$/g, '[Math]') // Inline math
+    .replace(/#{1,6}\s+/g, '')
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    .replace(/\*(.*?)\*/g, '$1')
+    .replace(/`(.*?)`/g, '$1')
+    .replace(/\[(.*?)\]\(.*?\)/g, '$1')
+    .replace(/!\[.*?\]\(.*?\)/g, '')
+    .replace(/\$\$(.*?)\$\$/g, '[Math]')
+    .replace(/\$(.*?)\$/g, '[Math]')
     .trim();
 
   if (plainText.length <= maxLength) {
@@ -200,9 +217,6 @@ function generateExcerpt(content, maxLength = 160) {
   return plainText.substring(0, maxLength).replace(/\s+\S*$/, '') + '...';
 }
 
-/**
- * Format date for display
- */
 export function formatDate(dateString, formatStr = 'MMMM d, yyyy') {
   try {
     const date = typeof dateString === 'string' ? parseISO(dateString) : dateString;
@@ -213,9 +227,6 @@ export function formatDate(dateString, formatStr = 'MMMM d, yyyy') {
   }
 }
 
-/**
- * Generate URL-friendly slug from title
- */
 export function slugify(text) {
   return text
     .toString()
@@ -228,9 +239,6 @@ export function slugify(text) {
     .replace(/\-\-+/g, '-');
 }
 
-/**
- * Clear posts cache (useful for development)
- */
 export function clearPostsCache() {
   postsCache = null;
   lastCacheTime = null;

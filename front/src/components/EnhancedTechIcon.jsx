@@ -7,8 +7,6 @@ const TechIcon = ({ icon: Icon, label, delay = 0 }) => {
     <div 
       className={`flex flex-col items-center justify-center p-4 cursor-pointer opacity-100 transform transition-all duration-300 ease-in-out ${hovered ? 'scale-105' : ''}`}
       style={{ 
-        // Handle the initial animation with inline styles
-        // We can use CSS animation instead of framer-motion
         animation: `fadeIn 0.5s ease-out ${delay}s forwards`
       }}
       onMouseEnter={() => setHovered(true)}
@@ -39,24 +37,24 @@ const TechIcon = ({ icon: Icon, label, delay = 0 }) => {
   );
 };
 
-// Add the required CSS animation
-const styles = `
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-`;
-
+// CSS-in-JS approach to avoid JSX attribute warning
 const TechIconWithStyles = (props) => {
   return (
     <>
-      <style jsx>{styles}</style>
+      <style>
+        {`
+          @keyframes fadeIn {
+            from {
+              opacity: 0;
+              transform: translateY(20px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+        `}
+      </style>
       <TechIcon {...props} />
     </>
   );

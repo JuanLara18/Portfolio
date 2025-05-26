@@ -495,7 +495,7 @@ export default function LandingPage() {
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200">Latest from the Blog</h3>
                   <div className="px-3 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300 rounded-full text-sm font-medium">
-                    New Posts Weekly
+                    Actively posting
                   </div>
                 </div>
                 
@@ -512,9 +512,9 @@ export default function LandingPage() {
                 </div> */}
                 
                 <div>
-                  <a 
-                    href="https://blog.juanlara.dev" 
-                    className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors gap-2 group relative overflow-hidden"
+                  <Link
+                    to="/blog"
+                    className="flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-300 relative overflow-hidden group shadow-lg"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -522,7 +522,7 @@ export default function LandingPage() {
                     <ExternalLink size={16} className="z-10 relative transform group-hover:translate-x-1 transition-transform duration-300" />
                     <div className="absolute inset-0 bg-blue-500 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                     {/* Light reflection effect */}
-                    <motion.div 
+                    <motion.div
                       className="absolute inset-0 opacity-0 group-hover:opacity-30 bg-gradient-to-r from-transparent via-white to-transparent skew-x-20 transition-opacity duration-1000"
                       animate={{ 
                         x: ["200%", "-200%"],
@@ -535,7 +535,7 @@ export default function LandingPage() {
                         } 
                       }}
                     />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </motion.div>
