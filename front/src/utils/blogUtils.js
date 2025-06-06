@@ -3,7 +3,11 @@ import matter from 'gray-matter';
 import { format, parseISO } from 'date-fns';
 
 // Base path for assets when deployed to GitHub Pages
-const base = process.env.PUBLIC_URL || '';
+const base =
+  process.env.PUBLIC_URL ||
+  (typeof window !== 'undefined'
+    ? window.location.pathname.replace(/\/[^\/]*$/, '')
+    : '');
 
 // Blog configuration
 export const BLOG_CONFIG = {
