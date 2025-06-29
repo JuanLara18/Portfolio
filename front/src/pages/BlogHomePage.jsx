@@ -151,8 +151,8 @@ export default function BlogHomePage() {
   const heroRef = useRef(null);
   
   // Transform values for parallax effects
-  const heroOpacity = useTransform(scrollY, [0, 300], [1, 0.6]);
-  const heroScale = useTransform(scrollY, [0, 300], [1, 0.95]);
+  const heroOpacity = useTransform(scrollY, [200, 300], [1, 0.98]);
+  const heroScale = useTransform(scrollY, [200, 300], [1, 0.98]);
   
   // Load posts and tags on component mount
   useEffect(() => {
