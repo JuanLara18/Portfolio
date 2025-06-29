@@ -1,37 +1,28 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Sun, Moon, Menu } from 'lucide-react';
 import MobileMenu from './MobileMenu';
 
 const Navbar = ({ darkMode, toggleDarkMode }) => {
-  const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { scrollY } = useScroll();
   
-  // Track scrolling to change navbar appearance
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const backgroundOpacity = useTransform(scrollY, [0, 120], [0.85, 0.98]);
+  const backdropBlur = useTransform(scrollY, [0, 120], [8, 16]);
+  const shadowOpacity = useTransform(scrollY, [0, 120], [0, 0.15]);
+  const navbarPadding = useTransform(scrollY, [0, 120], [16, 12]);
   
-  // Close mobile menu when changing routes
   useEffect(() => {
     setMobileMenuOpen(false);
-    // Ensure body scrolling is restored when routes change
     document.body.style.overflow = 'auto';
   }, [location.pathname]);
   
-  // Toggle mobile menu state
   const toggleMobileMenu = () => {
     const newMenuState = !mobileMenuOpen;
     setMobileMenuOpen(newMenuState);
     
-    // Add/remove class to body for styling entire page
     if (newMenuState) {
       document.body.classList.add('menu-open');
       document.body.style.overflow = 'hidden';
@@ -41,13 +32,11 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
     }
   };
   
-  // Get appropriate class for active/inactive links
   const getLinkClass = (path) => {
     const baseClass = "relative py-2 px-1 font-medium transition-all duration-300";
     const activeClass = "text-blue-600 dark:text-blue-400 before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-full before:bg-blue-600 dark:before:bg-blue-400";
     const inactiveClass = "text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-full before:scale-x-0 before:bg-blue-600 dark:before:bg-blue-400 before:origin-left before:transition-transform hover:before:scale-x-100";
     
-    // Determine if this route is active
     const isActive = path === '/' 
       ? location.pathname === '/' 
       : location.pathname.startsWith(path);
@@ -57,16 +46,23 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
   
   return (
     <>
-      <header 
-        className={`fixed w-full z-50 transition-all duration-500 ${
-          scrolled 
-            ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-lg py-3' 
-            : 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm py-4'
-        }`}
+      <motion.header 
+        className="fixed w-full z-50 transition-all duration-500"
+        style={{
+          backgroundColor: darkMode 
+            ? useTransform(backgroundOpacity, (value) => `rgba(17, 24, 39, ${value})`)
+            : useTransform(backgroundOpacity, (value) => `rgba(255, 255, 255, ${value})`),
+          backdropFilter: useTransform(backdropBlur, (value) => `blur(${value}px)`),
+          WebkitBackdropFilter: useTransform(backdropBlur, (value) => `blur(${value}px)`),
+          boxShadow: useTransform(shadowOpacity, (value) => 
+            `0 10px 25px -5px rgba(0, 0, 0, ${value}), 0 4px 6px -2px rgba(0, 0, 0, ${value * 0.5})`
+          ),
+          paddingTop: useTransform(navbarPadding, (value) => `${value}px`),
+          paddingBottom: useTransform(navbarPadding, (value) => `${value}px`)
+        }}
       >
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex justify-between items-center">
-            {/* Logo */}
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -79,7 +75,6 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
               <div className="absolute -bottom-1 left-0 h-0.5 w-full bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400"></div>
             </motion.div>
             
-            {/* Desktop Navigation */}
             <motion.nav 
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -99,7 +94,6 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
                 Blog
               </Link>
               
-              {/* Theme Toggle Button */}
               <button 
                 onClick={toggleDarkMode}
                 aria-label="Toggle dark mode"
@@ -109,7 +103,6 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
               </button>
             </motion.nav>
             
-            {/* Mobile Menu Button */}
             <div className="md:hidden flex items-center gap-4 z-10">
               <button 
                 onClick={toggleDarkMode}
@@ -129,9 +122,8 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
             </div>
           </div>
         </div>
-      </header>
+      </motion.header>
       
-      {/* Mobile Menu Component */}
       <MobileMenu 
         isOpen={mobileMenuOpen} 
         onClose={toggleMobileMenu} 

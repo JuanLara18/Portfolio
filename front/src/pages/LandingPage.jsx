@@ -66,11 +66,10 @@ export default function LandingPage() {
   const { scrollY } = useScroll();
   
   // Enhanced transform values based on scroll position for parallax effects
-  const headerOpacity = useTransform(scrollY, [0, 50], [0.6, 1]);
-  const heroScale = useTransform(scrollY, [0, 300], [1, 0.95]);
-  const heroOpacity = useTransform(scrollY, [0, 300], [1, 0.6]);
-  const heroY = useTransform(scrollY, [0, 300], [0, 40]); // Parallax effect
-  const headingY = useTransform(scrollY, [0, 300], [0, -15]); // Counter-parallax for heading
+  const heroOpacity = useTransform(scrollY, [150, 500], [1, 0.9]);
+  const heroScale = useTransform(scrollY, [150, 500], [1, 0.98]);
+  const heroY = useTransform(scrollY, [150, 500], [0, 10]);
+  const headingY = useTransform(scrollY, [0, 300], [0, -15]);
   
   // Parallax for decorative elements
   const bgElement1Y = useTransform(scrollY, [0, 300], [0, 30]);

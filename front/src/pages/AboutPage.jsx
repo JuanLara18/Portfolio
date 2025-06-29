@@ -384,8 +384,8 @@ export default function AboutPage() {
   const isHeroInView = useInView(heroRef);
   
   // Transform values based on scroll position
-  const heroOpacity = useTransform(scrollY, [0, 300], [1, 0.6]);
-  const heroScale = useTransform(scrollY, [0, 300], [1, 0.95]);
+  const heroOpacity = useTransform(scrollY, [150, 500], [1, 0.9]);
+  const heroScale = useTransform(scrollY, [150, 500], [1, 0.98]);
   
 // Experience data
 const experiences = [
