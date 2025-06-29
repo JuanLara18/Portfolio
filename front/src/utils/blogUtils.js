@@ -2,6 +2,13 @@
 import matter from 'gray-matter';
 import { format, parseISO } from 'date-fns';
 
+// Base path for assets when deployed to GitHub Pages
+const base =
+  process.env.PUBLIC_URL ||
+  (typeof window !== 'undefined'
+    ? window.location.pathname.replace(/\/[^\/]*$/, '')
+    : '');
+
 // Blog configuration
 export const BLOG_CONFIG = {
   categories: {
@@ -57,7 +64,7 @@ export async function getPostsManifest() {
   console.log('🔍 Loading posts manifest...');
   
   try {
-    const response = await fetch('/blog/posts-manifest.json');
+    const response = await fetch(`${base}/blog/posts-manifest.json`);
     console.log(`📡 Manifest response status: ${response.status}`);
     
     if (!response.ok) {
@@ -98,7 +105,7 @@ export async function loadAllPosts() {
     const posts = [];
 
     for (const postInfo of manifest) {
-      const fullPath = `/blog/posts/${postInfo.category}/${postInfo.filename}`;
+      const fullPath = `${base}/blog/posts/${postInfo.category}/${postInfo.filename}`;
       console.log(`📖 Processing post: ${postInfo.filename} from ${postInfo.category}`);
       
       const postData = await loadMarkdownFile(fullPath);
@@ -144,7 +151,7 @@ export async function loadAllPosts() {
 // ... rest of the functions remain the same
 export async function getPostBySlug(category, slug) {
   try {
-    const postData = await loadMarkdownFile(`/blog/posts/${category}/${slug}.md`);
+    const postData = await loadMarkdownFile(`${base}/blog/posts/${category}/${slug}.md`);
     
     if (!postData) {
       return null;
