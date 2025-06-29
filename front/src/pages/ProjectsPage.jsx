@@ -399,8 +399,8 @@ export default function ProjectsPage() {
   const isFeaturedInView = useInView(featuredRef, { once: true, margin: "-100px" });
   
   // Transform values based on scroll position
-  const heroOpacity = useTransform(scrollY, [150, 500], [1, 0.9]);
-  const heroScale = useTransform(scrollY, [150, 500], [1, 0.98]);
+  const heroOpacity = useTransform(scrollY, [260, 500], [1, 0.98]);
+  const heroScale = useTransform(scrollY, [260, 500], [1, 0.98]);
   
   // Filter projects based on category and search term with optimized visual layout
   useEffect(() => {
