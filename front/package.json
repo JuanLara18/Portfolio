@@ -4,16 +4,19 @@
   "private": true,
   "homepage": "https://juanlara18.github.io/Portfolio",
   "dependencies": {
+    "@craco/craco": "^7.1.0",
     "@testing-library/dom": "^8.x",
     "@testing-library/jest-dom": "^6.x",
     "@testing-library/react": "^14.x",
     "@testing-library/user-event": "^14.x",
+    "buffer": "^6.0.3",
     "date-fns": "^2.30.0",
     "framer-motion": "^12.x",
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.11.1",
     "katex": "^0.16.22",
     "lucide-react": "^0.x",
+    "process": "^0.11.10",
     "react": "^18.x",
     "react-dom": "^18.x",
     "react-markdown": "^10.1.0",
@@ -24,6 +27,8 @@
     "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.1",
     "remark-math": "^6.0.0",
+    "stream-browserify": "^3.0.0",
+    "util": "^0.12.5",
     "web-vitals": "^2.x"
   },
   "devDependencies": {
