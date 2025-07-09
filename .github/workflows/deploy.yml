@@ -1,17 +1,13 @@
 name: Deploy React Portfolio
 
-# Controla cuándo se ejecutará el workflow
 on:
-  # Se ejecuta en push a la rama principal
   push:
     branches: [ main ]
     paths:
-      - 'front/**'  # Solo se activa cuando hay cambios en la carpeta front
+      - 'front/**'
   
-  # Permite ejecutar este workflow manualmente desde la pestaña Actions
   workflow_dispatch:
 
-# Permisos necesarios para acciones de GitHub
 permissions:
   contents: write
 
@@ -21,62 +17,64 @@ jobs:
     environment: github-pages
     
     steps:
-      # Paso 1: Checkout del código
-      - name: Checkout 🛎️
+      - name: Checkout Repository 🛎️
         uses: actions/checkout@v3
       
-      # Paso 2: Configurar Node.js
-      - name: Setup Node.js ⚙️
+      - name: Setup Node.js Environment ⚙️
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'npm'
           cache-dependency-path: 'front/package-lock.json'
       
-      # Paso 3: Navegar a la carpeta front e instalar dependencias
       - name: Install Dependencies 📦
         run: |
           cd front
           npm ci
       
-      # Paso 4: Generate Blog Posts Manifest 📝
-      - name: Generate Blog Posts Manifest 📝
+      - name: Verify Blog Source Files 🔍
         run: |
           cd front
-          npm run generate-manifest
-      
-      # Paso 5: Verify Blog Structure 🔍
-      - name: Verify Blog Structure 🔍
-        run: |
-          cd front
-          echo "=== Blog Directory Structure ==="
+          echo "=== Blog Source Directory Structure ==="
           ls -la public/blog/ || echo "Blog directory not found"
-          echo "=== Posts Manifest ==="
-          cat public/blog/posts-manifest.json || echo "Manifest not found"
-          echo "=== Posts Directory ==="
-          find public/blog/posts -name "*.md" || echo "No markdown files found"
+          echo "=== Available Markdown Posts ==="
+          find public/blog/posts -name "*.md" 2>/dev/null | wc -l | xargs echo "Found markdown files:"
+          find public/blog/posts -name "*.md" 2>/dev/null || echo "No markdown files found"
       
-      # Paso 6: Construir la aplicación
-      - name: Build 🔧
+      - name: Build Application 🔧
         run: |
           cd front
           npm run build
         env:
-          CI: false  # Evita que los warnings detengan la compilación
+          CI: false
       
-      # Paso 7: Verify Build Contents 🔍
-      - name: Verify Build Contents 🔍
+      - name: Verify Blog Data Generation 📊
+        run: |
+          cd front
+          echo "=== Generated Blog Data ==="
+          if [ -f "src/data/blogData.json" ]; then
+            echo "✅ blogData.json generated successfully"
+            echo "Posts count: $(cat src/data/blogData.json | grep -o '"slug"' | wc -l)"
+            echo "Categories: $(cat src/data/blogData.json | grep -o '"category":"[^"]*"' | sort -u)"
+          else
+            echo "❌ blogData.json not found"
+            exit 1
+          fi
+      
+      - name: Verify Build Output 🔍
         run: |
           cd front
           echo "=== Build Directory Structure ==="
           ls -la build/
-          echo "=== Blog Assets in Build ==="
-          ls -la build/blog/ || echo "Blog assets not found in build"
+          echo "=== Build Assets ==="
+          echo "JS files: $(find build/static/js -name "*.js" | wc -l)"
+          echo "CSS files: $(find build/static/css -name "*.css" | wc -l)"
+          echo "Total build size: $(du -sh build/ | cut -f1)"
       
-      # Paso 8: Desplegar a GitHub Pages
       - name: Deploy to GitHub Pages 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: front/build  # La carpeta que contiene los archivos compilados
-          branch: gh-pages     # La rama donde se desplegará
-          clean: true          # Elimina archivos de despliegues anteriores
+          folder: front/build
+          branch: gh-pages
+          clean: true
+          commit-message: 'Deploy portfolio with blog data 🚀'

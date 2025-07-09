@@ -45,6 +45,8 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
+    "prebuild": "npm run build-blog-data",
+    "build-blog-data": "node scripts/build-blog-data.js",
     "generate-manifest": "node scripts/generate-posts-manifest.js",
     "generate-manifest:watch": "node scripts/generate-posts-manifest.js --watch"
   },
