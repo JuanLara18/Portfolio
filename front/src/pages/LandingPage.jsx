@@ -384,21 +384,19 @@ export default function LandingPage() {
             </div>
           </motion.div>
           
-          {/* Subtle cursor effect for desktop only */}
-          {window.innerWidth >= 768 && (
-            <motion.div 
-              className="fixed w-6 h-6 rounded-full border-2 border-blue-400/30 dark:border-blue-500/30 pointer-events-none z-50 hidden md:block"
-              style={{ 
-                x: mousePosition.x - 12, 
-                y: mousePosition.y - 12,
-                opacity: scrolled ? 0 : 0.6
-              }}
-              animate={{ 
-                scale: [1, 1.2, 1],
-                transition: { duration: 1, repeat: Infinity }
-              }}
-            />
-          )}
+        {/* Subtle cursor effect for desktop only */}
+        <motion.div 
+          className="fixed w-6 h-6 rounded-full border-2 border-blue-400/30 dark:border-blue-500/30 pointer-events-none z-50 hidden md:block"
+          style={{ 
+            left: mousePosition.x - 12, 
+            top: mousePosition.y - 12,
+            opacity: scrolled ? 0 : 0.6
+          }}
+          animate={{ 
+            scale: [1, 1.2, 1],
+            transition: { duration: 1, repeat: Infinity }
+          }}
+        />
         </div>
       </motion.section>
       
