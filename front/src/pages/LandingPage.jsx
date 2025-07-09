@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
-import { ChevronDown, Github, Linkedin, Mail, ExternalLink, Code, Terminal, Database, Server, Cpu, TerminalSquare, FileCode, Braces, Layers } from 'lucide-react';
+import { ChevronDown, Github, Linkedin, Mail, ExternalLink, Code, Terminal, Database, Server, Cpu, TerminalSquare, BrainCircuit, FileCode, Braces, Layers } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 // Import enhanced components
@@ -347,9 +347,9 @@ export default function LandingPage() {
                   <EnhancedTypingTerminal text="const profile = {\n  name: 'Juan Lara',\n  role: 'LLM/ML Specialist @ GenomAI',\n  expertise: ['RAG Systems', 'LLM Fine-tuning', 'Vector DBs'],\n  stack: ['Python', 'PyTorch', 'LangChain', 'GCP'],\n  education: [\n    'B.S. Computer Science',\n    'B.S. Mathematics'\n  ],\n  mission: 'Transform complex AI requirements into scalable solutions'\n};" />
 
                   <div className="mt-8 grid grid-cols-3 gap-2">
-                    <EnhancedTechIcon icon={Cpu} label="ML Systems" delay={0.2} />
-                    <EnhancedTechIcon icon={Braces} label="Algorithms" delay={0.4} />
-                    <EnhancedTechIcon icon={Database} label="Data Analysis" delay={0.6} />
+                    <EnhancedTechIcon icon={BrainCircuit} label="LLM Engineering" delay={0.2} />
+                    <EnhancedTechIcon icon={Database} label="RAG Systems" delay={0.4} />
+                    <EnhancedTechIcon icon={Server} label="Cloud Deployment" delay={0.6} />
                   </div>
                 </div>
               </div>
