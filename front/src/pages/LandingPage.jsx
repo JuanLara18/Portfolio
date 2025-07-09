@@ -189,7 +189,7 @@ export default function LandingPage() {
             >
               <motion.div variants={fadeInUp} className="mb-4">
                 <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 text-sm font-medium mb-4 backdrop-blur-sm">
-                  <Code size={14} className="mr-1.5" /> Research Assistant at Harvard Business School
+                  <Code size={14} className="mr-1.5" /> LLM/ML Specialist at GenomAI
                 </div>
               </motion.div>
               
@@ -221,7 +221,7 @@ export default function LandingPage() {
                 variants={fadeInUp}
                 className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl leading-relaxed"
               >
-                I’m Juan Lara, a Computer Scientist and Mathematician passionate about solving real-world problems with code, data science, and AI.
+                I build end-to-end AI systems that transform complex requirements into scalable, production-ready solutions. Specializing in LLM fine-tuning, RAG architectures, and cloud deployment.
               </motion.p>
               
               <motion.div 
@@ -232,13 +232,13 @@ export default function LandingPage() {
                   whileHover={{ y: -3, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.5)" }}
                   className="px-4 py-2 rounded-lg text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 border border-blue-200 dark:border-blue-800 backdrop-blur-sm transition-all duration-300"
                 >
-                  Machine Learning
+                  LLM & RAG Systems
                 </motion.span>
                 <motion.span 
                   whileHover={{ y: -3, boxShadow: "0 10px 25px -5px rgba(67, 56, 202, 0.5)" }}
                   className="px-4 py-2 rounded-lg text-sm font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900/50 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 backdrop-blur-sm transition-all duration-300"
                 >
-                  AI Agents
+                  Generative AI
                 </motion.span>
                 <motion.span 
                   whileHover={{ y: -3, boxShadow: "0 10px 25px -5px rgba(147, 51, 234, 0.5)" }}
@@ -250,7 +250,7 @@ export default function LandingPage() {
                   whileHover={{ y: -3, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.5)" }}
                   className="px-4 py-2 rounded-lg text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 border border-blue-200 dark:border-blue-800 backdrop-blur-sm transition-all duration-300"
                 >
-                  Computational Modeling
+                  Cloud Deployment
                 </motion.span>
               </motion.div>
               
@@ -344,7 +344,7 @@ export default function LandingPage() {
                 
                 {/* Enhanced terminal card with improved shadow */}
                 <div className="relative z-10 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-[0_10px_40px_-15px_rgba(0,0,0,0.3)] dark:shadow-[0_10px_40px_-15px_rgba(0,0,0,0.7)] border border-gray-100 dark:border-gray-700 transition-all duration-500">
-                  <EnhancedTypingTerminal text="const profile = {\n  name: 'Juan Lara',\n  role: 'Research Assistant at Harvard Business School',\n  expertise: ['Machine Learning', 'Problem Solving'],\n education: [\n    'B.S. Computer Science',\n    'B.S. Mathematics'\n  ],\n  passion: 'Solve problems using ML systems'\n};" />
+                  <EnhancedTypingTerminal text="const profile = {\n  name: 'Juan Lara',\n  role: 'LLM/ML Specialist @ GenomAI',\n  expertise: ['RAG Systems', 'LLM Fine-tuning', 'Vector DBs'],\n  stack: ['Python', 'PyTorch', 'LangChain', 'GCP'],\n  education: [\n    'B.S. Computer Science',\n    'B.S. Mathematics'\n  ],\n  mission: 'Transform complex AI requirements into scalable solutions'\n};" />
 
                   <div className="mt-8 grid grid-cols-3 gap-2">
                     <EnhancedTechIcon icon={Cpu} label="ML Systems" delay={0.2} />
@@ -424,7 +424,7 @@ export default function LandingPage() {
                 <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200">About Me</h3>
               </div>
               <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                I’m a computer scientist & mathematician who loves turning complex theories into clean, battle-tested code. Trained at Universidad Nacional de Colombia, I’m currently diving deep into applied research at Harvard Business School, building ML systems that tackle real organizational challenges.
+                I'm a Computer Scientist & Mathematician with 3+ years developing production-ready generative AI solutions. Currently building AI-powered clinical decision support systems at GenomAI, with previous research experience at Harvard University.
               </p>
               <Link to="/about" className="text-blue-600 dark:text-blue-400 font-medium inline-flex items-center group">
                 <span>Read more</span>
@@ -447,7 +447,7 @@ export default function LandingPage() {
                 <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200">Projects</h3>
               </div>
               <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                Through my projects, I harness machine learning and generative AI to build data pipelines, train predictive models, and automate analyses—always emphasizing transparency, reliability, and real-world impact.
+                From TextInsight (multilingual NLP library) to scalable RAG systems, I build end-to-end AI solutions that bridge advanced ML techniques with robust engineering practices. Each project emphasizes production-ready deployment and measurable business impact.
               </p>
               <Link to="/projects" className="text-blue-600 dark:text-blue-400 font-medium inline-flex items-center group">
                 <span>Explore projects</span>

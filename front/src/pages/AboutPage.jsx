@@ -390,19 +390,34 @@ export default function AboutPage() {
 // Experience data
 const experiences = [
   {
-    role: "Research Assistant",
-    company: "Harvard Business School",
-    period: "Sep 2022 - Present",
+    role: "LLM/ML Specialist",
+    company: "GenomAI",
+    period: "July 2025 - Present",
+    location: "Danville, USA (Remote)",
+    description:
+      "Architect AI-powered clinical decision support systems integrating RAG pipelines with vector databases and LLM fine-tuning techniques to deliver real-time, evidence-based treatment recommendations for healthcare professionals.",
+    responsibilities: [
+      "Develop HIPAA-compliant generative AI solutions using advanced prompt engineering and retrieval-augmented generation to process multimodal medical data while ensuring regulatory compliance and patient privacy protection.",
+      "Optimize inference pipelines and model deployment on cloud infrastructure, implementing efficient scaling strategies and performance monitoring to support production-level healthcare applications with sub-second response requirements.",
+      "Lead cross-functional collaboration with clinical teams to translate complex medical workflows into scalable AI architectures that enhance diagnostic accuracy and treatment personalization."
+    ],
+    skills: ["LLM Fine-tuning", "RAG Systems", "Vector Databases", "HIPAA Compliance", "Healthcare AI", "Cloud Deployment"],
+    logo: "genomai-logo.png"
+  },
+  {
+    role: "Research Associate | ML Specialist",
+    company: "Harvard University",
+    period: "Sep 2022 - July 2025",
     location: "Boston, USA (Remote)",
     description:
-      "Integrated machine learning into research workflows and co-designed rigorous mathematical frameworks for organizational economics, in collaboration with the Digital Reskilling Lab.",
+      "Built end-to-end ML pipelines integrating clustering algorithms, XGBoost models, and NLP techniques to analyze large-scale organizational datasets, revealing key insights on firm learning strategies and technology adoption patterns.",
     responsibilities: [
-      "Integrated clustering techniques, XGBoost models, and NLP pipelines to empirically validate theoretical frameworks using extensive company datasets.",
-      "Collaborated with the Digital Reskilling Lab to bridge quantitative research and practical business applications, generating actionable insights for reskilling strategies and organizational decision-making.",
-      "Co-designed economic models of firm behavior—covering organizational hierarchies, exclusive contract dynamics, and technology shocks—and produced proofs and simulations for an upcoming working paper."
+      "Designed mathematical frameworks for modeling organizational hierarchies and technology shocks, providing formal validation through simulation-based approaches that underpin upcoming academic publications.",
+      "Automated research workflows that accelerated data-driven insight generation for firm behavior analysis, translating quantitative research into actionable recommendations for reskilling strategies.",
+      "Collaborated with interdisciplinary teams to transform economic theories into scalable ML applications, ensuring research objectives align with practical business applications."
     ],
-    // Skills: ["Python", "Machine Learning", "NLP", "XGBoost"],
-    logo: "hbs-logo.png"
+    skills: ["Python", "XGBoost", "NLP", "Clustering", "Mathematical Modeling", "Research Automation"],
+    logo: "harvard-logo.png"
   },
   {
     role: "Data Scientist",
@@ -410,12 +425,13 @@ const experiences = [
     period: "Feb 2024 - Jan 2025",
     location: "Bogota, D.C., Colombia (Hybrid)",
     description:
-      "Developed multi-platform ML applications and led the creation of TextInsight, earning recognition as Total Ops Star Employee for LATAM.",
+      "Engineered production-ready applications for geospatial analysis and segmentation using ML models and robust data-processing pipelines on Google Cloud Platform, enhancing operational efficiency across multiple data sources.",
     responsibilities: [
-      "Developed multi-platform applications embedding machine learning models for segmentation tasks, leveraging geospatial data and deploying scalable solutions on Google Cloud Platform to enhance field operations efficiency.",
-      "Streamlined analytical workflows and reporting with user-friendly tools, reducing manual effort, improving operational decision-making, and securing the Total Ops Star Employee award for LATAM.",
-      "Led the design and implementation of TextInsight, a Python library for automated multilingual text analysis using LLMs and advanced NetworkX visualizations, enabling faster, more accurate survey insights across Latin America."
+      "Led the design and implementation of TextInsight, a Python library for automated multilingual text analysis using LLMs and advanced NetworkX visualizations, reducing text processing time from hours to under one hour and earning Total Ops Star Employee recognition across LATAM.",
+      "Streamlined analytical workflows through automated Python pipelines, significantly reducing manual processing while enabling dynamic real-time reporting and cross-functional analytics.",
+      "Integrated scalable cloud workflows with advanced data management systems, supporting large-scale batch processing and reproducible research methodologies."
     ],
+    skills: ["Python", "Google Cloud Platform", "TextInsight", "Geospatial Analysis", "NLP", "Data Pipelines"],
     logo: "ipsos-logo.jpg"
   }
 ];
@@ -465,7 +481,67 @@ const experiences = [
   ];
   
   // Courses/Training data
-  const courses = [
+const courses = [
+  {
+    title: "AI Engineer for Developers Associate",
+    provider: "DataCamp",
+    date: "July 2025",
+    description: "Advanced certification in AI engineering for developers, focusing on large language models and retrieval-augmented generation systems.",
+    certificateLink: "https://www.datacamp.com/certificate/AIEDA0019827293059",
+    certificateId: "AIEDA0019827293059",
+    topics: ["LLM Engineering", "RAG Systems", "AI Development"],
+    logo: "datacamp-logo.png"
+  },
+  {
+    title: "Curso de LangChain",
+    provider: "Platzi",
+    date: "July 2025",
+    description: "Comprehensive training on LangChain framework for building applications with large language models and AI agents.",
+    certificateLink: "https://platzi.com/p/larajuan/curso/dd0e8538-8e8f-4ed9-acae-5192ba8faf18",
+    certificateId: "dd0e8538-8e8f-4ed9-acae-5192ba8faf18",
+    topics: ["LangChain", "LLM Applications", "AI Agents"],
+    logo: "platzi-logo.png"
+  },
+  {
+    title: "Curso de NLP con Python",
+    provider: "Platzi",
+    date: "July 2025",
+    description: "Training on natural language processing with Python, covering transformers and modern NLP techniques.",
+    certificateLink: "https://platzi.com/p/larajuan/curso/520eb925-05d2-4298-ae08-187d5a2bae0a",
+    certificateId: "520eb925-05d2-4298-ae08-187d5a2bae0a",
+    topics: ["NLP", "Python", "Transformers"],
+    logo: "platzi-logo.png"
+  },
+  {
+    title: "Fundamentals of MCP",
+    provider: "Hugging Face",
+    date: "May 2025",
+    description: "Training on Model Customization and Production fundamentals using Hugging Face tools and frameworks.",
+    certificateLink: "https://huggingface.co/datasets/mcp-course/certificates/resolve/main/certificates/juanlara/2025-05-01.png",
+    certificateId: "juanlara",
+    topics: ["Model Customization", "Production ML", "Hugging Face"],
+    logo: "hugging_face-logo.png"
+  },
+  {
+    title: "Bases de datos SQL",
+    provider: "Platzi",
+    date: "April 2025",
+    description: "Training on SQL database fundamentals and practical implementation.",
+    certificateLink: "https://platzi.com/p/larajuan/learning-path/13458-datos-sql/diploma/detalle/",
+    certificateId: "539844d2-3b5e-43e9-ae00-d68331327f26",
+    topics: ["SQL", "Database Design", "Data Management"],
+    logo: "platzi-logo.png"
+  },
+  {
+    title: "Artificial Intelligence Professional Certificate (CAIPC)",
+    provider: "Certiprof",
+    date: "November 2024",
+    description: "Professional-level certification in artificial intelligence covering machine learning and practical AI applications.",
+    certificateLink: "https://www.credly.com/badges/JLRKFTTLUSP-WTHHHBBCH-YQSTJTBBBR",
+    certificateId: "JLRKFTTLUSP-WTHHHBBCH-YQSTJTBBBR",
+    topics: ["AI", "Machine Learning", "Professional Certification"],
+    logo: "certiprof_CAIPC-logo.png"
+  },
     {
       title: "AI Agents Fundamentals",
       provider: "Hugging Face",
@@ -659,12 +735,12 @@ const experiences = [
                 className="space-y-5 text-gray-700 dark:text-gray-300 leading-relaxed max-w-3xl"
               >
                 <p className="text-lg">
-                  Passionate <span className="font-medium text-blue-600 dark:text-blue-400">Machine Learning Specialist</span> with a strong background in Computer Science and Mathematics from <span className="font-medium text-blue-600 dark:text-blue-400">Universidad Nacional de Colombia</span>, complemented by applied research experience at <span className="font-medium text-indigo-600 dark:text-indigo-400">Harvard Business School</span>.
+                  <span className="font-medium text-blue-600 dark:text-blue-400">LLM/ML Specialist</span> with 3+ years developing production-ready generative AI solutions. Currently building AI-powered clinical decision support systems at <span className="font-medium text-blue-600 dark:text-blue-400">GenomAI</span>, with previous research experience at <span className="font-medium text-indigo-600 dark:text-indigo-400">Harvard University</span>.
                 </p>
-                
+
                 <div className="py-1 border-l-2 border-blue-500/30 dark:border-blue-700/50 pl-4">
                   <p>
-                    Leveraging my interdisciplinary approach, I translate theoretical insights into practical business applications through scalable predictive models, adaptive generative architectures, and end-to-end data pipeline optimization.
+                    Specializing in the complete AI engineering stack: LLM fine-tuning with PyTorch, RAG architectures using LangChain and vector databases, plus cloud deployment on GCP. My expertise bridges advanced ML techniques with robust engineering practices for scalable, production-ready solutions.
                   </p>
                 </div>
                 
@@ -778,107 +854,114 @@ const experiences = [
               variants={fadeInUp}
               className="italic text-center mb-10 text-gray-600 dark:text-gray-400"
             >
-              Languages, frameworks, and tools with proven experience and impact
+              Core technologies and frameworks powering production AI systems
             </motion.p>
 
             <motion.div
               variants={fadeInUp}
               className="grid gap-x-12 gap-y-8 md:grid-cols-2"
             >
-              {/* ML & AI Frameworks */}
+              {/* LLM & RAG Systems */}
               <div>
                 <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
-                  ML & AI Frameworks
+                  LLM & RAG Systems
                 </h3>
                 <SkillBar
-                  name="Generative AI"
+                  name="Large Language Models"
                   level={4.5}
                   icon={BrainCircuit}
                   color="blue"
                 />
                 <SkillBar
-                  name="Natural Language Processing"
+                  name="RAG & Vector Databases"
                   level={4.5}
-                  icon={Terminal}
+                  icon={Database}
                   color="green"
                 />
                 <SkillBar
-                  name="ML Frameworks"
-                  level={4.5}
+                  name="PEFT & Fine-tuning"
+                  level={4}
                   icon={Code}
                   color="indigo"
                 />
               </div>
 
-              {/* DevOps & Tools */}
+              {/* ML Engineering & MLOps */}
               <div>
                 <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
-                  DevOps & Tools
+                  ML Engineering & MLOps
                 </h3>
                 <SkillBar
-                  name="Version Control"
-                  level={4.5}
-                  icon={Github}
-                  color="orange"
+                  name="ML Frameworks"
+                  level={4.3}
+                  icon={Terminal}
+                  color="purple"
                 />
                 <SkillBar
-                  name="Deployment"
-                  level={4}
+                  name="Model Deployment"
+                  level={3.9}
                   icon={Server}
                   color="red"
                 />
                 <SkillBar
-                  name="Automation & Agentic AI"
-                  level={4}
-                  icon={Layers}
-                  color="teal"
+                  name="CI/CD & Automation"
+                  level={3.8}
+                  icon={Github}
+                  color="orange"
                 />
               </div>
 
-              {/* Automation & Agentic AI */}
+              {/* Cloud & Infrastructure */}
               <div>
                 <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
-                  Cloud & Agentic AI
+                  Cloud & Infrastructure
                 </h3>
                 <SkillBar
                   name="Cloud Platforms"
                   level={4}
                   icon={Cloud}
-                  color="cyan"
+                  color="teal"
                 />
                 <SkillBar
-                  name="Agent Frameworks"
-                  level={4}
+                  name="Container Orchestration"
+                  level={3.5}
+                  icon={Box}
+                  color="yellow"
+                />
+                <SkillBar
+                  name="Distributed Systems"
+                  level={3.3}
                   icon={Layers}
-                  color="teal"
+                  color="indigo"
                 />
               </div>
 
-              {/* Visualization & Web Dev */}
+              {/* Development & Applications */}
               <div>
                 <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
-                  Visualization & Web Dev
+                  Development & Applications
                 </h3>
                 <SkillBar
+                  name="Python & SQL"
+                  level={4.7}
+                  icon={Code}
+                  color="blue"
+                />
+                <SkillBar
+                  name="API Development"
+                  level={4.2}
+                  icon={Globe}
+                  color="green"
+                />
+                <SkillBar
                   name="Data Visualization"
-                  level={4}
+                  level={3.9}
                   icon={BarChart}
                   color="purple"
                 />
-                <SkillBar
-                  name="Interactive Applications"
-                  level={4}
-                  icon={Globe}
-                  color="emerald"
-                />
-                <SkillBar
-                  name="Web Development"
-                  level={4}
-                  icon={Box}
-                  color="blueGray"
-                />
               </div>
             </motion.div>
+
           </motion.div>
         </div>
       </section>
