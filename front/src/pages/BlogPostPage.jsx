@@ -253,7 +253,7 @@ export default function BlogPostPage() {
   }
   
   const categoryConfig = BLOG_CONFIG.categories[post.category];
-  const headerImage = post.headerImage || `/blog/headers/default-${post.category}.jpg`;
+  const headerImage = post.headerImage || `${process.env.PUBLIC_URL}/blog/headers/default-${post.category}.jpg`;
   const baseImagePath = `/blog/figures/${post.category}`;
   
   return (

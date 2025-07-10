@@ -43,7 +43,7 @@ const staggerContainer = {
 // Post card component (reused from BlogHomePage but simplified)
 const PostCard = ({ post }) => {
   const categoryConfig = BLOG_CONFIG.categories[post.category];
-  const headerImage = post.headerImage || `/blog/headers/default-${post.category}.jpg`;
+  const headerImage = post.headerImage || `${process.env.PUBLIC_URL}/blog/headers/default-${post.category}.jpg`;
   
   return (
     <motion.article 
@@ -58,9 +58,9 @@ const PostCard = ({ post }) => {
           alt={post.title}
           className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
           onError={(e) => {
-            e.target.src = `/blog/headers/default-${post.category}.jpg`;
+            e.target.src = `${process.env.PUBLIC_URL}/blog/headers/default-${post.category}.jpg`;
             e.target.onerror = () => {
-              e.target.src = '/blog/headers/default.jpg';
+              e.target.src = `${process.env.PUBLIC_URL}/blog/headers/default.jpg`;
             };
           }}
         />

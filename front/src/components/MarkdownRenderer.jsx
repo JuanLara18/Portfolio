@@ -79,7 +79,7 @@ const MarkdownRenderer = memo(({ content, className = "", baseImagePath = "" }) 
       const imageSrc = src.startsWith('http') ? src : `${baseImagePath}/${src}`;
       
       return (
-        <figure className="my-8">
+        <div className="my-8">
           <img
             src={imageSrc}
             alt={alt || ''}
@@ -93,11 +93,11 @@ const MarkdownRenderer = memo(({ content, className = "", baseImagePath = "" }) 
             {...props}
           />
           {(alt || title) && (
-            <figcaption className="mt-2 text-sm text-gray-600 dark:text-gray-400 text-center italic">
+            <div className="mt-2 text-sm text-gray-600 dark:text-gray-400 text-center italic">
               {title || alt}
-            </figcaption>
+            </div>
           )}
-        </figure>
+        </div>
       );
     },
     
