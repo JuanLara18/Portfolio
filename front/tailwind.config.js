@@ -9,26 +9,7 @@ module.exports = {
         mono: ['Source Code Pro', 'monospace'],
       },
       colors: {
-        // Custom colors can be added here if needed
-      },
-      animation: {
-        'bounce-slow': 'bounce 3s linear infinite',
-      },
-    },
-  },
-  plugins: [],
-}/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
-  darkMode: 'class', // Enable class-based dark mode
-  theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        mono: ['Source Code Pro', 'monospace'],
-      },
-      colors: {
-        // Added custom color palette
+  // Added custom color palette
         slate: {
           50: '#f8fafc',
           100: '#f1f5f9',
@@ -72,5 +53,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
 }

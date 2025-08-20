@@ -1,60 +1,19 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
+import { variants as motionVariants } from '../shared/motion';
 import { ChevronDown, Github, Linkedin, Mail, ExternalLink, Code, Terminal, Database, Server, Cpu, TerminalSquare, BrainCircuit, FileCode, Braces, Layers } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-// Import enhanced components
-import EnhancedTypingTerminal from '../components/EnhancedTypingTerminal';
-import EnhancedTechIcon from '../components/EnhancedTechIcon';
-import ParticleGridBackground from '../components/ParticleGridBackground';
+// Import enhanced components via UI barrel
+import { TypingTerminal, TechIcon, ParticleBackground } from '../components/ui';
+import { HoverMotion } from '../components/layout/TransitionProvider';
 
 // Animation variants
-const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] }
-  }
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.2
-    }
-  }
-};
-
-const slideInRight = {
-  hidden: { opacity: 0, x: 40 },
-  visible: { 
-    opacity: 1, 
-    x: 0,
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] }
-  }
-};
-
-const slideInLeft = {
-  hidden: { opacity: 0, x: -40 },
-  visible: { 
-    opacity: 1, 
-    x: 0,
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] }
-  }
-};
-
-const scaleUp = {
-  hidden: { opacity: 0, scale: 0.9 },
-  visible: { 
-    opacity: 1, 
-    scale: 1,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
-  }
-};
+const fadeInUp = motionVariants.fadeInUp();
+const staggerContainer = motionVariants.stagger();
+const slideInRight = motionVariants.fadeInRight();
+const slideInLeft = motionVariants.fadeInLeft();
+const scaleUp = motionVariants.scaleUp();
 
 // Main landing page component
 export default function LandingPage() {
@@ -162,7 +121,7 @@ export default function LandingPage() {
         className="relative min-h-screen flex items-center justify-center overflow-hidden"
       >
         {/* Enhanced Particle Grid Background */}
-        <ParticleGridBackground mousePosition={mousePosition} />
+  <ParticleBackground mousePosition={mousePosition} />
         
         {/* Floating decorative elements with parallax effect */}
         <motion.div 
@@ -228,30 +187,26 @@ export default function LandingPage() {
                 variants={fadeInUp}
                 className="flex flex-wrap gap-3 mb-8"
               >
-                <motion.span 
-                  whileHover={{ y: -3, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.5)" }}
+                <HoverMotion as={motion.span} extraWhileHover={{ boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.5)" }}
                   className="px-4 py-2 rounded-lg text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 border border-blue-200 dark:border-blue-800 backdrop-blur-sm transition-all duration-300"
                 >
                   LLM & RAG Systems
-                </motion.span>
-                <motion.span 
-                  whileHover={{ y: -3, boxShadow: "0 10px 25px -5px rgba(67, 56, 202, 0.5)" }}
+                </HoverMotion>
+                <HoverMotion as={motion.span} extraWhileHover={{ boxShadow: "0 10px 25px -5px rgba(67, 56, 202, 0.5)" }}
                   className="px-4 py-2 rounded-lg text-sm font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900/50 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 backdrop-blur-sm transition-all duration-300"
                 >
                   Generative AI
-                </motion.span>
-                <motion.span 
-                  whileHover={{ y: -3, boxShadow: "0 10px 25px -5px rgba(147, 51, 234, 0.5)" }}
+                </HoverMotion>
+                <HoverMotion as={motion.span} extraWhileHover={{ boxShadow: "0 10px 25px -5px rgba(147, 51, 234, 0.5)" }}
                   className="px-4 py-2 rounded-lg text-sm font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300 border border-purple-200 dark:border-purple-800 backdrop-blur-sm transition-all duration-300"
                 >
                   NLP
-                </motion.span>
-                <motion.span 
-                  whileHover={{ y: -3, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.5)" }}
+                </HoverMotion>
+                <HoverMotion as={motion.span} extraWhileHover={{ boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.5)" }}
                   className="px-4 py-2 rounded-lg text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 border border-blue-200 dark:border-blue-800 backdrop-blur-sm transition-all duration-300"
                 >
                   Cloud Deployment
-                </motion.span>
+                </HoverMotion>
               </motion.div>
               
               {/* Enhanced CTA buttons */}
@@ -306,12 +261,13 @@ export default function LandingPage() {
             </motion.div>
             
             {/* Enhanced Terminal Card */}
-            <motion.div 
+            <HoverMotion as={motion.div}
               variants={scaleUp}
               initial="hidden"
               animate="visible"
               className="lg:col-span-2"
-              whileHover={{ y: -5, transition: { duration: 0.3 } }}
+              y={-5}
+              duration={0.3}
             >
               <div className="relative">
                 {/* Animated decorative shapes */}
@@ -344,16 +300,16 @@ export default function LandingPage() {
                 
                 {/* Enhanced terminal card with improved shadow */}
                 <div className="relative z-10 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-[0_10px_40px_-15px_rgba(0,0,0,0.3)] dark:shadow-[0_10px_40px_-15px_rgba(0,0,0,0.7)] border border-gray-100 dark:border-gray-700 transition-all duration-500">
-                  <EnhancedTypingTerminal text="const profile = {\n  name: 'Juan Lara',\n  role: 'LLM/ML Specialist @ GenomAI',\n  expertise: ['RAG Systems', 'LLM Fine-tuning', 'Vector DBs'],\n  stack: ['Python', 'PyTorch', 'LangChain', 'GCP'],\n  education: [\n    'B.S. Computer Science',\n    'B.S. Mathematics'\n  ],\n  mission: 'Transform complex AI requirements into scalable solutions'\n};" />
+                  <TypingTerminal text="const profile = {\n  name: 'Juan Lara',\n  role: 'LLM/ML Specialist @ GenomAI',\n  expertise: ['RAG Systems', 'LLM Fine-tuning', 'Vector DBs'],\n  stack: ['Python', 'PyTorch', 'LangChain', 'GCP'],\n  education: [\n    'B.S. Computer Science',\n    'B.S. Mathematics'\n  ],\n  mission: 'Transform complex AI requirements into scalable solutions'\n};" />
 
                   <div className="mt-8 grid grid-cols-3 gap-2">
-                    <EnhancedTechIcon icon={BrainCircuit} label="LLM Engineering" delay={0.2} />
-                    <EnhancedTechIcon icon={Database} label="RAG Systems" delay={0.4} />
-                    <EnhancedTechIcon icon={Server} label="Cloud Deployment" delay={0.6} />
+                    <TechIcon icon={BrainCircuit} label="LLM Engineering" delay={0.2} />
+                    <TechIcon icon={Database} label="RAG Systems" delay={0.4} />
+                    <TechIcon icon={Server} label="Cloud Deployment" delay={0.6} />
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </HoverMotion>
           </div>
           
           {/* Enhanced scroll indicator */}
@@ -557,10 +513,11 @@ export default function LandingPage() {
               Let's Connect
             </motion.h2>
             
-            <motion.div 
-              variants={scaleUp}
+            <HoverMotion as={motion.div}
               className="bg-gray-800 p-8 rounded-xl shadow-xl border border-gray-700 mb-8"
-              whileHover={{ y: -5, transition: { duration: 0.3 } }}
+              y={-5}
+              duration={0.3}
+              variants={scaleUp}
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                 <div>
@@ -580,12 +537,13 @@ export default function LandingPage() {
                 
                 <div>
                   <div className="flex flex-col space-y-4">
-                    <motion.a 
+                    <HoverMotion as={motion.a}
                       href="https://github.com/JuanLara18" 
                       target="_blank" 
                       rel="noopener noreferrer" 
                       className="flex items-center px-4 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors relative overflow-hidden group"
-                      whileHover={{ y: -2, transition: { duration: 0.2 } }}
+                      y={-2}
+                      duration={0.2}
                     >
                       <Github className="mr-3 text-white" size={20} />
                       <span>Github Projects</span>
@@ -602,13 +560,14 @@ export default function LandingPage() {
                           } 
                         }}
                       />
-                    </motion.a>
-                    <motion.a 
+                    </HoverMotion>
+                    <HoverMotion as={motion.a}
                       href="https://www.linkedin.com/in/julara/?locale=en_US" 
                       target="_blank" 
                       rel="noopener noreferrer" 
                       className="flex items-center px-4 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors relative overflow-hidden group"
-                      whileHover={{ y: -2, transition: { duration: 0.2 } }}
+                      y={-2}
+                      duration={0.2}
                     >
                       <Linkedin className="mr-3 text-white" size={20} />
                       <span>LinkedIn Profile</span>
@@ -625,11 +584,12 @@ export default function LandingPage() {
                           } 
                         }}
                       />
-                    </motion.a>
-                    <motion.a 
+                    </HoverMotion>
+                    <HoverMotion as={motion.a}
                       href="mailto:larajuand@outlook.com" 
                       className="flex items-center px-4 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors relative overflow-hidden group"
-                      whileHover={{ y: -2, transition: { duration: 0.2 } }}
+                      y={-2}
+                      duration={0.2}
                     >
                       <Mail className="mr-3 text-white" size={20} />
                       <span>Send Email</span>
@@ -646,11 +606,11 @@ export default function LandingPage() {
                           } 
                         }}
                       />
-                    </motion.a>
+                    </HoverMotion>
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </HoverMotion>
             
             <motion.p 
               variants={fadeInUp}

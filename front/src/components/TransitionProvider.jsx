@@ -1,32 +1,13 @@
-import { useState, useEffect, createContext, useContext, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useSpring, useInView } from 'framer-motion';
+import React, { useState, useEffect, createContext, useContext, useRef, useMemo } from 'react';
+import { motion, AnimatePresence, useScroll, useSpring, useInView, useTransform } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
+import { variants as motionVariants, useScrollRevealVariants } from '../shared/motion';
 
 // Create a context to manage transition state
 const TransitionContext = createContext();
 
-// Page transition variants with improved performance
-const pageTransitions = {
-  initial: {
-    opacity: 0,
-    y: 10
-  },
-  animate: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.4,
-      ease: [0.22, 1, 0.36, 1]
-    }
-  },
-  exit: {
-    opacity: 0,
-    transition: {
-      duration: 0.2,
-      ease: [0.22, 1, 0.36, 1]
-    }
-  }
-};
+// Use centralized page transitions
+const pageTransitions = motionVariants.page;
 
 export const TransitionProvider = ({ children }) => {
   const location = useLocation();
@@ -100,7 +81,7 @@ export const TransitionProvider = ({ children }) => {
   
   return (
     <TransitionContext.Provider value={{ ...deviceInfo, avgFps }}>
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={location.pathname}
           initial="initial"
@@ -136,43 +117,31 @@ export const ScrollReveal = ({
     once, 
     margin: `-${threshold * 100}px 0px` 
   });
-  
+
   // Adjust animation parameters based on device capability
   const adjustedDistance = isMobile ? Math.min(distance, 20) : distance;
   const adjustedDuration = isMobile ? Math.min(duration, 0.5) : duration;
-  
+  const adjustedDelay = isMobile ? delay * 0.5 : delay;
+
   // Simpler animation for reduced motion or low performance
   const shouldUseSimpleAnimation = prefersReducedMotion || !isHighPerformance;
-  
-  // Calculate motion properties based on direction
-  const getMotionProps = () => {
-    if (shouldUseSimpleAnimation) {
-      return { opacity: isInView ? 1 : 0 };
-    }
-    
-    const directionProps = {
-      y: direction === "up" ? (isInView ? 0 : adjustedDistance) : 
-         direction === "down" ? (isInView ? 0 : -adjustedDistance) : 0,
-      x: direction === "left" ? (isInView ? 0 : adjustedDistance) : 
-         direction === "right" ? (isInView ? 0 : -adjustedDistance) : 0
-    };
-    
-    return {
-      opacity: isInView ? 1 : 0,
-      ...directionProps,
-      transition: {
-        duration: adjustedDuration,
-        delay: isMobile ? delay * 0.5 : delay,
-        ease: [0.22, 1, 0.36, 1]
-      }
-    };
-  };
-  
+
+  // Stable variants to prevent re-creating animation objects each render
+  const variants = useScrollRevealVariants({
+    direction,
+    distance: adjustedDistance,
+    duration: adjustedDuration,
+    delay: adjustedDelay,
+    simple: shouldUseSimpleAnimation
+  });
+
   return (
     <motion.div
       ref={ref}
       className={className}
-      animate={getMotionProps()}
+      variants={variants}
+      initial="hidden"
+      animate={isInView ? 'visible' : 'hidden'}
       {...props}
     >
       {children}
@@ -274,22 +243,24 @@ export const StaggerContainer = ({
 
 // Improved hover effect with adaptive motion
 export const HoverMotion = ({ 
+  as: Component = motion.div,
   children, 
   scale = 1.03, 
   y = -3, 
   duration = 0.3,
   className = "", 
+  extraWhileHover = {},
   ...props 
 }) => {
   const { isMobile, prefersReducedMotion } = useTransition();
   
   // Skip hover animations on mobile or reduced motion
   if (isMobile || prefersReducedMotion) {
-    return <div className={className} {...props}>{children}</div>;
+    return <Component className={className} {...props}>{children}</Component>;
   }
   
   return (
-    <motion.div
+    <Component
       className={className}
       whileHover={{ 
         scale, 
@@ -297,11 +268,12 @@ export const HoverMotion = ({
         transition: { 
           duration, 
           ease: [0.22, 1, 0.36, 1]
-        }
+        },
+        ...extraWhileHover
       }}
       {...props}
     >
       {children}
-    </motion.div>
+    </Component>
   );
 };

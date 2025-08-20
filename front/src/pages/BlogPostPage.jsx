@@ -15,7 +15,8 @@ import {
   ChevronUp
 } from 'lucide-react';
 import { getPostBySlug, BLOG_CONFIG, formatDate } from '../utils/blogUtils';
-import MarkdownRenderer from '../components/MarkdownRenderer';
+import { MarkdownRenderer } from '../components/blog';
+import { HoverMotion } from '../components/layout/TransitionProvider';
 
 // Animation variants
 const fadeInUp = {
@@ -137,17 +138,17 @@ const ScrollToTop = () => {
   if (!isVisible) return null;
   
   return (
-    <motion.button
+    <HoverMotion as={motion.button}
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.8 }}
       onClick={scrollToTop}
       className="fixed bottom-8 right-8 z-50 w-12 h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg flex items-center justify-center transition-colors"
-      whileHover={{ scale: 1.1 }}
+      scale={1.1}
       whileTap={{ scale: 0.9 }}
     >
       <ChevronUp size={24} />
-    </motion.button>
+    </HoverMotion>
   );
 };
 
@@ -253,13 +254,20 @@ export default function BlogPostPage() {
   }
   
   const categoryConfig = BLOG_CONFIG.categories[post.category];
-  const headerImage = post.headerImage || `${process.env.PUBLIC_URL}/blog/headers/default-${post.category}.jpg`;
-  const baseImagePath = `/blog/figures/${post.category}`;
+  const withPublicUrl = (p) => {
+    if (!p) return '';
+    const base = process.env.PUBLIC_URL || '';
+    if (p.startsWith('http')) return p;
+    if (p.startsWith('/')) return `${base}${p}`;
+    return `${base}/${p}`;
+  };
+  const headerImage = withPublicUrl(post.headerImage || `/blog/headers/default-${post.category}.jpg`);
+  const baseImagePath = withPublicUrl(`/blog/figures/${post.category}`);
   
   return (
     <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
       {/* Header with Hero Image */}
-      <motion.section 
+  <motion.section 
         ref={heroRef}
         style={{ y: headerY, opacity: headerOpacity }}
         className="relative h-96 md:h-[500px] overflow-hidden"
@@ -271,10 +279,13 @@ export default function BlogPostPage() {
             alt={post.title}
             className="w-full h-full object-cover"
             onError={(e) => {
-              e.target.src = `/blog/headers/default-${post.category}.jpg`;
-              e.target.onerror = () => {
-                e.target.src = '/blog/headers/default.jpg';
-              };
+              const fallbackByCat = withPublicUrl(`/blog/headers/default-${post.category}.jpg`);
+              const fallback = withPublicUrl('/blog/headers/default.jpg');
+              if (e.target.src !== fallbackByCat) {
+                e.target.src = fallbackByCat;
+              } else if (e.target.src !== fallback) {
+                e.target.src = fallback;
+              }
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/20"></div>

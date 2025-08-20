@@ -6,7 +6,7 @@ const DOT_SIZE = 5;
 const MAX_DISTANCE = 150;
 const UPDATE_INTERVAL = 25;
 
-const ParticleGridBackground = ({ mousePosition }) => {
+const ParticleBackground = ({ mousePosition }) => {
   const gridRef = useRef(null);
   
   useEffect(() => {
@@ -109,4 +109,4 @@ const ParticleGridBackground = ({ mousePosition }) => {
   );
 };
 
-export default ParticleGridBackground;
+export default ParticleBackground;

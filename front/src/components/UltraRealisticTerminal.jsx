@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const EnhancedTypingTerminal = ({ text = "Welcome to the enhanced terminal experience! This simulation now features more realistic typing patterns, better mistake handling, natural pauses, and improved visual effects for an authentic coding experience." }) => {
+const TypingTerminalAdvanced = ({ text = "Welcome to the enhanced terminal experience! This simulation now features more realistic typing patterns, better mistake handling, natural pauses, and improved visual effects for an authentic coding experience." }) => {
   const [displayText, setDisplayText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showCursor, setShowCursor] = useState(true);
@@ -242,4 +242,4 @@ const EnhancedTypingTerminal = ({ text = "Welcome to the enhanced terminal exper
   );
 };
 
-export default EnhancedTypingTerminal;
+export default TypingTerminalAdvanced;

@@ -14,37 +14,29 @@ import {
   FileText 
 } from 'lucide-react';
 import { loadAllPosts, getAllTags, BLOG_CONFIG, formatDate } from '../utils/blogUtils';
+import { variants as motionVariants } from '../shared/motion';
+import { MotionCard } from '../shared/ui/Card';
 
 // Animation variants
-const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] }
-  }
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.2
-    }
-  }
-};
+const fadeInUp = motionVariants.fadeInUp();
+const staggerContainer = motionVariants.stagger();
 
 // Post card component
 const PostCard = ({ post }) => {
   const categoryConfig = BLOG_CONFIG.categories[post.category];
-  const headerImage = post.headerImage || `${process.env.PUBLIC_URL}/blog/headers/default-${post.category}.jpg`;
+  const withPublicUrl = (p) => {
+    if (!p) return '';
+    const base = process.env.PUBLIC_URL || '';
+    if (p.startsWith('http')) return p;
+    if (p.startsWith('/')) return `${base}${p}`;
+    return `${base}/${p}`;
+  };
+  const headerImage = withPublicUrl(post.headerImage || `/blog/headers/default-${post.category}.jpg`);
   
   return (
-    <motion.article 
+    <MotionCard 
       className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 h-full flex flex-col group hover:shadow-xl transition-all duration-500"
-      whileHover={{ y: -5, transition: { duration: 0.3 } }}
+      hover="lift"
       variants={fadeInUp}
     >
       {/* Header Image */}
@@ -54,10 +46,13 @@ const PostCard = ({ post }) => {
           alt={post.title}
           className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
           onError={(e) => {
-            e.target.src = `/blog/headers/default-${post.category}.jpg`;
-            e.target.onerror = () => {
-              e.target.src = '/blog/headers/default.jpg';
-            };
+            const fallbackByCat = withPublicUrl(`/blog/headers/default-${post.category}.jpg`);
+            const fallback = withPublicUrl('/blog/headers/default.jpg');
+            if (e.target.src !== fallbackByCat) {
+              e.target.src = fallbackByCat;
+            } else if (e.target.src !== fallback) {
+              e.target.src = fallback;
+            }
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
@@ -133,7 +128,7 @@ const PostCard = ({ post }) => {
           </Link>
         </div>
       </div>
-    </motion.article>
+  </MotionCard>
   );
 };
 
@@ -346,7 +341,7 @@ export default function BlogHomePage() {
       <section className="py-16">
         <div className="container mx-auto px-6">
           <motion.div 
-            initial="hidden"
+            initial={false}
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
@@ -399,6 +394,7 @@ export default function BlogHomePage() {
               </motion.div>
             ) : (
               <motion.div 
+                initial={false}
                 variants={staggerContainer}
                 className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
               >

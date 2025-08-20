@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
-const EnhancedTypingTerminal = ({ text }) => {
+const TypingTerminal = ({ text }) => {
   const [displayText, setDisplayText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showCursor, setShowCursor] = useState(true);
@@ -94,4 +94,4 @@ const EnhancedTypingTerminal = ({ text }) => {
   );
 };
 
-export default EnhancedTypingTerminal;
+export default TypingTerminal;

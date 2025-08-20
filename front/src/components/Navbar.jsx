@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Sun, Moon, Menu } from 'lucide-react';
-import MobileMenu from './MobileMenu';
+import MobileMenu from './layout/MobileMenu';
 
 const Navbar = ({ darkMode, toggleDarkMode }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

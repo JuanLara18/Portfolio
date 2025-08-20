@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { variants as motionVariants } from '../shared/motion';
 import { Link } from 'react-router-dom';
 import { 
   ExternalLink, 
@@ -23,45 +24,13 @@ import {
   Layers,
   Box
 } from 'lucide-react';
+import { HoverMotion } from '../components/layout/TransitionProvider';
 
 // Animation variants
-const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] }
-  }
-};
-
-const fadeInRight = {
-  hidden: { opacity: 0, x: -30 },
-  visible: { 
-    opacity: 1, 
-    x: 0,
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] }
-  }
-};
-
-const fadeInLeft = {
-  hidden: { opacity: 0, x: 30 },
-  visible: { 
-    opacity: 1, 
-    x: 0,
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] }
-  }
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.2
-    }
-  }
-};
+const fadeInUp = motionVariants.fadeInUp();
+const fadeInRight = motionVariants.fadeInRight();
+const fadeInLeft = motionVariants.fadeInLeft();
+const staggerContainer = motionVariants.stagger();
 
 // Skill component with animated progress bar
 const SkillBar = ({ name, level, icon: Icon, color = "blue" }) => {
@@ -751,12 +720,13 @@ const courses = [
             </motion.div>
             
             {/* Enhanced Profile Image with more sophisticated decorative elements */}
-            <motion.div 
+            <HoverMotion as={motion.div}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="md:w-2/5 flex justify-center"
-              whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
+              scale={1.02}
+              duration={0.3}
             >
               <div className="relative">
                 {/* Animated decorative circles */}
@@ -829,7 +799,7 @@ const courses = [
                   </motion.div>
                 </div>
               </div>
-            </motion.div>
+            </HoverMotion>
           </div>
         </div>
       </motion.section>

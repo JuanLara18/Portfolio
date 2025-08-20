@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { TransitionProvider } from './components/TransitionProvider';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+import { TransitionProvider, Navbar } from './components/layout';
 import LandingPage from './pages/LandingPage';
 import AboutPage from './pages/AboutPage';
 import ProjectsPage from './pages/ProjectsPage';
@@ -44,8 +42,26 @@ function App() {
     }
   }, [darkMode]);
 
+  // Derive a safe basename from PUBLIC_URL (path only, no origin)
+  const basename = (() => {
+    const raw = process.env.PUBLIC_URL;
+    if (!raw) return '/';
+    try {
+      // If it's an absolute URL, extract pathname; if it's a path, use as-is
+      const url = raw.startsWith('http') ? new URL(raw) : new URL(raw, window.location.origin);
+      const path = url.pathname || '/';
+      // Ensure no trailing slash except root
+      return path !== '/' && path.endsWith('/') ? path.slice(0, -1) : path || '/';
+    } catch {
+      return '/';
+    }
+  })();
+
   return (
-    <Router basename={process.env.PUBLIC_URL}>
+    <Router 
+      basename={basename}
+      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+    >
       <TransitionProvider>
         <div className="App min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
           <Navbar 
@@ -70,7 +86,7 @@ function App() {
               <Route path="*" element={<LandingPage />} />
             </Routes>
           </div>
-          {/* <Footer /> */}
+          {/* Footer intentionally omitted for now */}
         </div>
       </TransitionProvider>
     </Router>

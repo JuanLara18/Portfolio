@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { variants as motionVariants } from '../shared/motion';
+import { MotionCard } from '../shared/ui/Card';
 import { 
   ExternalLink, 
   Github, 
@@ -21,47 +23,12 @@ import {
   Mail
 } from 'lucide-react';
 
-// Animation variants
-const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] }
-  }
-};
+// Animation variants (centralized)
+const fadeInUp = motionVariants.fadeInUp();
+const fadeInRight = motionVariants.fadeInRight();
+const staggerContainer = motionVariants.stagger();
 
-const fadeInRight = {
-  hidden: { opacity: 0, x: -30 },
-  visible: { 
-    opacity: 1, 
-    x: 0,
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] }
-  }
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.2
-    }
-  }
-};
-
-const cardHover = {
-  rest: { scale: 1, y: 0 },
-  hover: { 
-    scale: 1.02, 
-    y: -8,
-    transition: {
-      duration: 0.4,
-      ease: [0.22, 1, 0.36, 1]
-    }
-  }
-};
+// Card hover behavior is centralized via MotionCard
 
 // Project categories with their icons and colors
 const categories = [
@@ -281,12 +248,11 @@ const ProjectCard = ({ project, inView }) => {
 
   
   return (
-    <motion.div 
+    <MotionCard
+      as={motion.div}
+      hover="liftScale"
       className={`bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 h-full flex flex-col
       ${project.featured ? 'col-span-2' : ''}`}
-      initial="rest"
-      whileHover="hover"
-      variants={cardHover}
     >
       <div className="relative overflow-hidden aspect-[4/3]">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 z-10"></div>
@@ -384,7 +350,7 @@ const ProjectCard = ({ project, inView }) => {
           ) : null}
         </div>
       </div>
-    </motion.div>
+  </MotionCard>
   );
 };
 
