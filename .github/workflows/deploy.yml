@@ -15,26 +15,26 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     environment: github-pages
+    defaults:
+      run:
+        working-directory: ./front
     
     steps:
       - name: Checkout Repository 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       - name: Setup Node.js Environment ⚙️
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: 'npm'
           cache-dependency-path: 'front/package-lock.json'
       
       - name: Install Dependencies 📦
-        run: |
-          cd front
-          npm ci
+        run: npm ci
       
       - name: Verify Blog Source Files 🔍
         run: |
-          cd front
           echo "=== Blog Source Directory Structure ==="
           ls -la public/blog/ || echo "Blog directory not found"
           echo "=== Available Markdown Posts ==="
@@ -42,15 +42,12 @@ jobs:
           find public/blog/posts -name "*.md" 2>/dev/null || echo "No markdown files found"
       
       - name: Build Application 🔧
-        run: |
-          cd front
-          npm run build
+        run: npm run build
         env:
           CI: false
       
       - name: Verify Blog Data Generation 📊
         run: |
-          cd front
           echo "=== Generated Blog Data ==="
           if [ -f "src/data/blogData.json" ]; then
             echo "✅ blogData.json generated successfully"
@@ -63,7 +60,6 @@ jobs:
       
       - name: Verify Build Output 🔍
         run: |
-          cd front
           echo "=== Build Directory Structure ==="
           ls -la build/
           echo "=== Build Assets ==="
