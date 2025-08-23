@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { TransitionProvider, Navbar } from './components/layout';
 import LandingPage from './pages/LandingPage';
 import AboutPage from './pages/AboutPage';
@@ -7,10 +8,14 @@ import ProjectsPage from './pages/ProjectsPage';
 import BlogHomePage from './pages/BlogHomePage';
 import BlogPostPage from './pages/BlogPostPage';
 import BlogCategoryPage from './pages/BlogCategoryPage';
+import useNavbarHeight from './hooks/useNavbarHeight';
 
 function App() {
   // Dark mode state
   const [darkMode, setDarkMode] = useState(false);
+  
+  // Dynamic navbar height
+  const navbarHeight = useNavbarHeight();
   
   // Initialize darkMode based on user preference or localStorage
   useEffect(() => {
@@ -58,19 +63,20 @@ function App() {
   })();
 
   return (
-    <Router 
-      basename={basename}
-      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-    >
-      <TransitionProvider>
-        <div className="App min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <HelmetProvider>
+      <Router 
+        basename={basename}
+        future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+      >
+        <TransitionProvider>
+        <div className="App min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 relative overflow-x-hidden">
           <Navbar 
             darkMode={darkMode} 
             toggleDarkMode={toggleDarkMode} 
           />
           
-          {/* Main content with top padding for navbar */}
-          <div className="pt-20">
+          {/* Main content with dynamic top padding for navbar */}
+          <div style={{ paddingTop: `${navbarHeight + 8}px` }}>
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/about" element={<AboutPage />} />
@@ -88,8 +94,9 @@ function App() {
           </div>
           {/* Footer intentionally omitted for now */}
         </div>
-      </TransitionProvider>
-    </Router>
+        </TransitionProvider>
+      </Router>
+    </HelmetProvider>
   );
 }
 

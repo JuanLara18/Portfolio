@@ -14,7 +14,7 @@ import {
   MessageCircle,
   ChevronUp
 } from 'lucide-react';
-import { getPostBySlug, BLOG_CONFIG, formatDate } from '../utils/blogUtils';
+import { getPostBySlug, BLOG_CONFIG, formatDate, scrollToElementCentered } from '../utils/blogUtils';
 import { MarkdownRenderer } from '../components/blog';
 import { HoverMotion } from '../components/layout/TransitionProvider';
 
@@ -79,6 +79,20 @@ const TableOfContents = ({ content }) => {
   }, [headings]);
   
   if (headings.length === 0) return null;
+
+  // Function to smoothly scroll to element and center it
+  const scrollToElement = (e, id) => {
+    e.preventDefault();
+    
+    // Adjust navbar height based on screen size
+    const navbarHeight = window.innerWidth < 768 ? 70 : 80;
+    
+    scrollToElementCentered(id, {
+      navbarHeight,
+      updateURL: true,
+      highlightElement: true
+    });
+  };
   
   return (
     <nav className="sticky top-24 bg-white dark:bg-gray-800 rounded-lg p-4 shadow-lg border border-gray-200 dark:border-gray-700">
@@ -91,7 +105,8 @@ const TableOfContents = ({ content }) => {
           <li key={id}>
             <a
               href={`#${id}`}
-              className={`block py-1 text-sm transition-colors duration-200 ${
+              onClick={(e) => scrollToElement(e, id)}
+              className={`block py-1 text-sm transition-colors duration-200 cursor-pointer ${
                 activeId === id
                   ? 'text-blue-600 dark:text-blue-400 font-medium'
                   : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
@@ -161,9 +176,9 @@ export default function BlogPostPage() {
   const { scrollY } = useScroll();
   const heroRef = useRef(null);
   
-  // Transform values for header parallax
-  const headerY = useTransform(scrollY, [0, 400], [0, 100]);
-  const headerOpacity = useTransform(scrollY, [0, 300], [1, 0.3]);
+  // Transform values for smoother header parallax
+  const headerY = useTransform(scrollY, [0, 400], [0, -60]);
+  const headerOpacity = useTransform(scrollY, [0, 300], [1, 0.8]);
   
   useEffect(() => {
     async function loadPost() {
@@ -235,11 +250,11 @@ export default function BlogPostPage() {
           </p>
           <div className="flex gap-3 justify-center">
             <button 
-              onClick={() => navigate(-1)}
+              onClick={() => navigate('/blog')}
               className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors flex items-center gap-2"
             >
               <ArrowLeft size={16} />
-              Go Back
+              Back to Blog
             </button>
             <Link 
               to="/blog"
@@ -270,7 +285,7 @@ export default function BlogPostPage() {
   <motion.section 
         ref={heroRef}
         style={{ y: headerY, opacity: headerOpacity }}
-        className="relative h-96 md:h-[500px] overflow-hidden"
+        className="relative h-96 md:h-[500px] overflow-hidden parallax-smooth"
       >
         {/* Background Image */}
         <div className="absolute inset-0">
@@ -303,11 +318,11 @@ export default function BlogPostPage() {
               {/* Back Button */}
               <div className="mb-6">
                 <button
-                  onClick={() => navigate(-1)}
+                  onClick={() => navigate('/blog')}
                   className="inline-flex items-center px-4 py-2 bg-white/20 backdrop-blur-md text-white rounded-lg hover:bg-white/30 transition-colors border border-white/20"
                 >
                   <ArrowLeft size={16} className="mr-2" />
-                  Back
+                  Back to Blog
                 </button>
               </div>
               
@@ -350,13 +365,13 @@ export default function BlogPostPage() {
               </div>
               
               {/* Tags */}
-              {post.tags && post.tags.length > 0 && (
+                  {post.tags && post.tags.length > 0 && (
                 <div className="flex flex-wrap gap-2 mt-6">
                   {post.tags.map((tag, index) => (
                     <Link
                       key={index}
                       to={`/blog/tag/${encodeURIComponent(tag)}`}
-                      className="inline-flex items-center px-3 py-1 bg-white/20 backdrop-blur-md text-white rounded-full text-sm hover:bg-white/30 transition-colors border border-white/20"
+                      className="card-tag card-tag-hero inline-flex items-center"
                     >
                       <Tag size={12} className="mr-1" />
                       {tag}

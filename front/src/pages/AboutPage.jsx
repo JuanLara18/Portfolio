@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { variants as motionVariants } from '../shared/motion';
+import { Helmet } from 'react-helmet-async';
+import { variants as motionVariants, defaultViewportSettings, earlyViewportSettings } from '../shared/motion';
 import { Link } from 'react-router-dom';
 import { 
   ExternalLink, 
@@ -17,6 +18,7 @@ import {
   Mail, 
   Phone,
   MapPin,
+  ChevronDown,
   Github,
   BarChart,
   Terminal,
@@ -119,7 +121,7 @@ const ExperienceCard = ({
   logo 
 }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "0px" });
   
   return (
     <motion.div 
@@ -127,7 +129,7 @@ const ExperienceCard = ({
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-10 border border-gray-100 dark:border-gray-700 relative overflow-hidden group"
+      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-10 border border-gray-100 dark:border-gray-700 relative overflow-hidden group mobile-card-large"
     >
       <div className="absolute top-0 right-0 w-40 h-40 bg-blue-50/50 dark:bg-blue-900/10 rounded-full -mr-20 -mt-20 z-0 transform group-hover:scale-110 transition-transform duration-500"></div>
       
@@ -136,13 +138,14 @@ const ExperienceCard = ({
           <div className="w-24 h-24 md:w-24 md:h-24 rounded-lg overflow-hidden flex-shrink-0 bg-white p-2 shadow-md">
             <img 
               src={`${process.env.PUBLIC_URL}/images/company-logos/${logo}`} 
-              alt={company} 
+              alt={`${company} company logo`}
+              loading="lazy"
               className="w-full h-full object-contain"
             />
           </div>
           
           <div>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white">{role}</h3>
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white mobile-card-title">{role}</h3>
             <div className="text-lg text-blue-600 dark:text-blue-400 font-medium">{company}</div>
             <div className="flex flex-wrap items-center text-sm text-gray-600 dark:text-gray-400 mt-1 gap-2">
               <span>{period}</span>
@@ -152,11 +155,11 @@ const ExperienceCard = ({
           </div>
         </div>
         
-        <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">{description}</p>
+        <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed mobile-card-text">{description}</p>
         
         {responsibilities && (
           <div className="mb-4">
-            <h4 className="text-sm uppercase tracking-wider text-gray-600 dark:text-gray-400 font-semibold mb-2">Key Responsibilities</h4>
+            <h4 className="text-sm uppercase tracking-wider text-gray-600 dark:text-gray-400 font-semibold mb-2 mobile-card-subtitle">Key Responsibilities</h4>
             <ul className="list-disc list-inside space-y-1 text-gray-700 dark:text-gray-300">
               {responsibilities.map((item, index) => (
                 <li key={index} className="leading-relaxed">{item}</li>
@@ -194,7 +197,7 @@ const EducationCard = ({
   logo 
 }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "0px" });
   
   return (
     <motion.div 
@@ -202,7 +205,7 @@ const EducationCard = ({
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8 border border-gray-100 dark:border-gray-700 relative overflow-hidden"
+      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8 border border-gray-100 dark:border-gray-700 relative overflow-hidden mobile-card-large"
     >
       <div className="absolute bottom-0 left-0 w-40 h-40 bg-blue-50/50 dark:bg-blue-900/10 rounded-full -ml-20 -mb-20 z-0"></div>
       
@@ -211,13 +214,14 @@ const EducationCard = ({
           <div className="w-24 h-24 md:w-24 md:h-24 rounded-lg overflow-hidden flex-shrink-0 bg-white p-2 shadow-md">
             <img 
               src={`${process.env.PUBLIC_URL}/images/institutions/${logo}`} 
-              alt={institution} 
+              alt={`${institution} institutional logo`}
+              loading="lazy"
               className="w-full h-full object-contain"
             />
           </div>
           
           <div>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white">{degree}</h3>
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white mobile-card-title">{degree}</h3>
             <div className="text-lg text-blue-600 dark:text-blue-400">{institution}</div>
             <div className="flex flex-wrap items-center text-sm text-gray-600 dark:text-gray-400 mt-1 gap-2">
               <span>{period}</span>
@@ -251,7 +255,7 @@ const EducationCard = ({
             className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline gap-1 group"
           >
             <span>View Certificate</span>
-            <ExternalLink size={14} className="transform group-hover:translate-x-1 transition-transform duration-300" />
+            <ExternalLink size={14} className="transform group-hover:translate-x-1 transition-transform duration-150" />
           </a>
         )}
       </div>
@@ -272,7 +276,7 @@ const CourseCard = ({
   logo 
 }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "0px" });
   
   return (
     <motion.div 
@@ -280,7 +284,7 @@ const CourseCard = ({
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-5 border border-gray-100 dark:border-gray-700 h-full relative overflow-hidden group"
+      className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-5 border border-gray-100 dark:border-gray-700 h-full relative overflow-hidden group mobile-card"
     >
       <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-50/50 dark:bg-indigo-900/10 rounded-full -mr-12 -mt-12 z-0 transform group-hover:scale-110 transition-transform duration-500"></div>
       
@@ -289,31 +293,32 @@ const CourseCard = ({
           <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-white p-1 shadow-sm">
             <img 
               src={`${process.env.PUBLIC_URL}/images/institutions/${logo}`} 
-              alt={provider} 
+              alt={`${provider} training provider logo`}
+              loading="lazy"
               className="w-full h-full object-contain"
             />
           </div>
           
           <div>
-            <h3 className="text-base font-bold text-gray-900 dark:text-white line-clamp-2">{title}</h3>
+            <h3 className="text-base font-bold text-gray-900 dark:text-white line-clamp-2 mobile-card-title">{title}</h3>
             <div className="text-sm text-gray-600 dark:text-gray-400">{provider}</div>
           </div>
         </div>
         
         <div className="flex flex-wrap gap-2 mb-3 text-xs">
-          <span className="px-2 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-md">
+          <span className="card-tag inline-flex items-center">
             {date}
           </span>
           
           {duration && (
-            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md">
+            <span className="card-tag inline-flex items-center">
               {duration}
             </span>
           )}
         </div>
         
         {description && (
-          <p className="text-sm text-gray-700 dark:text-gray-300 mb-3 line-clamp-2">{description}</p>
+          <p className="text-sm text-gray-700 dark:text-gray-300 mb-3 line-clamp-2 card-description">{description}</p>
         )}
         
         {topics && topics.length > 0 && (
@@ -338,7 +343,7 @@ const CourseCard = ({
               className="inline-flex items-center text-blue-600 dark:text-blue-400 text-sm hover:underline gap-1 group"
             >
               <span>Verify Certificate {certificateId && `(ID: ${certificateId})`}</span>
-              <ExternalLink size={12} className="transform group-hover:translate-x-1 transition-transform duration-300" />
+              <ExternalLink size={12} className="transform group-hover:translate-x-1 transition-transform duration-150" />
             </a>
           </div>
         )}
@@ -353,8 +358,9 @@ export default function AboutPage() {
   const isHeroInView = useInView(heroRef);
   
   // Transform values based on scroll position
-  const heroOpacity = useTransform(scrollY, [260, 500], [1, 0.98]);
-  const heroScale = useTransform(scrollY, [260, 500], [1, 0.98]);
+  const heroOpacity = useTransform(scrollY, [260, 800], [1, 0.98]);
+  const heroScale = useTransform(scrollY, [260, 800], [1, 0.995]);
+  const scrollIndicatorOpacity = useTransform(scrollY, [0, 300], [1, 0]);
   
 // Experience data
 const experiences = [
@@ -585,13 +591,21 @@ const courses = [
   ];
   
   return (
-    <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+    <>
+      <Helmet>
+        <title>About - Juan Lara | Computer Scientist & Mathematician</title>
+        <meta name="description" content="Learn about my background as a Computer Scientist and Mathematician with expertise in LLM/ML engineering, working at GenomAI and Harvard University." />
+        <meta property="og:title" content="About Juan Lara" />
+        <meta property="og:description" content="Computer Scientist & Mathematician specializing in AI and ML" />
+        <meta name="keywords" content="Computer Science, Mathematics, AI Engineer, GenomAI, Harvard, Machine Learning Specialist" />
+      </Helmet>
+      <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
       
       {/* Hero Section */}
       <motion.section 
         ref={heroRef}
         style={{ opacity: heroOpacity, scale: heroScale }}
-        className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden"
+  className="hero-section relative h-[80vh] min-h-[600px] flex items-center justify-center overflow-hidden pt-6 sm:pt-8"
       >
         {/* Enhanced background with multiple layers */}
         <div className="absolute inset-0 bg-gradient-to-b from-blue-50 via-blue-50/80 to-white dark:from-gray-800/90 dark:via-gray-800/70 dark:to-gray-900 -z-10"></div>
@@ -654,31 +668,31 @@ const courses = [
         {/* Subtle geometric patterns */}
         <div className="absolute inset-0 opacity-5 dark:opacity-10 bg-grid-pattern -z-10"></div>
         
-        <div className="container mx-auto px-4 md:px-10 lg:px-16 xl:px-20 max-w-7xl">
-          <div className="flex flex-col-reverse md:flex-row items-center md:items-start gap-10">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+          <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-12 mb-8">
             {/* Content Column */}
             <motion.div 
               initial="hidden"
               animate="visible"
               variants={staggerContainer}
-              className="md:w-3/5"
+              className="lg:w-3/5 text-center lg:text-left"
             >
               {/* Enhanced badge */}
               <motion.div variants={fadeInRight} className="mb-6">
-                <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-100 to-blue-50 dark:from-blue-900/50 dark:to-blue-800/30 text-blue-800 dark:text-blue-300 text-sm font-medium backdrop-blur-sm border border-blue-200/50 dark:border-blue-700/30 shadow-sm">
+                <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-100 to-blue-50 dark:from-blue-900/50 dark:to-blue-800/30 text-blue-800 dark:text-blue-300 text-sm font-medium backdrop-blur-sm border border-blue-200/50 dark:border-blue-700/30 shadow-sm touch-target">
                   <Code size={14} className="mr-2" /> About Me
                 </div>
               </motion.div>
               
               {/* Enhanced name heading with animated underline */}
               <motion.div variants={fadeInRight} className="relative mb-4">
-                <h1 className="text-4xl md:text-6xl font-bold mb-2 leading-tight">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-2 leading-tight">
                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 dark:from-blue-400 dark:via-blue-300 dark:to-indigo-400">
                     Juan Lara
                   </span>
                 </h1>
                 <motion.div 
-                  className="h-1 w-24 bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 rounded-full"
+                  className="h-1 w-24 bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 rounded-full mx-auto lg:mx-0"
                   animate={{ 
                     width: ["0%", "18%", "16%"],
                     opacity: [0, 1, 0.9]
@@ -693,7 +707,7 @@ const courses = [
               {/* Enhanced subtitle with better styling */}
               <motion.h2 
                 variants={fadeInRight}
-                className="text-2xl md:text-3xl text-gray-800 dark:text-gray-200 mb-8 font-medium"
+                className="text-lg xs:text-xl sm:text-2xl md:text-3xl text-gray-800 dark:text-gray-200 mb-6 xs:mb-8 font-medium"
               >
                 Computer Scientist & Mathematician
               </motion.h2>
@@ -701,9 +715,9 @@ const courses = [
               {/* Content paragraphs with enhanced styling */}
               <motion.div 
                 variants={fadeInRight}
-                className="space-y-5 text-gray-700 dark:text-gray-300 leading-relaxed max-w-3xl"
+                className="space-y-4 xs:space-y-5 text-sm xs:text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed max-w-3xl"
               >
-                <p className="text-lg">
+                <p className="text-sm xs:text-base sm:text-lg">
                   <span className="font-medium text-blue-600 dark:text-blue-400">LLM/ML Specialist</span> with 3+ years developing production-ready generative AI solutions. Currently building AI-powered clinical decision support systems at <span className="font-medium text-blue-600 dark:text-blue-400">GenomAI</span>, with previous research experience at <span className="font-medium text-indigo-600 dark:text-indigo-400">Harvard University</span>.
                 </p>
 
@@ -719,98 +733,98 @@ const courses = [
               </motion.div>
             </motion.div>
             
-            {/* Enhanced Profile Image with more sophisticated decorative elements */}
-            <HoverMotion as={motion.div}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="md:w-2/5 flex justify-center"
-              scale={1.02}
-              duration={0.3}
+            {/* Enhanced profile card with better proportions and mobile optimization */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="md:w-2/5 flex justify-center md:justify-end px-4 sm:px-0"
             >
-              <div className="relative">
-                {/* Animated decorative circles */}
-                <motion.div 
-                  className="absolute -top-8 -left-8 w-full h-full bg-blue-200/40 dark:bg-blue-800/30 rounded-full z-0"
-                  animate={{ 
-                    rotate: [12, 15, 12],
-                    scale: [1, 1.05, 1]
-                  }}
-                  transition={{ 
-                    duration: 10, 
-                    repeat: Infinity,
-                    repeatType: "reverse" 
-                  }}
-                ></motion.div>
-                
-                <motion.div 
-                  className="absolute -bottom-8 -right-8 w-full h-full bg-indigo-200/40 dark:bg-indigo-800/30 rounded-full z-0"
-                  animate={{ 
-                    rotate: [-12, -10, -12],
-                    scale: [1, 0.98, 1]
-                  }}
-                  transition={{ 
-                    duration: 8, 
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    delay: 1
-                  }}
-                ></motion.div>
-                
-                {/* Subtle glow effect */}
-                <div className="absolute inset-0 bg-blue-400/10 dark:bg-blue-400/5 blur-3xl rounded-full transform scale-90 z-5"></div>
-                
-                {/* Enhanced image container with better shadows and border */}
-                <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-white/90 dark:border-gray-800/90 shadow-[0_0_30px_rgba(37,99,235,0.2)] dark:shadow-[0_0_30px_rgba(37,99,235,0.15)] z-10">
-                  <img 
-                    src={`${process.env.PUBLIC_URL}/images/Profile.JPG`} 
-                    alt="Juan Lara" 
-                    className="w-full h-full object-cover"
-                  />
+              <div className="relative w-full max-w-xs sm:max-w-sm">
+                {/* Modern profile card with mobile-optimized dimensions */}
+                <div className="bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-2xl border border-gray-100 dark:border-gray-700 backdrop-blur-sm mobile-card-optimized">
+                  {/* Profile image - responsive sizing */}
+                  <div className="relative w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 mx-auto mb-4 sm:mb-6">
+                    <div className="relative w-full h-full rounded-xl sm:rounded-2xl overflow-hidden bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-700 dark:to-gray-800 border-2 sm:border-4 border-white dark:border-gray-600 shadow-xl">
+                      <img 
+                        src={`${process.env.PUBLIC_URL}/images/Profile.JPG`} 
+                        alt="Juan Lara - Computer Scientist and Mathematician" 
+                        loading="lazy"
+                        className="w-full h-full object-cover"
+                      />
+                      {/* Subtle professional overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-blue-900/5 via-transparent to-transparent dark:from-blue-900/10"></div>
+                    </div>
+                    {/* Professional status indicator - smaller on mobile */}
+                    <div className="absolute -bottom-1 sm:-bottom-2 -right-1 sm:-right-2 flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 bg-green-500 border-2 sm:border-4 border-white dark:border-gray-800 rounded-full shadow-lg">
+                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full"></div>
+                    </div>
+                  </div>
                   
-                  {/* Subtle overlay for better image integration */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-blue-900/10 to-transparent dark:from-blue-900/20 mix-blend-overlay"></div>
-                </div>
-                
-                {/* Animated dots decoration */}
-                <div className="absolute -bottom-4 -right-4 z-20">
-                  <motion.div 
-                    className="flex space-x-1.5"
-                    animate={{ 
-                      y: [0, -3, 0],
-                      opacity: [0.7, 1, 0.7]
-                    }}
-                    transition={{ 
-                      duration: 4, 
-                      repeat: Infinity,
-                      repeatType: "reverse" 
-                    }}
-                  >
-                    {[0, 1, 2].map(i => (
-                      <div 
-                        key={i}
-                        className="w-2 h-2 rounded-full bg-blue-500 dark:bg-blue-400"
-                        style={{ 
-                          animationDelay: `${i * 0.2}s`,
-                          opacity: 1 - (i * 0.2)
-                        }}
-                      ></div>
-                    ))}
-                  </motion.div>
+                  {/* Professional information - mobile optimized */}
+                  <div className="text-center space-y-3 sm:space-y-4">
+                    <div>
+                      <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1 sm:mb-2">Juan Lara</h3>
+                      <p className="text-base sm:text-lg text-blue-600 dark:text-blue-400 font-semibold mb-1">LLM/ML Specialist</p>
+                      <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">GenomAI</p>
+                    </div>
+                    
+                    {/* Status badge - responsive sizing */}
+                    <div className="inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 text-green-700 dark:text-green-400 text-xs sm:text-sm font-medium rounded-full border border-green-200 dark:border-green-800/50">
+                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full mr-1.5 sm:mr-2 animate-pulse"></div>
+                      Available for projects
+                    </div>
+                    
+                    {/* Quick stats - mobile optimized */}
+                    <div className="grid grid-cols-2 gap-3 sm:gap-4 pt-3 sm:pt-4 mt-4 sm:mt-6 border-t border-gray-100 dark:border-gray-700">
+                      <div className="text-center">
+                        <div className="text-xl sm:text-2xl font-bold text-blue-600 dark:text-blue-400">3+</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">Years Experience</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-xl sm:text-2xl font-bold text-indigo-600 dark:text-indigo-400">16+</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">Projects</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </HoverMotion>
+            </motion.div>
           </div>
         </div>
+        
       </motion.section>
       
+      {/* Scroll indicator positioned outside hero section in the remaining 20% space */}
+      <motion.div
+        style={{ opacity: scrollIndicatorOpacity }}
+        className="flex justify-center items-start pt-4 pb-6 cursor-pointer z-40 h-[20vh] min-h-[120px]"
+        onClick={() => {
+          const targetPosition = window.innerHeight * 0.8;
+          window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+        }}
+      >
+        <motion.div
+          animate={{
+            y: [0, 8, 0],
+            transition: {
+              duration: 1.5,
+              repeat: Infinity,
+              repeatType: 'loop'
+            }
+          }}
+        >
+          <ChevronDown size={24} className="text-blue-600 dark:text-blue-400" />
+        </motion.div>
+      </motion.div>
+      
       {/* Skills Section */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-800">
-        <div className="container mx-auto px-6">
+      <section className="pt-8 pb-16 bg-gray-50 dark:bg-gray-800">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "0px" }}
             variants={staggerContainer}
             className="max-w-4xl mx-auto"
           >
@@ -829,7 +843,7 @@ const courses = [
 
             <motion.div
               variants={fadeInUp}
-              className="grid gap-x-12 gap-y-8 md:grid-cols-2"
+              className="grid gap-x-8 gap-y-8 lg:grid-cols-2"
             >
               {/* LLM & RAG Systems */}
               <div>
@@ -939,11 +953,11 @@ const courses = [
       
       {/* Experience Section */}
       <section className="py-16">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
           <motion.div 
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "0px" }}
             variants={staggerContainer}
             className="max-w-4xl mx-auto"
           >
@@ -958,7 +972,7 @@ const courses = [
             </motion.div>
             
             <div className="relative">
-              <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-blue-200 dark:bg-blue-800 z-0"></div>
+              <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-blue-200 dark:bg-blue-800 z-0 hidden lg:block"></div>
               
               <div className="relative z-10">
                 {experiences.map((exp, index) => (
@@ -972,11 +986,11 @@ const courses = [
       
       {/* Education Section */}
       <section className="py-16 bg-gray-50 dark:bg-gray-800">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
           <motion.div 
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "0px" }}
             variants={staggerContainer}
             className="max-w-4xl mx-auto"
           >
@@ -1001,11 +1015,11 @@ const courses = [
       
       {/* Awards & Recognition Section */}
       <section className="py-16">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
           <motion.div 
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "0px" }}
             variants={staggerContainer}
             className="max-w-4xl mx-auto"
           >
@@ -1059,11 +1073,11 @@ const courses = [
       
       {/* Courses & Certifications Section */}
       <section className="py-16 bg-gray-50 dark:bg-gray-800">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
           <motion.div 
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "0px" }}
             variants={staggerContainer}
             className="max-w-5xl mx-auto"
           >
@@ -1091,11 +1105,11 @@ const courses = [
       
       {/* Languages Section */}
       <section className="py-16">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
           <motion.div 
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "0px" }}
             variants={staggerContainer}
             className="max-w-4xl mx-auto"
           >
@@ -1141,11 +1155,11 @@ const courses = [
       
       {/* CTA Section */}
       <section className="py-16 bg-gray-900 dark:bg-gray-950">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-6 mobile-card-container">
           <motion.div 
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "0px" }}
             variants={staggerContainer}
             className="max-w-4xl mx-auto text-center text-white"
           >
@@ -1198,5 +1212,6 @@ const courses = [
       </section>
       
     </div>
+    </>
   );
 }

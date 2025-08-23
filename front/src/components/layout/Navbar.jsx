@@ -4,15 +4,24 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Sun, Moon, Menu } from 'lucide-react';
 import MobileMenu from './MobileMenu';
 
+// Constantes de configuración de navbar
+const NAVBAR_CONFIG = {
+  SCROLL_THRESHOLD: 120,
+  OPACITY_RANGE: [0.85, 0.98],
+  BLUR_RANGE: [8, 16],
+  SHADOW_RANGE: [0, 0.15],
+  PADDING_RANGE: [16, 12]
+};
+
 const Navbar = ({ darkMode, toggleDarkMode }) => {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 	const location = useLocation();
 	const { scrollY } = useScroll();
   
-	const backgroundOpacity = useTransform(scrollY, [0, 120], [0.85, 0.98]);
-	const backdropBlur = useTransform(scrollY, [0, 120], [8, 16]);
-	const shadowOpacity = useTransform(scrollY, [0, 120], [0, 0.15]);
-	const navbarPadding = useTransform(scrollY, [0, 120], [16, 12]);
+	const backgroundOpacity = useTransform(scrollY, [0, NAVBAR_CONFIG.SCROLL_THRESHOLD], NAVBAR_CONFIG.OPACITY_RANGE);
+	const backdropBlur = useTransform(scrollY, [0, NAVBAR_CONFIG.SCROLL_THRESHOLD], NAVBAR_CONFIG.BLUR_RANGE);
+	const shadowOpacity = useTransform(scrollY, [0, NAVBAR_CONFIG.SCROLL_THRESHOLD], NAVBAR_CONFIG.SHADOW_RANGE);
+	const navbarPadding = useTransform(scrollY, [0, NAVBAR_CONFIG.SCROLL_THRESHOLD], NAVBAR_CONFIG.PADDING_RANGE);
   
 	useEffect(() => {
 		setMobileMenuOpen(false);
@@ -33,7 +42,7 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
 	};
   
 	const getLinkClass = (path) => {
-		const baseClass = "relative py-2 px-1 font-medium transition-all duration-300";
+		const baseClass = "relative py-2 px-1 font-medium transition-all duration-150 touch-target";
 		const activeClass = "text-blue-600 dark:text-blue-400 before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-full before:bg-blue-600 dark:before:bg-blue-400";
 		const inactiveClass = "text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-full before:scale-x-0 before:bg-blue-600 dark:before:bg-blue-400 before:origin-left before:transition-transform hover:before:scale-x-100";
     
@@ -61,15 +70,15 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
 					paddingBottom: useTransform(navbarPadding, (value) => `${value}px`)
 				}}
 			>
-				<div className="container mx-auto px-4 sm:px-6">
-					<div className="flex justify-between items-center">
+				<div className="container mx-auto px-4 sm:px-6 lg:px-8">
+					<div className="flex justify-between items-center py-4 sm:py-0">
 						<motion.div 
 							initial={{ opacity: 0, x: -20 }}
 							animate={{ opacity: 1, x: 0 }}
 							transition={{ duration: 0.5 }}
-							className="text-xl font-bold relative z-10"
+							className="text-lg sm:text-xl font-bold relative z-10"
 						>
-							<Link to="/" className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
+							<Link to="/" className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 touch-target">
 								Juan Lara
 							</Link>
 							<div className="absolute -bottom-1 left-0 h-0.5 w-full bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400"></div>
@@ -79,7 +88,7 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
 							initial={{ opacity: 0, y: -10 }}
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ duration: 0.5, delay: 0.1 }}
-							className="hidden md:flex items-center space-x-8"
+							className="hidden md:flex items-center space-x-6 lg:space-x-8"
 						>
 							<Link to="/" className={getLinkClass('/')}>Home</Link>
 							<Link to="/about" className={getLinkClass('/about')}>About</Link>
@@ -89,17 +98,17 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
 							<button 
 								onClick={toggleDarkMode}
 								aria-label="Toggle dark mode"
-								className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+								className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors touch-target"
 							>
 								{darkMode ? <Sun size={18} /> : <Moon size={18} />}
 							</button>
 						</motion.nav>
             
-						<div className="md:hidden flex items-center gap-4 z-10">
+						<div className="md:hidden flex items-center gap-2 sm:gap-4 z-10">
 							<button 
 								onClick={toggleDarkMode}
 								aria-label="Toggle dark mode"
-								className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+								className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors touch-target"
 							>
 								{darkMode ? <Sun size={18} /> : <Moon size={18} />}
 							</button>
@@ -107,7 +116,7 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
 							<button
 								onClick={toggleMobileMenu}
 								aria-label="Toggle menu"
-								className="p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+								className="p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors touch-target"
 							>
 								<Menu size={22} />
 							</button>

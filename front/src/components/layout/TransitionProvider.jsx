@@ -1,13 +1,32 @@
 import React, { useState, useEffect, createContext, useContext, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring, useInView, useTransform } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
-import { variants as motionVariants, useScrollRevealVariants } from '../../shared/motion';
+import { variants as motionVariants, useScrollRevealVariants, easeGentle } from '../../shared/motion';
 
 // Create a context to manage transition state
 const TransitionContext = createContext();
 
-// Use centralized page transitions
-const pageTransitions = motionVariants.page;
+// Enhanced page transitions with professional feel
+const pageTransitions = {
+  initial: { opacity: 0, y: 12 },
+  animate: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { 
+      duration: 0.6, 
+      ease: easeGentle,
+      staggerChildren: 0.05
+    } 
+  },
+  exit: { 
+    opacity: 0, 
+    y: -8,
+    transition: { 
+      duration: 0.3, 
+      ease: easeGentle 
+    } 
+  }
+};
 
 export const TransitionProvider = ({ children }) => {
 	const location = useLocation();
@@ -179,7 +198,7 @@ export const HoverMotion = ({
 	return (
 		<Component
 			className={className}
-			whileHover={{ scale, y, transition: { duration, ease: [0.22, 1, 0.36, 1] }, ...extraWhileHover }}
+			whileHover={{ scale, y, transition: { duration: Math.min(duration, 0.2), ease: [0.22, 1, 0.36, 1] }, ...extraWhileHover }}
 			{...props}
 		>
 			{children}

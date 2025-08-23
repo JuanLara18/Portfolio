@@ -100,3 +100,55 @@ export function slugify(text) {
     .replace(/[^\w\-]+/g, '')
     .replace(/\-\-+/g, '-');
 }
+
+// Enhanced scroll function that centers the target element
+export function scrollToElementCentered(elementId, options = {}) {
+  const {
+    offset = 0,
+    navbarHeight = 80,
+    behavior = 'smooth',
+    updateURL = true,
+    highlightElement = true
+  } = options;
+  
+  const element = document.getElementById(elementId);
+  if (!element) return false;
+  
+  const elementRect = element.getBoundingClientRect();
+  const absoluteElementTop = elementRect.top + window.pageYOffset;
+  
+  // Calculate the center position accounting for navbar and custom offset
+  const viewportHeight = window.innerHeight;
+  const elementHeight = elementRect.height;
+  
+  // Center the element in the viewport
+  const targetScrollTop = absoluteElementTop 
+    - (viewportHeight / 2) 
+    + (elementHeight / 2) 
+    - (navbarHeight / 2) 
+    + offset;
+  
+  window.scrollTo({
+    top: Math.max(0, targetScrollTop),
+    behavior
+  });
+  
+  // Add highlight effect if requested
+  if (highlightElement) {
+    setTimeout(() => {
+      element.classList.add('toc-highlight');
+      setTimeout(() => {
+        element.classList.remove('toc-highlight');
+      }, 2000);
+    }, 500);
+  }
+  
+  // Update the URL hash after scrolling if requested
+  if (updateURL) {
+    setTimeout(() => {
+      window.history.pushState(null, null, `#${elementId}`);
+    }, 500);
+  }
+  
+  return true;
+}

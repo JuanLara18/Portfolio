@@ -11,7 +11,8 @@ import {
   ArrowRight, 
   Layers,
   Brain,
-  FileText 
+  FileText,
+  ChevronDown 
 } from 'lucide-react';
 import { loadAllPosts, getAllTags, BLOG_CONFIG, formatDate } from '../utils/blogUtils';
 import { variants as motionVariants } from '../shared/motion';
@@ -35,7 +36,7 @@ const PostCard = ({ post }) => {
   
   return (
     <MotionCard 
-      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 h-full flex flex-col group hover:shadow-xl transition-all duration-500"
+      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 h-full flex flex-col group hover:shadow-xl transition-all duration-200 mobile-card"
       hover="lift"
       variants={fadeInUp}
     >
@@ -81,24 +82,24 @@ const PostCard = ({ post }) => {
           </h2>
           
           <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3 leading-relaxed">
-            {post.excerpt}
+              <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3 leading-relaxed card-description">{post.excerpt}</p>
           </p>
           
           {/* Tags */}
           {post.tags && post.tags.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-4">
               {post.tags.slice(0, 3).map((tag, index) => (
-                <Link
-                  key={index}
-                  to={`/blog/tag/${encodeURIComponent(tag)}`}
-                  className="inline-flex items-center px-2 py-1 text-xs font-medium rounded bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-                >
+                  <Link
+                    key={index}
+                    to={`/blog/tag/${encodeURIComponent(tag)}`}
+                    className="card-tag inline-flex items-center"
+                  >
                   <Tag size={10} className="mr-1" />
                   {tag}
                 </Link>
               ))}
               {post.tags.length > 3 && (
-                <span className="inline-flex items-center px-2 py-1 text-xs font-medium rounded bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                <span className="card-tag inline-flex items-center">
                   +{post.tags.length - 3} more
                 </span>
               )}
@@ -139,15 +140,20 @@ export default function BlogHomePage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedTag, setSelectedTag] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
   const { scrollY } = useScroll();
   const heroRef = useRef(null);
   
-  // Transform values for parallax effects
-  const heroOpacity = useTransform(scrollY, [200, 300], [1, 0.98]);
-  const heroScale = useTransform(scrollY, [200, 300], [1, 0.98]);
+  // Pagination configuration
+  const POSTS_PER_PAGE = 6;
+  
+  // Transform values for smoother parallax effects
+  const heroOpacity = useTransform(scrollY, [100, 400], [1, 0.95]);
+  const heroY = useTransform(scrollY, [0, 400], [0, -50]);
+  const scrollIndicatorOpacity = useTransform(scrollY, [0, 200], [1, 0]);
   
   // Load posts and tags on component mount
   useEffect(() => {
@@ -202,7 +208,14 @@ export default function BlogHomePage() {
     }
     
     setFilteredPosts(filtered);
+    // Reset to first page when filters change
+    setCurrentPage(1);
   }, [posts, searchTerm, selectedCategory, selectedTag]);
+  
+  // Pagination calculations
+  const totalPosts = filteredPosts.length;
+  const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
+  const paginatedPosts = filteredPosts.slice((currentPage - 1) * POSTS_PER_PAGE, currentPage * POSTS_PER_PAGE);
   
   if (loading) {
     return (
@@ -240,8 +253,8 @@ export default function BlogHomePage() {
       {/* Hero Section */}
       <motion.section 
         ref={heroRef}
-        style={{ opacity: heroOpacity, scale: heroScale }}
-        className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden"
+        style={{ opacity: heroOpacity, y: heroY }}
+        className="relative h-[80vh] min-h-[600px] flex items-center justify-center overflow-hidden parallax-smooth"
       >
         <div className="absolute inset-0 bg-gradient-to-b from-blue-50 to-white dark:from-gray-800 dark:to-gray-900 -z-10"></div>
         
@@ -249,12 +262,12 @@ export default function BlogHomePage() {
         <div className="absolute top-40 right-20 w-72 h-72 rounded-full bg-blue-100/50 dark:bg-blue-900/20 blur-3xl -z-10"></div>
         <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-indigo-100/30 dark:bg-indigo-900/10 blur-3xl -z-10"></div>
         
-        <div className="container mx-auto px-6">
+  <div className="container mx-auto px-6 -mt-2 mobile-card-container">
           <motion.div 
             initial="hidden"
             animate="visible"
             variants={staggerContainer}
-            className="max-w-4xl mx-auto text-center"
+            className="max-w-4xl mx-auto text-center mb-2"
           >
             <motion.div variants={fadeInUp} className="mb-4">
               <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 text-sm font-medium mb-4">
@@ -335,22 +348,47 @@ export default function BlogHomePage() {
             </motion.div>
           </motion.div>
         </div>
+        
       </motion.section>
       
+      {/* Scroll indicator positioned outside hero section - with smoother transition */}
+      <motion.div
+        style={{ opacity: scrollIndicatorOpacity }}
+        className="flex justify-center items-center py-3 cursor-pointer z-40 h-[6vh] min-h-[50px] transition-all duration-300 ease-out"
+        onClick={() => {
+          const targetPosition = window.innerHeight * 0.8;
+          window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+        }}
+      >
+        <motion.div
+          animate={{
+            y: [0, 6, 0],
+            transition: {
+              duration: 2,
+              repeat: Infinity,
+              repeatType: 'loop',
+              ease: "easeInOut"
+            }
+          }}
+        >
+          <ChevronDown size={22} className="text-blue-600 dark:text-blue-400 transition-colors duration-200" />
+        </motion.div>
+      </motion.div>
+      
       {/* Posts Grid */}
-      <section className="py-16">
-        <div className="container mx-auto px-6">
+      <section className="py-0 pb-16">
+        <div className="container mx-auto px-6 mobile-card-container">
           <motion.div 
             initial={false}
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "0px" }}
             variants={staggerContainer}
             className="max-w-6xl mx-auto"
           >
             {/* Results info */}
             <motion.div 
               variants={fadeInUp}
-              className="flex items-center justify-between mb-10"
+              className="flex items-center justify-between mb-4"
             >
               <div className="flex items-center">
                 <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mr-4">
@@ -364,11 +402,60 @@ export default function BlogHomePage() {
               </div>
               
               <div className="text-gray-600 dark:text-gray-300">
-                {filteredPosts.length} {filteredPosts.length === 1 ? 'post' : 'posts'} found
+                {totalPosts > 0 && (
+                  <><span className="font-medium text-gray-700 dark:text-gray-100">{Math.min((currentPage - 1) * POSTS_PER_PAGE + 1, totalPosts)}</span>
+                  {' '}-{' '}
+                  <span className="font-medium text-gray-700 dark:text-gray-100">{Math.min(currentPage * POSTS_PER_PAGE, totalPosts)}</span>
+                  {' '}of{' '}
+                  <span className="font-medium text-gray-700 dark:text-gray-100">{totalPosts}</span> posts</>
+                )}
               </div>
             </motion.div>
             
-            {filteredPosts.length === 0 ? (
+            {/* Category pills for easier filtering on desktop */}
+            <motion.div 
+              variants={fadeInUp}
+              className="hidden lg:flex flex-wrap gap-3 mb-6"
+            >
+              <button
+                key="all"
+                onClick={() => setSelectedCategory('all')}
+                aria-pressed={selectedCategory === 'all'}
+                aria-label="Show all posts"
+                className={`flex items-center px-4 py-2 rounded-full text-sm font-medium transition-colors
+                  ${selectedCategory === 'all'
+                    ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 border border-blue-200 dark:border-blue-800' 
+                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 border border-transparent'}`}
+              >
+                <Layers size={16} className="mr-2" />
+                All Categories
+              </button>
+              {Object.entries(BLOG_CONFIG.categories).map(([key, config]) => (
+                <button
+                  key={key}
+                  onClick={() => setSelectedCategory(key)}
+                  aria-pressed={selectedCategory === key}
+                  aria-label={`Filter posts by ${config.name}`}
+                  className={`flex items-center px-4 py-2 rounded-full text-sm font-medium transition-colors
+                    ${selectedCategory === key
+                      ? `bg-${config.color}-100 dark:bg-${config.color}-900/50 text-${config.color}-800 dark:text-${config.color}-200 border border-${config.color}-200 dark:border-${config.color}-800` 
+                      : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 border border-transparent'}`}
+                >
+                  {config.icon && (
+                    <>
+                      {typeof config.icon === 'function' ? (
+                        <config.icon size={16} className="mr-2" />
+                      ) : (
+                        <BookOpen size={16} className="mr-2" />
+                      )}
+                    </>
+                  )}
+                  {config.name}
+                </button>
+              ))}
+            </motion.div>
+            
+            {totalPosts === 0 ? (
               <motion.div 
                 variants={fadeInUp}
                 className="text-center py-16"
@@ -393,15 +480,69 @@ export default function BlogHomePage() {
                 </button>
               </motion.div>
             ) : (
-              <motion.div 
-                initial={false}
-                variants={staggerContainer}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-              >
-                {filteredPosts.map(post => (
-                  <PostCard key={`${post.category}-${post.slug}`} post={post} />
-                ))}
-              </motion.div>
+              <>
+                <motion.div 
+                  initial={false}
+                  variants={staggerContainer}
+                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mobile-grid-single"
+                >
+                  {paginatedPosts.map(post => (
+                    <PostCard key={`${post.category}-${post.slug}`} post={post} />
+                  ))}
+                </motion.div>
+                
+                {/* Pagination controls */}
+                {totalPages > 1 && (
+                  <motion.div
+                    variants={fadeInUp}
+                    className="flex flex-col sm:flex-row items-center justify-between mt-12 pt-8 border-t border-gray-200 dark:border-gray-700"
+                  >
+                    <div className="text-sm text-gray-600 dark:text-gray-400 mb-4 sm:mb-0">
+                      <span className="font-medium text-gray-700 dark:text-gray-100">{Math.min((currentPage - 1) * POSTS_PER_PAGE + 1, totalPosts)}</span>
+                      {' '}-{' '}
+                      <span className="font-medium text-gray-700 dark:text-gray-100">{Math.min(currentPage * POSTS_PER_PAGE, totalPosts)}</span>
+                      {' '}of{' '}
+                      <span className="font-medium text-gray-700 dark:text-gray-100">{totalPosts}</span> posts
+                    </div>
+                    
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={() => setCurrentPage(1)}
+                        disabled={currentPage === 1}
+                        className="px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                      >
+                        First
+                      </button>
+                      
+                      <button
+                        onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                        disabled={currentPage === 1}
+                        className="px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                      >
+                        Previous
+                      </button>
+                      
+                      <div className="px-3 text-sm text-gray-700 dark:text-gray-300">{currentPage} / {totalPages}</div>
+                      
+                      <button
+                        onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                        disabled={currentPage === totalPages}
+                        className="px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                      >
+                        Next
+                      </button>
+                      
+                      <button
+                        onClick={() => setCurrentPage(totalPages)}
+                        disabled={currentPage === totalPages}
+                        className="px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                      >
+                        Last
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+              </>
             )}
           </motion.div>
         </div>

@@ -1,12 +1,139 @@
-import { memo } from 'react';
+import { memo, useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import remarkGfm from 'remark-gfm';
 import remarkFrontmatter from 'remark-frontmatter';
 import rehypeKatex from 'rehype-katex';
 import rehypeHighlight from 'rehype-highlight';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import mermaid from 'mermaid';
+import { ChevronDown, ChevronRight, Copy, Check } from 'lucide-react';
 import 'katex/dist/katex.min.css';
-import 'highlight.js/styles/github-dark.css';
+
+// Initialize Mermaid
+mermaid.initialize({ 
+  startOnLoad: false, 
+  theme: 'dark',
+  securityLevel: 'loose',
+  fontFamily: 'Inter, system-ui, sans-serif'
+});
+
+// Enhanced Toggle Component
+const ToggleSection = ({ title, children, defaultOpen = false }) => {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+  
+  return (
+    <div className="my-6 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-gray-50 dark:bg-gray-800/50">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full px-4 py-3 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 hover:from-blue-100 hover:to-indigo-100 dark:hover:from-blue-900/50 dark:hover:to-indigo-900/50 transition-all duration-200 flex items-center justify-between text-left font-semibold text-gray-900 dark:text-gray-100"
+      >
+        <span className="flex items-center">
+          {isOpen ? (
+            <ChevronDown size={18} className="mr-2 text-blue-600 dark:text-blue-400" />
+          ) : (
+            <ChevronRight size={18} className="mr-2 text-blue-600 dark:text-blue-400" />
+          )}
+          {title}
+        </span>
+        <div className="w-2 h-2 rounded-full bg-blue-500 dark:bg-blue-400"></div>
+      </button>
+      {isOpen && (
+        <div className="p-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+          {children}
+        </div>
+      )}
+    </div>
+  );
+};
+
+// Mermaid Diagram Component
+const MermaidDiagram = ({ chart }) => {
+  const ref = useRef(null);
+  const [svg, setSvg] = useState('');
+  
+  useEffect(() => {
+    const renderDiagram = async () => {
+      try {
+        const { svg } = await mermaid.render(`mermaid-${Date.now()}`, chart);
+        setSvg(svg);
+      } catch (error) {
+        console.error('Mermaid rendering error:', error);
+        setSvg('<p>Error rendering diagram</p>');
+      }
+    };
+    
+    renderDiagram();
+  }, [chart]);
+  
+  return (
+    <div className="my-8 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700">
+      <div 
+        ref={ref}
+        className="flex justify-center"
+        dangerouslySetInnerHTML={{ __html: svg }}
+      />
+    </div>
+  );
+};
+
+// Enhanced Code Block with Copy Button
+const CodeBlock = ({ language, value, ...props }) => {
+  const [copied, setCopied] = useState(false);
+  
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(value);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+  
+  // Check if it's a Mermaid diagram
+  if (language === 'mermaid') {
+    return <MermaidDiagram chart={value} />;
+  }
+  
+  // Check if it's a toggle section
+  if (language === 'toggle') {
+    const lines = value.split('\n');
+    const title = lines[0] || 'Toggle Section';
+    const content = lines.slice(1).join('\n');
+    return (
+      <ToggleSection title={title}>
+        <ReactMarkdown>{content}</ReactMarkdown>
+      </ToggleSection>
+    );
+  }
+  
+  return (
+    <div className="relative my-6 group">
+      <div className="flex items-center justify-between bg-gray-800 dark:bg-gray-900 text-gray-300 px-4 py-2 text-sm rounded-t-lg border-b border-gray-600">
+        <span className="font-medium">{language || 'code'}</span>
+        <button
+          onClick={copyToClipboard}
+          className="flex items-center gap-1 hover:text-white transition-colors opacity-0 group-hover:opacity-100"
+        >
+          {copied ? <Check size={16} /> : <Copy size={16} />}
+          {copied ? 'Copied!' : 'Copy'}
+        </button>
+      </div>
+      <SyntaxHighlighter
+        style={oneDark}
+        language={language}
+        customStyle={{
+          margin: 0,
+          borderTopLeftRadius: 0,
+          borderTopRightRadius: 0,
+          borderBottomLeftRadius: '0.5rem',
+          borderBottomRightRadius: '0.5rem',
+        }}
+        {...props}
+      >
+        {value}
+      </SyntaxHighlighter>
+    </div>
+  );
+};
 
 const BlogMarkdownRenderer = memo(({ content, className = "", baseImagePath = "" }) => {
 	// Safely extract plain text from React children trees

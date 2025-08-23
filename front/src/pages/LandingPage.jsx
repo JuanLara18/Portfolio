@@ -1,18 +1,91 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
-import { variants as motionVariants } from '../shared/motion';
-import { ChevronDown, Github, Linkedin, Mail, ExternalLink, Code, Terminal, Database, Server, Cpu, TerminalSquare, BrainCircuit, FileCode, Braces, Layers } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
+import { variants as motionVariants, defaultViewportSettings, earlyViewportSettings } from '../shared/motion';
+import { ChevronDown, Github, Linkedin, Mail, ExternalLink, Code, Terminal, Database, Server, Cpu, TerminalSquare, FileCode, Braces, Layers, User, BrainCircuit } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 // Import enhanced components via UI barrel
 import { TypingTerminal, TechIcon, ParticleBackground } from '../components/ui';
 import { HoverMotion } from '../components/layout/TransitionProvider';
 
+// Constantes de configuración de scroll
+const SCROLL_CONFIG = {
+  HERO_START: 150,
+  HERO_END: 500,
+  HEADING_END: 300,
+  PARALLAX_RANGE: 300,
+  SCROLL_THRESHOLD: 50,
+  SECTION_THRESHOLDS: {
+    HERO: 600,
+    ABOUT: 1200,
+    EXPERIENCE: 1800
+  }
+};
+
 // Animation variants
 const fadeInUp = motionVariants.fadeInUp();
 const staggerContainer = motionVariants.stagger();
 const slideInRight = motionVariants.fadeInRight();
 const slideInLeft = motionVariants.fadeInLeft();
+
+// Custom smooth card animations for landing previews
+const smoothCardLeft = {
+  hidden: { 
+    opacity: 0, 
+    x: -30, 
+    y: 20,
+    scale: 0.95
+  },
+  visible: { 
+    opacity: 1, 
+    x: 0, 
+    y: 0,
+    scale: 1,
+    transition: { 
+      duration: 0.6,
+      ease: [0.25, 0.46, 0.45, 0.94],
+      type: "spring",
+      stiffness: 100,
+      damping: 15
+    } 
+  }
+};
+
+const smoothCardRight = {
+  hidden: { 
+    opacity: 0, 
+    x: 30, 
+    y: 20,
+    scale: 0.95
+  },
+  visible: { 
+    opacity: 1, 
+    x: 0, 
+    y: 0,
+    scale: 1,
+    transition: { 
+      duration: 0.6,
+      ease: [0.25, 0.46, 0.45, 0.94],
+      type: "spring",
+      stiffness: 100,
+      damping: 15,
+      delay: 0.1
+    } 
+  }
+};
+
+// Custom stagger for preview cards
+const previewStagger = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.1
+    }
+  }
+};
 const scaleUp = motionVariants.scaleUp();
 
 // Main landing page component
@@ -25,25 +98,26 @@ export default function LandingPage() {
   const { scrollY } = useScroll();
   
   // Enhanced transform values based on scroll position for parallax effects
-  const heroOpacity = useTransform(scrollY, [150, 500], [1, 0.9]);
-  const heroScale = useTransform(scrollY, [150, 500], [1, 0.98]);
-  const heroY = useTransform(scrollY, [150, 500], [0, 10]);
-  const headingY = useTransform(scrollY, [0, 300], [0, -15]);
+  const heroOpacity = useTransform(scrollY, [SCROLL_CONFIG.HERO_START, SCROLL_CONFIG.HERO_END], [1, 0.9]);
+  const heroScale = useTransform(scrollY, [SCROLL_CONFIG.HERO_START, SCROLL_CONFIG.HERO_END], [1, 0.98]);
+  const heroY = useTransform(scrollY, [SCROLL_CONFIG.HERO_START, SCROLL_CONFIG.HERO_END], [0, 10]);
+  const headingY = useTransform(scrollY, [0, SCROLL_CONFIG.HEADING_END], [0, -15]);
   
   // Parallax for decorative elements
-  const bgElement1Y = useTransform(scrollY, [0, 300], [0, 30]);
-  const bgElement2Y = useTransform(scrollY, [0, 300], [0, -20]);
+  const bgElement1Y = useTransform(scrollY, [0, SCROLL_CONFIG.PARALLAX_RANGE], [0, 30]);
+  const bgElement2Y = useTransform(scrollY, [0, SCROLL_CONFIG.PARALLAX_RANGE], [0, -20]);
+  const scrollIndicatorOpacity = useTransform(scrollY, [0, 100], [1, 0]);
   
   // Handle scroll events
   useMotionValueEvent(scrollY, "change", (latest) => {
-    setScrolled(latest > 50);
+    setScrolled(latest > SCROLL_CONFIG.SCROLL_THRESHOLD);
     
     // Determine active section
-    if (latest < 600) {
+    if (latest < SCROLL_CONFIG.SECTION_THRESHOLDS.HERO) {
       setActiveSection('hero');
-    } else if (latest < 1200) {
+    } else if (latest < SCROLL_CONFIG.SECTION_THRESHOLDS.ABOUT) {
       setActiveSection('about');
-    } else if (latest < 1800) {
+    } else if (latest < SCROLL_CONFIG.SECTION_THRESHOLDS.EXPERIENCE) {
       setActiveSection('experience');
     } else {
       setActiveSection('projects');
@@ -108,7 +182,15 @@ export default function LandingPage() {
   };
   
   return (
-    <div className="min-h-screen bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100">
+    <>
+      <Helmet>
+        <title>Juan Lara</title>
+        <meta name="description" content="LLM/ML Specialist with 3+ years developing production-ready generative AI solutions. Specializing in RAG systems, LLM fine-tuning, and cloud deployment." />
+        <meta property="og:title" content="Juan Lara - LLM/ML Specialist" />
+        <meta property="og:description" content="Computer Scientist & Mathematician building AI-powered solutions" />
+        <meta name="keywords" content="LLM, RAG, MLOps, AWS, GCP, Python, AI Engineer, Machine Learning" />
+      </Helmet>
+      <div className="min-h-screen bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 relative overflow-x-hidden">
       
       {/* Hero Section with Enhanced Technical Grid */}
       <motion.section 
@@ -118,7 +200,7 @@ export default function LandingPage() {
           opacity: heroOpacity,
           y: heroY // Apply parallax effect on scroll
         }}
-        className="relative min-h-screen flex items-center justify-center overflow-hidden"
+        className="hero-section relative min-h-[85vh] flex items-center justify-center overflow-hidden py-12"
       >
         {/* Enhanced Particle Grid Background */}
   <ParticleBackground mousePosition={mousePosition} />
@@ -137,26 +219,26 @@ export default function LandingPage() {
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-white dark:from-gray-900 to-transparent z-0"></div>
         <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white dark:from-gray-900 to-transparent z-0"></div>
         
-        <div className="container mx-auto px-6 py-12 md:py-24 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
+        <div className="container mx-auto px-3 sm:px-6 lg:px-8 relative z-10 -mt-8 sm:-mt-12">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8 items-center">
             <motion.div 
               initial="hidden"
               animate="visible"
               variants={staggerContainer}
-              className="lg:col-span-3 text-left"
+              className="lg:col-span-3 text-center lg:text-left px-2 sm:px-0"
               style={{ y: headingY }} // Counter-parallax for content
             >
-              <motion.div variants={fadeInUp} className="mb-4">
-                <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 text-sm font-medium mb-4 backdrop-blur-sm">
-                  <Code size={14} className="mr-1.5" /> LLM/ML Specialist at GenomAI
+              <motion.div variants={fadeInUp} className="mb-3 lg:mb-4">
+                <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 text-xs sm:text-sm font-medium mb-3 lg:mb-4 backdrop-blur-sm">
+                  <Code size={12} className="mr-1.5 sm:mr-1.5" /> LLM/ML Specialist at GenomAI
                 </div>
               </motion.div>
               
-              {/* Enhanced text reveal animation */}
+              {/* Enhanced text reveal animation with mobile optimization */}
               <motion.h1 
                 ref={titleRef}
                 variants={fadeInUp}
-                className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-normal"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 leading-tight"
               >
                 <motion.span 
                   className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 inline-block  pb-1"
@@ -167,7 +249,7 @@ export default function LandingPage() {
                   Transforming Numbers
                 </motion.span>
                 <motion.span 
-                  className="block mt-1 text-gray-800 dark:text-gray-100"
+                  className="block mt-1 lg:mt-2 text-gray-800 dark:text-gray-100"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.4 }}
@@ -178,73 +260,64 @@ export default function LandingPage() {
               
               <motion.p 
                 variants={fadeInUp}
-                className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl leading-relaxed"
+                className="text-base sm:text-lg text-gray-600 dark:text-gray-400 mb-4 lg:mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed px-2 sm:px-0"
               >
-                I build end-to-end AI systems that transform complex requirements into scalable, production-ready solutions. Specializing in LLM fine-tuning, RAG architectures, and cloud deployment.
+                Building production-ready AI systems with LLM fine-tuning, RAG architectures, and cloud-native deployment on AWS/GCP.
               </motion.p>
               
               <motion.div 
                 variants={fadeInUp}
-                className="flex flex-wrap gap-3 mb-8"
+                className="flex flex-wrap justify-center lg:justify-start gap-2 mb-6 lg:mb-8 px-2 sm:px-0"
               >
-                <HoverMotion as={motion.span} extraWhileHover={{ boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.5)" }}
-                  className="px-4 py-2 rounded-lg text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 border border-blue-200 dark:border-blue-800 backdrop-blur-sm transition-all duration-300"
+                <HoverMotion as={motion.span}
+                  className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 border border-blue-200 dark:border-blue-800 backdrop-blur-sm transition-all duration-300 touch-target"
                 >
-                  LLM & RAG Systems
+                  LLM
                 </HoverMotion>
-                <HoverMotion as={motion.span} extraWhileHover={{ boxShadow: "0 10px 25px -5px rgba(67, 56, 202, 0.5)" }}
-                  className="px-4 py-2 rounded-lg text-sm font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900/50 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 backdrop-blur-sm transition-all duration-300"
+                <HoverMotion as={motion.span}
+                  className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900/50 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 backdrop-blur-sm transition-all duration-300 touch-target"
                 >
-                  Generative AI
+                  RAG
                 </HoverMotion>
-                <HoverMotion as={motion.span} extraWhileHover={{ boxShadow: "0 10px 25px -5px rgba(147, 51, 234, 0.5)" }}
-                  className="px-4 py-2 rounded-lg text-sm font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300 border border-purple-200 dark:border-purple-800 backdrop-blur-sm transition-all duration-300"
+                <HoverMotion as={motion.span}
+                  className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300 border border-purple-200 dark:border-purple-800 backdrop-blur-sm transition-all duration-300 touch-target"
                 >
-                  NLP
+                  MLOps
                 </HoverMotion>
-                <HoverMotion as={motion.span} extraWhileHover={{ boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.5)" }}
-                  className="px-4 py-2 rounded-lg text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 border border-blue-200 dark:border-blue-800 backdrop-blur-sm transition-all duration-300"
+                <HoverMotion as={motion.span}
+                  className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300 border border-green-200 dark:border-green-800 backdrop-blur-sm transition-all duration-300 touch-target"
                 >
-                  Cloud Deployment
+                  AWS
+                </HoverMotion>
+                <HoverMotion as={motion.span}
+                  className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 border border-blue-200 dark:border-blue-800 backdrop-blur-sm transition-all duration-300 touch-target"
+                >
+                  GCP
                 </HoverMotion>
               </motion.div>
               
               {/* Enhanced CTA buttons */}
               <motion.div 
                 variants={fadeInUp}
-                className="flex flex-wrap gap-4 mb-8"
+                className="flex flex-col sm:flex-row gap-3 mb-6 lg:mb-8 px-2 sm:px-0"
               >
                 <Link 
                   to="/projects" 
-                  className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-300 flex items-center gap-2 relative overflow-hidden group shadow-lg"
+                  className="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2 relative overflow-hidden group shadow-lg touch-target"
                 >
                   <span className="z-10 relative">View Projects</span>
-                  <ExternalLink size={16} className="z-10 relative transition-transform duration-300 group-hover:translate-x-1" />
-                  <div className="absolute inset-0 bg-blue-500 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-                  {/* Add subtle light reflection effect */}
-                  <motion.div 
-                    className="absolute inset-0 opacity-0 group-hover:opacity-30 bg-gradient-to-r from-transparent via-white to-transparent skew-x-20 transition-opacity duration-1000"
-                    animate={{ 
-                      x: ["200%", "-200%"],
-                      transition: { 
-                        repeat: Infinity, 
-                        repeatType: "loop", 
-                        duration: 2.5,
-                        ease: "easeInOut",
-                        repeatDelay: 0.5
-                      } 
-                    }}
-                  />
+                  <ExternalLink size={16} className="z-10 relative transition-transform duration-150 group-hover:translate-x-1" />
+                  <div className="absolute inset-0 bg-blue-500 transform translate-y-full group-hover:translate-y-0 transition-transform duration-200"></div>
                 </Link>
                 <Link 
                   to="/documents/CV___EN.pdf" 
-                  className="px-6 py-3 border-2 border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 rounded-lg group hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-all duration-300 flex items-center gap-2 shadow-sm relative overflow-hidden"
+                  className="w-full sm:w-auto px-6 py-3 border-2 border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 rounded-lg group hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-all duration-300 flex items-center justify-center gap-2 shadow-sm relative overflow-hidden touch-target"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   <span className="relative z-10">Download CV</span>
                   <svg 
-                    className="w-4 h-4 transform transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1 relative z-10" 
+                    className="w-4 h-4 transform transition-transform duration-150 group-hover:translate-x-1 group-hover:translate-y-1 relative z-10" 
                     viewBox="0 0 24 24" 
                     fill="none" 
                     stroke="currentColor" 
@@ -265,14 +338,14 @@ export default function LandingPage() {
               variants={scaleUp}
               initial="hidden"
               animate="visible"
-              className="lg:col-span-2"
+              className="lg:col-span-2 mt-8 lg:mt-0 px-2 sm:px-0"
               y={-5}
               duration={0.3}
             >
               <div className="relative">
-                {/* Animated decorative shapes */}
+                {/* Simplified decorative shapes for mobile */}
                 <motion.div 
-                  className="absolute -top-10 -left-10 w-40 h-40 bg-blue-200/30 dark:bg-blue-900/20 rounded-lg z-0"
+                  className="absolute -top-6 -left-6 w-20 sm:w-32 lg:w-40 h-20 sm:h-32 lg:h-40 bg-blue-200/20 dark:bg-blue-900/10 rounded-lg z-0 hidden sm:block"
                   initial={{ rotate: 12, scale: 0.9 }}
                   animate={{ 
                     rotate: [12, 15, 12, 9, 12],
@@ -298,47 +371,19 @@ export default function LandingPage() {
                   }}
                 />
                 
-                {/* Enhanced terminal card with improved shadow */}
-                <div className="relative z-10 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-[0_10px_40px_-15px_rgba(0,0,0,0.3)] dark:shadow-[0_10px_40px_-15px_rgba(0,0,0,0.7)] border border-gray-100 dark:border-gray-700 transition-all duration-500">
-                  <TypingTerminal text="const profile = {\n  name: 'Juan Lara',\n  role: 'LLM/ML Specialist @ GenomAI',\n  expertise: ['RAG Systems', 'LLM Fine-tuning', 'Vector DBs'],\n  stack: ['Python', 'PyTorch', 'LangChain', 'GCP'],\n  education: [\n    'B.S. Computer Science',\n    'B.S. Mathematics'\n  ],\n  mission: 'Transform complex AI requirements into scalable solutions'\n};" />
+                {/* Enhanced terminal card with mobile optimization */}
+                <div className="relative z-10 bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-xl shadow-xl border border-gray-100 dark:border-gray-700 transition-all duration-500">
+                  <TypingTerminal text="const profile = {\n  name: 'Juan Lara',\n  role: 'LLM/ML Specialist @ GenomAI',\n  expertise: ['LLM', 'RAG', 'MLOps'],\n  stack: ['Python', 'PyTorch', 'AWS', 'GCP'],\n  education: [\n    'B.S. Computer Science',\n    'B.S. Mathematics'\n  ],\n  mission: 'Building next-gen AI systems'\n};" />
 
-                  <div className="mt-8 grid grid-cols-3 gap-2">
-                    <TechIcon icon={BrainCircuit} label="LLM Engineering" delay={0.2} />
-                    <TechIcon icon={Database} label="RAG Systems" delay={0.4} />
-                    <TechIcon icon={Server} label="Cloud Deployment" delay={0.6} />
+                  <div className="mt-4 sm:mt-6 grid grid-cols-3 gap-2 sm:gap-3">
+                    <TechIcon icon={BrainCircuit} label="GenAI" delay={0.2} />
+                    <TechIcon icon={Database} label="Vector DB" delay={0.4} />
+                    <TechIcon icon={Server} label="DevOps" delay={0.6} />
                   </div>
                 </div>
               </div>
             </HoverMotion>
           </div>
-          
-          {/* Enhanced scroll indicator */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ 
-              delay: 1.8, 
-              duration: 0.8
-            }}
-            className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer"
-            onClick={scrollToContent}
-          >
-            <div className="flex flex-col items-center">
-              <span className="text-sm text-gray-500 dark:text-gray-400 mb-2 font-medium">Explore More</span>
-              <motion.div
-                animate={{ 
-                  y: [0, 8, 0],
-                  transition: { 
-                    duration: 1.5, 
-                    repeat: Infinity,
-                    repeatType: "loop"
-                  }
-                }}
-              >
-                <ChevronDown size={24} className="text-blue-600 dark:text-blue-400" />
-              </motion.div>
-            </div>
-          </motion.div>
           
         {/* Subtle cursor effect for desktop only */}
         <motion.div 
@@ -356,20 +401,48 @@ export default function LandingPage() {
         </div>
       </motion.section>
       
+      {/* Scroll indicator positioned between hero and content sections */}
+      <div className="relative py-4 sm:py-6 bg-white dark:bg-gray-900 flex justify-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          style={{ opacity: scrollIndicatorOpacity }}
+          transition={{ 
+            delay: 0.8, 
+            duration: 0.8
+          }}
+          className="cursor-pointer touch-target"
+          onClick={scrollToContent}
+        >
+          <motion.div
+            animate={{ 
+              y: [0, 8, 0],
+              transition: { 
+                duration: 1.5, 
+                repeat: Infinity,
+                repeatType: "loop"
+              }
+            }}
+          >
+            <ChevronDown size={24} className="text-blue-600 dark:text-blue-400" />
+          </motion.div>
+        </motion.div>
+      </div>
+      
       {/* Section Previews */}
-      <section className="py-20 bg-white dark:bg-gray-900">
-        <div className="container mx-auto px-6 max-w-6xl">
+      <section className="py-8 sm:py-12 bg-white dark:bg-gray-900">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl mobile-card-container">
           <motion.div 
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-2 gap-10"
+            viewport={defaultViewportSettings}
+            variants={previewStagger}
+            className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10"
           >
             {/* About Preview */}
             <motion.div 
-              variants={slideInLeft}
-              className="bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-800 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 border border-gray-100 dark:border-gray-700 transform hover:-translate-y-2"
+              variants={motionVariants.scrollReveal.left()}
+              className="bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-800 p-6 sm:p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 border border-gray-100 dark:border-gray-700 transform hover:-translate-y-2 mobile-smooth-transition mobile-card-large mobile-card-optimized"
             >
               <div className="flex items-center mb-4">
                 <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900/50 dark:text-blue-300 mr-3">
@@ -382,7 +455,7 @@ export default function LandingPage() {
               </p>
               <Link to="/about" className="text-blue-600 dark:text-blue-400 font-medium inline-flex items-center group">
                 <span>Read more</span>
-                <svg className="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-150" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </Link>
@@ -391,8 +464,8 @@ export default function LandingPage() {
             
             {/* Projects Preview */}
             <motion.div 
-              variants={slideInRight}
-              className="bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-800 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 border border-gray-100 dark:border-gray-700 transform hover:-translate-y-2"
+              variants={smoothCardRight}
+              className="bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-800 p-6 sm:p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700 transform hover:-translate-y-1 mobile-smooth-transition mobile-card-large mobile-card-optimized"
             >
               <div className="flex items-center mb-4">
                 <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900/50 dark:text-blue-300 mr-3">
@@ -405,7 +478,7 @@ export default function LandingPage() {
               </p>
               <Link to="/projects" className="text-blue-600 dark:text-blue-400 font-medium inline-flex items-center group">
                 <span>Explore projects</span>
-                <svg className="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-150" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </Link>
@@ -415,8 +488,8 @@ export default function LandingPage() {
       </section>
       
       {/* Blog and Contact Preview */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-800">
-        <div className="container mx-auto px-6">
+      <section className="py-16 sm:py-20 bg-gray-50 dark:bg-gray-800">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 mobile-card-container">
           <motion.div 
             initial="hidden"
             whileInView="visible"
@@ -426,21 +499,21 @@ export default function LandingPage() {
           >
             <motion.h2 
               variants={fadeInUp} 
-              className="text-3xl md:text-4xl font-bold mb-6 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400"
+              className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400"
             >
               Research & Writing
             </motion.h2>
             
             <motion.p 
               variants={fadeInUp}
-              className="text-lg text-gray-600 dark:text-gray-300 mb-10 text-center"
+              className="text-base sm:text-lg text-gray-600 dark:text-gray-300 mb-6 sm:mb-10 text-center"
             >
-              Coming soon: reflections on machine intelligence, computational organization theory, and the logic that connects math with code.
+              Come and read my thoughts! 
             </motion.p>
             
             <motion.div 
               variants={fadeInUp}
-              className="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 relative overflow-hidden"
+              className="bg-white dark:bg-gray-900 p-6 sm:p-8 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 relative overflow-hidden mobile-smooth-transition mobile-card-large"
               whileHover={{ y: -5, transition: { duration: 0.3 } }}
             >
               <div className="absolute top-0 right-0 w-40 h-40 bg-blue-100/50 dark:bg-blue-900/20 rounded-full -mr-20 -mt-20 z-0"></div>
@@ -467,24 +540,24 @@ export default function LandingPage() {
                 <div>
                   <Link
                     to="/blog"
-                    className="flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-300 relative overflow-hidden group shadow-lg"
+                    className="flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-150 relative overflow-hidden group shadow-lg touch-target mobile-smooth-transition"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <span className="z-10 relative">Visit Blog</span>
-                    <ExternalLink size={16} className="z-10 relative transform group-hover:translate-x-1 transition-transform duration-300" />
-                    <div className="absolute inset-0 bg-blue-500 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                    {/* Light reflection effect */}
+                    <ExternalLink size={16} className="z-10 relative transform group-hover:translate-x-1 transition-transform duration-150" />
+                    <div className="absolute inset-0 bg-blue-500 transform translate-y-full group-hover:translate-y-0 transition-transform duration-200"></div>
+                    {/* Professional light reflection effect with proper dark mode support */}
                     <motion.div
-                      className="absolute inset-0 opacity-0 group-hover:opacity-30 bg-gradient-to-r from-transparent via-white to-transparent skew-x-20 transition-opacity duration-1000"
+                      className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-gradient-to-r from-transparent via-white/60 dark:via-gray-800/40 to-transparent skew-x-20 transition-opacity duration-700"
                       animate={{ 
                         x: ["200%", "-200%"],
                         transition: { 
                           repeat: Infinity, 
                           repeatType: "loop", 
-                          duration: 2.5,
+                          duration: 2.8,
                           ease: "easeInOut",
-                          repeatDelay: 0.5
+                          repeatDelay: 1.2
                         } 
                       }}
                     />
@@ -497,8 +570,8 @@ export default function LandingPage() {
       </section>
       
       {/* Footer/Contact */}
-      <footer className="py-12 bg-gray-900 text-white" id="contact">
-        <div className="container mx-auto px-6">
+      <footer className="py-8 sm:py-12 bg-gray-900 text-white" id="contact">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 mobile-card-container">
           <motion.div 
             initial="hidden"
             whileInView="visible"
@@ -514,12 +587,12 @@ export default function LandingPage() {
             </motion.h2>
             
             <HoverMotion as={motion.div}
-              className="bg-gray-800 p-8 rounded-xl shadow-xl border border-gray-700 mb-8"
+              className="bg-gray-800 p-6 sm:p-8 rounded-xl shadow-xl border border-gray-700 mb-6 sm:mb-8 mobile-smooth-transition mobile-card-large"
               y={-5}
               duration={0.3}
               variants={scaleUp}
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-center">
                 <div>
                   <h3 className="text-xl font-semibold mb-4">Get in Touch</h3>
                   <p className="text-gray-400 mb-6">
@@ -536,19 +609,19 @@ export default function LandingPage() {
                 </div>
                 
                 <div>
-                  <div className="flex flex-col space-y-4">
+                  <div className="flex flex-col space-y-3 sm:space-y-4">
                     <HoverMotion as={motion.a}
                       href="https://github.com/JuanLara18" 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className="flex items-center px-4 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors relative overflow-hidden group"
+                      className="flex items-center px-4 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors duration-150 relative overflow-hidden group touch-target mobile-smooth-transition"
                       y={-2}
                       duration={0.2}
                     >
                       <Github className="mr-3 text-white" size={20} />
                       <span>Github Projects</span>
                       <motion.div 
-                        className="absolute inset-0 opacity-0 group-hover:opacity-10 bg-gradient-to-r from-transparent via-white to-transparent skew-x-20"
+                        className="absolute inset-0 opacity-0 group-hover:opacity-10 bg-gradient-to-r from-transparent via-white dark:via-gray-200 to-transparent skew-x-20"
                         animate={{ 
                           x: ["200%", "-200%"],
                           transition: { 
@@ -565,14 +638,14 @@ export default function LandingPage() {
                       href="https://www.linkedin.com/in/julara/?locale=en_US" 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className="flex items-center px-4 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors relative overflow-hidden group"
+                      className="flex items-center px-4 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors duration-150 relative overflow-hidden group touch-target mobile-smooth-transition"
                       y={-2}
                       duration={0.2}
                     >
                       <Linkedin className="mr-3 text-white" size={20} />
                       <span>LinkedIn Profile</span>
                       <motion.div 
-                        className="absolute inset-0 opacity-0 group-hover:opacity-10 bg-gradient-to-r from-transparent via-white to-transparent skew-x-20"
+                        className="absolute inset-0 opacity-0 group-hover:opacity-10 bg-gradient-to-r from-transparent via-white dark:via-gray-200 to-transparent skew-x-20"
                         animate={{ 
                           x: ["200%", "-200%"],
                           transition: { 
@@ -587,14 +660,14 @@ export default function LandingPage() {
                     </HoverMotion>
                     <HoverMotion as={motion.a}
                       href="mailto:larajuand@outlook.com" 
-                      className="flex items-center px-4 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors relative overflow-hidden group"
+                      className="flex items-center px-4 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors duration-150 relative overflow-hidden group"
                       y={-2}
                       duration={0.2}
                     >
                       <Mail className="mr-3 text-white" size={20} />
                       <span>Send Email</span>
                       <motion.div 
-                        className="absolute inset-0 opacity-0 group-hover:opacity-10 bg-gradient-to-r from-transparent via-white to-transparent skew-x-20"
+                        className="absolute inset-0 opacity-0 group-hover:opacity-10 bg-gradient-to-r from-transparent via-white dark:via-gray-200 to-transparent skew-x-20"
                         animate={{ 
                           x: ["200%", "-200%"],
                           transition: { 
@@ -621,6 +694,7 @@ export default function LandingPage() {
           </motion.div>
         </div>
       </footer>
-    </div>
+      </div>
+    </>
   );
 }

@@ -1,1 +1,9 @@
-export { variants, easeStandard, useScrollRevealVariants } from './variants';
+export { 
+  variants, 
+  easeStandard, 
+  easeSmooth, 
+  easeGentle,
+  useScrollRevealVariants,
+  defaultViewportSettings,
+  earlyViewportSettings
+} from './variants';

@@ -39,7 +39,7 @@ const PostCard = ({ post }) => {
   
   return (
     <MotionCard 
-      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 h-full flex flex-col group hover:shadow-xl transition-all duration-500"
+      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 h-full flex flex-col group hover:shadow-xl transition-all duration-200"
       hover="lift"
       variants={fadeInUp}
     >
@@ -84,7 +84,7 @@ const PostCard = ({ post }) => {
             </Link>
           </h2>
           
-          <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3 leading-relaxed">
+          <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3 leading-relaxed card-description">
             {post.excerpt}
           </p>
           
@@ -95,14 +95,14 @@ const PostCard = ({ post }) => {
                 <Link
                   key={index}
                   to={`/blog/tag/${encodeURIComponent(tag)}`}
-                  className="inline-flex items-center px-2 py-1 text-xs font-medium rounded bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                  className="card-tag inline-flex items-center"
                 >
                   <Tag size={10} className="mr-1" />
                   {tag}
                 </Link>
               ))}
               {post.tags.length > 3 && (
-                <span className="inline-flex items-center px-2 py-1 text-xs font-medium rounded bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                <span className="card-tag inline-flex items-center">
                   +{post.tags.length - 3} more
                 </span>
               )}
@@ -146,8 +146,8 @@ export default function BlogCategoryPage() {
   const heroRef = useRef(null);
   
   // Transform values for parallax effects
-  const heroOpacity = useTransform(scrollY, [0, 300], [1, 0.6]);
-  const heroScale = useTransform(scrollY, [0, 300], [1, 0.95]);
+  const heroOpacity = useTransform(scrollY, [100, 600], [1, 0.97]);
+  const heroScale = useTransform(scrollY, [100, 600], [1, 0.995]);
   
   // Determine if we're showing category or tag
   const isCategory = Boolean(category);

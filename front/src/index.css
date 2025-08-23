@@ -2,162 +2,368 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  /* Light mode - enhanced color palette */
-  --primary: #2563eb;
-  --primary-dark: #1d4ed8;
-  --primary-light: #60a5fa;
-  --primary-shadow: rgba(37, 99, 235, 0.2);
+/* --------------------------------------------------------------------------
+   Theme variables
+   Keep variables compact and centralized so consumers can rely on them.
+   ------------------------------------------------------------------------- */
+
+@media (max-width:320px){
+  header[class*="fixed"]{min-height:80px}
+  .hero-section{padding-top:5.5rem!important}
+  .mobile-card-container{padding-left:.75rem!important;padding-right:.75rem!important}
+  .mobile-card{padding:.875rem!important;border-radius:.5rem!important}
   
-  --secondary: #4338ca;
-  --secondary-dark: #3730a3;
-  --secondary-light: #818cf8;
-  --secondary-shadow: rgba(67, 56, 202, 0.2);
-  
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8fafc;
-  --bg-accent: #f0f5ff;
-  --text-primary: #0f172a;
-  --text-secondary: #334155;
-  --text-tertiary: #64748b;
-
-  /* Dark mode - enhanced color palette */
-  --primary-dark-mode: #3b82f6;
-  --primary-dark-mode-dark: #2563eb;
-  --primary-dark-mode-light: #93c5fd;
-  --primary-shadow-dark: rgba(59, 130, 246, 0.5);
-  
-  --secondary-dark-mode: #6366f1;
-  --secondary-dark-mode-dark: #4f46e5;
-  --secondary-dark-mode-light: #a5b4fc;
-  --secondary-shadow-dark: rgba(99, 102, 241, 0.5);
-  
-  --bg-primary-dark: #0f172a;
-  --bg-secondary-dark: #1e293b;
-  --bg-accent-dark: #1e3a8a;
-  --text-primary-dark: #f1f5f9;
-  --text-secondary-dark: #cbd5e1;
-  --text-tertiary-dark: #94a3b8;
-  
-  /* Animation timing */
-  --transition-slow: 700ms cubic-bezier(0.22, 1, 0.36, 1);
-  --transition-medium: 500ms cubic-bezier(0.22, 1, 0.36, 1);
-  --transition-fast: 300ms cubic-bezier(0.22, 1, 0.36, 1);
-  
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  --shadow-focus: 0 0 0 3px var(--primary-shadow);
-  
-  /* Dark mode shadows */
-  --shadow-sm-dark: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md-dark: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-  --shadow-lg-dark: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
-  --shadow-xl-dark: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
-  --shadow-focus-dark: 0 0 0 3px var(--primary-shadow-dark);
-}
-
-/* Enhanced utilities */
-.shadow-glass {
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-.dark .shadow-glass {
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-}
-
-/* Enhanced animations */
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
-}
-
-.animate-float {
-  animation: float 4s ease-in-out infinite;
-}
-
-@keyframes pulse-subtle {
-  0% { opacity: 0.7; }
-  50% { opacity: 1; }
-  100% { opacity: 0.7; }
-}
-
-.animate-pulse-subtle {
-  animation: pulse-subtle 3s ease-in-out infinite;
-}
-
-/* Shimmer effect for text */
-.shimmer {
-  position: relative;
-  overflow: hidden;
-}
-
-.shimmer::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: linear-gradient(to right, 
-    rgba(255, 255, 255, 0) 0%, 
-    rgba(255, 255, 255, 0.2) 50%, 
-    rgba(255, 255, 255, 0) 100%);
-  transform: translateX(-100%);
-  animation: shimmer 3s infinite;
-}
-
-.dark .shimmer::after {
-  background: linear-gradient(to right, 
-    rgba(255, 255, 255, 0) 0%, 
-    rgba(255, 255, 255, 0.1) 50%, 
-    rgba(255, 255, 255, 0) 100%);
-}
-
-@keyframes shimmer {
-  100% {
-    transform: translateX(100%);
+  /* Profile card on very small screens */
+  .mobile-card-optimized {
+    max-width: 260px !important;
+    padding: 1rem !important;
   }
 }
 
-/* Glass morphism for cards and UI elements */
-.glass {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+:root{
+  --primary:#2563eb;--primary-dark:#1d4ed8;--primary-light:#60a5fa;--primary-shadow:rgba(37,99,235,.2);
+  --secondary:#4338ca;--secondary-dark:#3730a3;--secondary-light:#818cf8;--secondary-shadow:rgba(67,56,202,.2);
+  --bg-primary:#fff;--bg-secondary:#f8fafc;--bg-accent:#f0f5ff;
+  --text-primary:#0f172a;--text-secondary:#334155;--text-tertiary:#64748b;
+  --primary-dark-mode:#3b82f6;--primary-dark-mode-dark:#2563eb;--primary-dark-mode-light:#93c5fd;--primary-shadow-dark:rgba(59,130,246,.5);
+  --bg-primary-dark:#0f172a;--text-primary-dark:#f1f5f9;--text-secondary-dark:#cbd5e1;--text-tertiary-dark:#94a3b8;
+  --transition-slow:700ms cubic-bezier(.22,1,.36,1);--transition-medium:500ms cubic-bezier(.22,1,.36,1);--transition-fast:300ms cubic-bezier(.22,1,.36,1);
+  --shadow-sm:0 1px 2px rgba(0,0,0,.05);--shadow-md:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -1px rgba(0,0,0,.06);
+  --shadow-lg:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -2px rgba(0,0,0,.05);--shadow-xl:0 20px 25px -5px rgba(0,0,0,.1),0 10px 10px -5px rgba(0,0,0,.04);
+  --shadow-focus:0 0 0 3px var(--primary-shadow);--shadow-focus-dark:0 0 0 3px var(--primary-shadow-dark);
 }
 
-.dark .glass {
-  background: rgba(15, 23, 42, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+/* --------------------------------------------------------------------------
+   Small, reusable utilities & effects
+   ----------------------------------------------------------------------- */
+.shadow-glass{box-shadow:0 8px 32px rgba(0,0,0,.1);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.dark .shadow-glass{box-shadow:0 8px 32px rgba(0,0,0,.3)}
+.glass{background:rgba(255,255,255,.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.2)}
+.dark .glass{background:rgba(15,23,42,.7);border:1px solid rgba(255,255,255,.1)}
+
+@keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-10px)}100%{transform:translateY(0)}}
+.animate-float{animation:float 4s ease-in-out infinite}
+@keyframes pulse-subtle{0%{opacity:.7}50%{opacity:1}100%{opacity:.7}}
+.animate-pulse-subtle{animation:pulse-subtle 3s ease-in-out infinite}
+
+.shimmer{position:relative;overflow:hidden}
+.shimmer::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.2) 50%,rgba(255,255,255,0) 100%);transform:translateX(-100%);animation:shimmer 3s infinite}
+.dark .shimmer::after{background:linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.1) 50%,rgba(255,255,255,0) 100%)}
+@keyframes shimmer{100%{transform:translateX(100%)}}
+
+.bg-scan-lines{background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.15),rgba(0,0,0,.15) 1px,transparent 1px,transparent 2px);background-size:100% 2px;pointer-events:none}
+
+/* Focus styles (accessibility) */
+*:focus-visible{outline:none;box-shadow:var(--shadow-focus);transition:box-shadow .2s}
+.dark *:focus-visible{box-shadow:var(--shadow-focus-dark)}
+
+/* --------------------------------------------------------------------------
+   Layout & global mobile optimizations
+   Keep safe, non-breaking defaults for html/body and #root
+   ----------------------------------------------------------------------- */
+html,body{overscroll-behavior:none;position:relative;height:100%;min-height:100vh;background-color:#fff;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;text-size-adjust:100%;-webkit-tap-highlight-color:transparent;-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
+
+/* Enhanced professional transitions and overlay system */
+* {
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
 }
 
-/* Enhanced focus styles for accessibility */
-*:focus-visible {
-  outline: none;
-  box-shadow: var(--shadow-focus);
-  transition: box-shadow 0.2s ease-in-out;
-}
-
-.dark *:focus-visible {
-  box-shadow: var(--shadow-focus-dark);
-}
-
-/* Additional CRT scan line effect for terminal */
-.bg-scan-lines {
-  background-image: repeating-linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0.15),
-    rgba(0, 0, 0, 0.15) 1px,
-    transparent 1px,
-    transparent 2px
+/* Professional overlay system with proper dark mode support */
+.overlay-light {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(255, 255, 255, 0.05) 50%, 
+    rgba(255, 255, 255, 0.1) 100%
   );
-  background-size: 100% 2px;
-  pointer-events: none;
 }
+
+.dark .overlay-light {
+  background: linear-gradient(135deg, 
+    rgba(55, 65, 81, 0.08) 0%, 
+    rgba(75, 85, 99, 0.04) 50%, 
+    rgba(55, 65, 81, 0.08) 100%
+  );
+}
+
+/* Professional backdrop blur effects */
+.backdrop-blur-professional {
+  backdrop-filter: blur(8px) saturate(150%);
+  -webkit-backdrop-filter: blur(8px) saturate(150%);
+}
+
+/* Enhanced card hover states */
+.card-hover-professional {
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.card-hover-professional:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+}
+
+.dark .card-hover-professional:hover {
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35);
+}
+
+/* Professional scroll reveal animations */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s,
+              transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s;
+}
+
+.scroll-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-reveal-right {
+  opacity: 0;
+  transform: translateX(-45px);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.15s,
+              transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.15s;
+}
+
+.scroll-reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scroll-reveal-left {
+  opacity: 0;
+  transform: translateX(45px);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s,
+              transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
+}
+
+.scroll-reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.dark html,.dark body{background-color:#111827}
+#root{min-height:100vh;position:relative;-webkit-overflow-scrolling:touch}
+
+.mobile-optimized{min-height:44px;min-width:44px}
+.touch-target{min-height:48px;min-width:48px;display:inline-flex;align-items:center;justify-content:center}
+
+@supports(padding:env(safe-area-inset-top)){.safe-top{padding-top:env(safe-area-inset-top)}.safe-bottom{padding-bottom:env(safe-area-inset-bottom)}}
+
+/* Reduced-motion preference */
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* --------------------------------------------------------------------------
+   Consolidated mobile rules: use a small set of breakpoints and keep classes
+   referenced by components intact. These are intentionally conservative.
+   ----------------------------------------------------------------------- */
+
+/* Mobile: up to 768px - consistent navbar + general mobile optimizations */
+@media (max-width:768px){
+  header[class*="fixed"]{min-height:72px}
+  .hero-section{padding-top:4rem!important}
+  html{font-size:16px}
+  body{text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+  button,[role="button"],input[type="submit"]{cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,.1);touch-action:manipulation}
+  input,textarea,select{font-size:16px}
+  .scroll-container{-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+
+  /* Performance-friendly adjustments */
+  .animate-float{animation:none}
+  .shadow-glass{backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+  .parallax-element{transform:none!important}
+  .bg-gradient-to-br,.bg-gradient-to-r{background-attachment:local}
+  img{image-rendering:auto;-webkit-optimize-contrast:auto}
+
+  /* Force single-column grids for content-heavy pages */
+  .mobile-grid-single,.mobile-grid-double{display:grid!important;grid-template-columns:1fr!important;gap:1rem!important}
+
+  /* Ensure children don't span multiple columns on mobile (overrides Tailwind col-span-*) */
+  .mobile-grid-single > *, .mobile-grid-double > * {
+    grid-column-start: auto !important;
+    grid-column-end: auto !important;
+    grid-column: auto !important;
+  }
+
+  /* Card sizing for improved readability on phones */
+  .mobile-card-container{padding-left:1rem!important;padding-right:1rem!important}
+  /* Slightly tighter cards on phones to allow more content on screen */
+  .mobile-card{margin-left:0!important;margin-right:0!important;padding:1rem!important;border-radius:.875rem!important;margin-bottom:1rem!important}
+  .mobile-card-large{padding:1.25rem!important;font-size:1rem!important;line-height:1.5!important}
+  .mobile-card-optimized{width:100%!important;box-sizing:border-box!important}
+
+  /* Text inside cards */
+  /* Slightly smaller typography to fit more content while keeping proportions */
+  .mobile-card-text,.mobile-card p,.mobile-card .line-clamp-3,.mobile-card .line-clamp-2{font-size:0.95rem!important;line-height:1.5!important}
+  .mobile-card-title,.mobile-card h2,.mobile-card h3{font-size:1.125rem!important;line-height:1.25!important;margin-bottom:.4rem!important}
+  .mobile-card-subtitle,.mobile-card small,.mobile-card .text-sm{font-size:.9rem!important}
+
+  /* Slight global refinement for card descriptions and tags
+    - make descriptions a touch smaller and tighter for better density
+    - improve tag (chip) contrast, padding and borders in both themes
+  */
+  .card-description{font-size:0.94rem;line-height:1.45;color:var(--text-secondary);}
+  .dark .card-description{color:var(--text-secondary-dark)}
+
+  .card-tag{display:inline-flex;align-items:center;gap:.35rem;padding:.18rem .45rem;font-size:.72rem;font-weight:600;border-radius:9999px;background:rgba(243,244,246,0.9);color:#111827;border:1px solid rgba(15,23,42,0.04);}
+  .card-tag svg{opacity:.9;margin-right:0.25rem}
+  .dark .card-tag{background:rgba(255,255,255,0.04);color:var(--text-primary-dark);border:1px solid rgba(255,255,255,0.06);box-shadow:inset 0 -1px 0 rgba(0,0,0,0.2)}
+
+  /* Slightly tighter tag spacing when used inside card grids */
+  .card-tag+.card-tag{margin-left:0.35rem}
+
+  /* Hero variant for tags that sit on top of images (keeps white text and subtle blur) */
+  .card-tag-hero{background:rgba(255,255,255,0.08);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);color:rgba(255,255,255,0.95);border:1px solid rgba(255,255,255,0.12);font-weight:600}
+  .card-tag-hero svg{opacity:0.95}
+  .dark .card-tag-hero{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.95);border:1px solid rgba(255,255,255,0.12)}
+
+  /* Narrow hero/container margins on landing to use side space better */
+  .hero-section .mobile-card-container{padding-left:0.5rem!important;padding-right:0.5rem!important}
+
+  /* Images and decorative elements */
+  .mobile-card img{width:100%!important;height:auto!important;object-fit:cover!important}
+  .mobile-card .absolute.w-40.h-40,.mobile-card .absolute.w-24.h-24{width:3.25rem!important;height:3.25rem!important;opacity:.9!important}
+}
+
+/* Tighten paddings for smaller phones */
+@media (max-width:480px){
+  header[class*="fixed"]{min-height:76px}
+  .hero-section{padding-top:5rem!important}
+  .mobile-card-container{padding-left:.75rem!important;padding-right:.75rem!important}
+  .mobile-card{padding:1.125rem!important}
+/* Enhanced professional transitions and dark mode overlay fixes */
+@media (max-width: 768px) {
+  /* Smooth mobile transitions - prevent jarring animations */
+  .mobile-smooth-transition {
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+  }
+  
+  /* Enhanced touch targets for mobile */
+  .touch-target {
+    min-height: 44px !important;
+    min-width: 44px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  /* Professional overlay fixes for dark mode */
+  .dark .bg-gradient-to-r {
+    --tw-gradient-from: transparent;
+    --tw-gradient-to: transparent;
+    --tw-gradient-stops: var(--tw-gradient-from), rgba(75, 85, 99, 0.1) 50%, var(--tw-gradient-to);
+  }
+  
+  /* Smooth scroll-triggered animations */
+  .scroll-fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  .scroll-fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Project card mobile improvements */
+  .mobile-card .card-description {
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+  
+  .mobile-card .card-tag {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+  
+  /* Project grid mobile adjustments */
+  .mobile-grid-single {
+    gap: 1rem !important;
+  }
+  
+  /* Category badges mobile sizing */
+  .mobile-card .absolute.top-4.left-4 {
+    top: 0.75rem;
+    left: 0.75rem;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+  
+  .mobile-card .absolute.top-4.right-4 {
+    top: 0.75rem;
+    right: 0.75rem;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+  
+  /* Search and filter mobile improvements */
+  .mobile-card-container input,
+  .mobile-card-container select {
+    font-size: 1rem; /* Prevent iOS zoom */
+  }
+  
+  /* Profile card mobile optimizations */
+  .mobile-card-optimized {
+    width: 100% !important;
+    max-width: 280px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-sizing: border-box !important;
+  }
+}
+}
+
+@media (max-width:320px){
+  header[class*="fixed"]{min-height:80px}
+  .hero-section{padding-top:5.5rem!important}
+  .mobile-card-container{padding-left:.5rem!important;padding-right:.5rem!important}
+  .mobile-card{padding:.875rem!important;border-radius:.5rem!important}
+  /* Smooth transitions for all elements */
+  *, *::before, *::after {
+    will-change: auto;
+  }
+  
+  /* Improved scroll behavior */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Enhanced motion for blog components */
+  .blog-smooth-transition {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .parallax-smooth {
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+  }
+  
+  /* Highlight animation for table of contents navigation */
+  .toc-highlight {
+    animation: tocHighlight 2s ease-out;
+  }
+  
+  @keyframes tocHighlight {
+    0% {
+      background-color: rgba(59, 130, 246, 0.1);
+      border-left: 4px solid rgba(59, 130, 246, 0.5);
+    }
+    100% {
+      background-color: transparent;
+      border-left: 4px solid transparent;
+    }
+  }
+}
+
+/* Medium-mobile: 480–640 special case for 2-column mobile-grid-double */
+@media (min-width:480px) and (max-width:640px){
+  .mobile-grid-double{grid-template-columns:1fr 1fr!important;gap:.75rem!important}
+}
+
+/* Small-screen typography helpers */
+@media (max-width:640px){.text-responsive{font-size:clamp(.875rem,4vw,1.125rem);line-height:1.5}.heading-responsive{font-size:clamp(1.5rem,8vw,2.5rem);line-height:1.2}}
+
+/* Content helpers */
+.mobile-content-wide{max-width:100%!important;padding-left:.5rem!important;padding-right:.5rem!important}
+.mobile-hero-optimized{padding-left:.75rem!important;padding-right:.75rem!important}
