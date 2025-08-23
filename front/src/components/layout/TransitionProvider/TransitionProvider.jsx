@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext, useContext, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring, useInView, useTransform } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
-import { variants as motionVariants, useScrollRevealVariants, easeGentle } from '../../shared/motion';
+import { variants as motionVariants, useScrollRevealVariants, easeGentle } from '../../../utils';
 
 // Create a context to manage transition state
 const TransitionContext = createContext();

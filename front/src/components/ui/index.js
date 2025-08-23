@@ -1,6 +1,6 @@
-export { default as TypingTerminal } from '../EnhancedTypingTerminal';
-export { default as TypingTerminalAdvanced } from '../UltraRealisticTerminal';
-export { default as TechIcon } from '../EnhancedTechIcon';
-export { default as ParticleBackground } from '../ParticleGridBackground';
-export { default as Footer } from '../Footer';
-export { default as CursorEffect } from '../CursorEffect';
+export { default as TechIcon } from './TechIcon';
+export { default as Terminal } from './Terminal/Terminal';
+export { default as TypingTerminal } from './TypingTerminal';
+export { default as ParticleBackground } from './ParticleBackground';
+export { default as CursorEffect } from './CursorEffect';
+export { default as ScrollIndicator } from './ScrollIndicator';

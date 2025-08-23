@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { TransitionProvider, Navbar } from './components/layout';
+import { TransitionProvider, Navigation as Navbar } from './components/layout';
 import LandingPage from './pages/LandingPage';
 import AboutPage from './pages/AboutPage';
 import ProjectsPage from './pages/ProjectsPage';

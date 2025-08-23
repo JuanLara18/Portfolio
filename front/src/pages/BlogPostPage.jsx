@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { 
   Calendar, 
@@ -15,8 +16,8 @@ import {
   ChevronUp
 } from 'lucide-react';
 import { getPostBySlug, BLOG_CONFIG, formatDate, scrollToElementCentered } from '../utils/blogUtils';
-import { MarkdownRenderer } from '../components/blog';
-import { HoverMotion } from '../components/layout/TransitionProvider';
+import { MarkdownRenderer } from '../components/features/blog';
+import { HoverMotion } from '../components/layout';
 
 // Animation variants
 const fadeInUp = {
@@ -280,7 +281,14 @@ export default function BlogPostPage() {
   const baseImagePath = withPublicUrl(`/blog/figures/${post.category}`);
   
   return (
-    <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+    <>
+      <Helmet>
+        <title>{post.title} | Juan Lara</title>
+        <meta name="description" content={post.description || `Read ${post.title} by Juan Lara`} />
+        <meta property="og:title" content={`${post.title} | Juan Lara`} />
+        <meta property="og:description" content={post.description || `${post.title} blog post`} />
+      </Helmet>
+      <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
       {/* Header with Hero Image */}
   <motion.section 
         ref={heroRef}
@@ -483,5 +491,6 @@ export default function BlogPostPage() {
       {/* Scroll to Top Button */}
       <ScrollToTop />
     </div>
+    </>
   );
 }

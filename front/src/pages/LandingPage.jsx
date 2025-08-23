@@ -1,14 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
-import { variants as motionVariants, defaultViewportSettings, earlyViewportSettings } from '../shared/motion';
+import { variants as motionVariants, defaultViewportSettings, earlyViewportSettings } from '../utils';
 import { Github, Linkedin, Mail, ExternalLink, Code, Terminal, Database, Server, Cpu, TerminalSquare, FileCode, FileText, Braces, Layers, User, BrainCircuit } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-// Import enhanced components via UI barrel
-import { TypingTerminal, TechIcon, ParticleBackground } from '../components/ui';
-import { HoverMotion } from '../components/layout/TransitionProvider';
-import ScrollIndicator from '../components/ui/ScrollIndicator';
+// Import components from new structure
+import { TypingTerminal, TechIcon, ParticleBackground, ScrollIndicator } from '../components/ui';
+import { HoverMotion } from '../components/layout';
 
 // Constantes de configuración de scroll
 const SCROLL_CONFIG = {

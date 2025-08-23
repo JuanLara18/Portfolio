@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { 
   Calendar, 
@@ -18,8 +19,8 @@ import {
   BLOG_CONFIG, 
   formatDate 
 } from '../utils/blogUtils';
-import { variants as motionVariants } from '../shared/motion';
-import { MotionCard } from '../shared/ui/Card';
+import { variants as motionVariants } from '../utils';
+import { MotionCard } from '../components/common';
 
 // Animation variants
 const fadeInUp = motionVariants.fadeInUp();
@@ -235,7 +236,14 @@ export default function BlogCategoryPage() {
   }
   
   return (
-    <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+    <>
+      <Helmet>
+        <title>{displayInfo.title} | Juan Lara</title>
+        <meta name="description" content={`Browse ${displayInfo.title} posts by Juan Lara`} />
+        <meta property="og:title" content={`${displayInfo.title} | Juan Lara`} />
+        <meta property="og:description" content={`${displayInfo.title} blog posts`} />
+      </Helmet>
+      <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
       {/* Hero Section */}
       <motion.section 
         ref={heroRef}
@@ -352,5 +360,6 @@ export default function BlogCategoryPage() {
         </div>
       </section>
     </div>
+    </>
   );
 }

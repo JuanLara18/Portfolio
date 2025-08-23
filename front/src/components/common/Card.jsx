@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useTransition } from '../../components/layout/TransitionProvider';
-import { easeStandard } from '../motion';
+import { useTransition } from '../layout/TransitionProvider/TransitionProvider';
+import { easeStandard } from '../../utils';
 
 // Compute default hover style based on type
 const getHoverStyle = (type) => {

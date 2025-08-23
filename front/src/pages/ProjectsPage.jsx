@@ -2,8 +2,8 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
-import { variants as motionVariants, defaultViewportSettings, earlyViewportSettings } from '../shared/motion';
-import { MotionCard } from '../shared/ui/Card';
+import { variants as motionVariants, defaultViewportSettings, earlyViewportSettings } from '../utils';
+import { MotionCard } from '../components/common';
 import { 
   ExternalLink, 
   Github, 
@@ -23,7 +23,7 @@ import {
   Terminal,
   Mail
 } from 'lucide-react';
-import ScrollIndicator from '../components/ui/ScrollIndicator';
+import { ScrollIndicator } from '../components/ui';
 
 // Animation variants (centralized)
 const fadeInUp = motionVariants.fadeInUp();
@@ -558,9 +558,9 @@ export default function ProjectsPage() {
   return (
     <>
       <Helmet>
-        <title>Projects - Juan Lara | AI & Machine Learning Portfolio</title>
+        <title>Projects | Juan Lara</title>
         <meta name="description" content="Explore my portfolio of AI and machine learning projects, including TextInsight, RAG systems, and production-ready generative AI solutions." />
-        <meta property="og:title" content="Projects - Juan Lara Portfolio" />
+        <meta property="og:title" content="Projects | Juan Lara" />
         <meta property="og:description" content="AI & Machine Learning projects portfolio" />
         <meta name="keywords" content="AI Projects, Machine Learning Portfolio, TextInsight, RAG Systems, Python Projects" />
       </Helmet>

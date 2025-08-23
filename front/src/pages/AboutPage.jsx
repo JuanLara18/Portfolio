@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
-import { variants as motionVariants, defaultViewportSettings, earlyViewportSettings } from '../shared/motion';
+import { variants as motionVariants, defaultViewportSettings, earlyViewportSettings } from '../utils';
 import { Link } from 'react-router-dom';
 import { 
   ExternalLink, 
@@ -25,8 +25,8 @@ import {
   Layers,
   Box
 } from 'lucide-react';
-import { HoverMotion } from '../components/layout/TransitionProvider';
-import ScrollIndicator from '../components/ui/ScrollIndicator';
+import { HoverMotion } from '../components/layout';
+import { ScrollIndicator } from '../components/ui';
 
 // Animation variants
 const fadeInUp = motionVariants.fadeInUp();
@@ -592,9 +592,9 @@ const courses = [
   return (
     <>
       <Helmet>
-        <title>About - Juan Lara | Computer Scientist & Mathematician</title>
+        <title>About | Juan Lara</title>
         <meta name="description" content="Learn about my background as a Computer Scientist and Mathematician with expertise in LLM/ML engineering, working at GenomAI and Harvard University." />
-        <meta property="og:title" content="About Juan Lara" />
+        <meta property="og:title" content="About | Juan Lara" />
         <meta property="og:description" content="Computer Scientist & Mathematician specializing in AI and ML" />
         <meta name="keywords" content="Computer Science, Mathematics, AI Engineer, GenomAI, Harvard, Machine Learning Specialist" />
       </Helmet>

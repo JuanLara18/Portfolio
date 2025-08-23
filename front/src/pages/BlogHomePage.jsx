@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { 
   Calendar, 
@@ -15,9 +16,9 @@ import {
   Mail
 } from 'lucide-react';
 import { loadAllPosts, getAllTags, BLOG_CONFIG, formatDate } from '../utils/blogUtils';
-import { variants as motionVariants } from '../shared/motion';
-import { MotionCard } from '../shared/ui/Card';
-import ScrollIndicator from '../components/ui/ScrollIndicator';
+import { variants as motionVariants } from '../utils';
+import { MotionCard } from '../components/common';
+import { ScrollIndicator } from '../components/ui';
 
 // Animation variants
 const fadeInUp = motionVariants.fadeInUp();
@@ -249,7 +250,14 @@ export default function BlogHomePage() {
   }
   
   return (
-    <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+    <>
+      <Helmet>
+        <title>Blog | Juan Lara</title>
+        <meta name="description" content="Articles and insights about AI, machine learning, and technology by Juan Lara." />
+        <meta property="og:title" content="Blog | Juan Lara" />
+        <meta property="og:description" content="AI & Technology blog" />
+      </Helmet>
+      <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
       
       {/* Hero Section + Scroll Indicator Container */}
       <div className="h-[calc(100dvh-5.5rem)] flex flex-col">
@@ -592,5 +600,6 @@ export default function BlogHomePage() {
         </div>
       </section>
     </div>
+    </>
   );
 }
