@@ -325,8 +325,8 @@ export default function BlogCategoryPage() {
                 <h3 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-200">No posts found</h3>
                 <p className="text-gray-600 dark:text-gray-400 mb-6">
                   {isCategory 
-                    ? `No posts have been published in the "${displayInfo.title}" category yet.`
-                    : `No posts have been tagged with "${tag}" yet.`
+                    ? `No posts have been published in the "${displayInfo.title}" category.`
+                    : `No posts have been tagged with "${tag}".`
                   }
                 </p>
                 <Link 

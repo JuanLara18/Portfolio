@@ -246,7 +246,7 @@ export default function BlogPostPage() {
             {error || 'Post Not Found'}
           </h1>
           <p className="text-gray-600 dark:text-gray-400 mb-4">
-            The post you're looking for doesn't exist or has been moved.
+            The post you're looking for doesn't exist or may have been moved.
           </p>
           <div className="flex gap-3 justify-center">
             <button 

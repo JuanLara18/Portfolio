@@ -372,7 +372,7 @@ const experiences = [
       "Architect AI-powered clinical decision support systems integrating RAG pipelines with vector databases and LLM fine-tuning techniques to deliver real-time, evidence-based treatment recommendations for healthcare professionals.",
     responsibilities: [
       "Develop HIPAA-compliant generative AI solutions using advanced prompt engineering and retrieval-augmented generation to process multimodal medical data while ensuring regulatory compliance and patient privacy protection.",
-      "Optimize inference pipelines and model deployment on cloud infrastructure, implementing efficient scaling strategies and performance monitoring to support production-level healthcare applications with sub-second response requirements.",
+      "Optimize inference pipelines and model deployment on cloud infrastructure, implementing efficient scaling strategies and performance monitoring to support production healthcare applications with sub-second response requirements.",
       "Lead cross-functional collaboration with clinical teams to translate complex medical workflows into scalable AI architectures that enhance diagnostic accuracy and treatment personalization."
     ],
     skills: ["LLM Fine-tuning", "RAG Systems", "Vector Databases", "HIPAA Compliance", "Healthcare AI", "Cloud Deployment"],
@@ -386,7 +386,7 @@ const experiences = [
     description:
       "Built end-to-end ML pipelines integrating clustering algorithms, XGBoost models, and NLP techniques to analyze large-scale organizational datasets, revealing key insights on firm learning strategies and technology adoption patterns.",
     responsibilities: [
-      "Designed mathematical frameworks for modeling organizational hierarchies and technology shocks, providing formal validation through simulation-based approaches that underpin upcoming academic publications.",
+      "Designed mathematical frameworks for modeling organizational hierarchies and technology shocks, providing formal validation through simulation-based approaches that support upcoming academic publications.",
       "Automated research workflows that accelerated data-driven insight generation for firm behavior analysis, translating quantitative research into actionable recommendations for reskilling strategies.",
       "Collaborated with interdisciplinary teams to transform economic theories into scalable ML applications, ensuring research objectives align with practical business applications."
     ],
@@ -401,7 +401,7 @@ const experiences = [
     description:
       "Engineered production-ready applications for geospatial analysis and segmentation using ML models and robust data-processing pipelines on Google Cloud Platform, enhancing operational efficiency across multiple data sources.",
     responsibilities: [
-      "Led the design and implementation of TextInsight, a Python library for automated multilingual text analysis using LLMs and advanced NetworkX visualizations, reducing text processing time from hours to under one hour and earning Total Ops Star Employee recognition across LATAM.",
+      "Led the design and implementation of TextInsight, a Python library for automated multilingual text analysis using LLMs and advanced NetworkX visualizations, reducing text processing time from hours to under one hour and earning Total Ops Star Employee recognition across LATAM regions.",
       "Streamlined analytical workflows through automated Python pipelines, significantly reducing manual processing while enabling dynamic real-time reporting and cross-functional analytics.",
       "Integrated scalable cloud workflows with advanced data management systems, supporting large-scale batch processing and reproducible research methodologies."
     ],
@@ -724,7 +724,7 @@ const courses = [
 
                 <div className="py-1 border-l-2 border-blue-500/30 dark:border-blue-700/50 pl-4">
                   <p>
-                    Specializing in the complete AI engineering stack: LLM fine-tuning with PyTorch, RAG architectures using LangChain and vector databases, plus cloud deployment on GCP. My expertise bridges advanced ML techniques with robust engineering practices for scalable, production-ready solutions.
+                    Specializing in the complete AI engineering stack: LLM fine-tuning with PyTorch, RAG architectures using LangChain and vector databases, plus cloud deployment on GCP and AWS. My expertise bridges advanced ML techniques with robust engineering practices for scalable, production-ready solutions.
                   </p>
                 </div>
                 
@@ -824,7 +824,7 @@ const courses = [
               variants={fadeInUp}
               className="italic text-center mb-10 text-gray-600 dark:text-gray-400"
             >
-              Core technologies and frameworks powering production AI systems
+              Core technologies and frameworks I use to power production AI systems
             </motion.p>
 
             <motion.div
@@ -1032,7 +1032,7 @@ const courses = [
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white">Total Ops Star Employee - LATAM</h3>
                     <div className="text-sm text-blue-600 dark:text-blue-400 mb-2">Ipsos • April 2024</div>
                     <p className="text-gray-700 dark:text-gray-300">
-                      Recognized for developing TextInsight, demonstrating exceptional initiative, technical expertise, and commitment to operational excellence across Latin America operations.
+                      Recognized for developing TextInsight, demonstrating exceptional initiative, technical expertise, and commitment to operational excellence across Latin American operations.
                     </p>
                   </div>
                 </div>
@@ -1047,7 +1047,7 @@ const courses = [
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white">Best Averages Scholarship</h3>
                     <div className="text-sm text-blue-600 dark:text-blue-400 mb-2">Universidad Nacional de Colombia • 2018-2023</div>
                     <p className="text-gray-700 dark:text-gray-300">
-                      Awarded for 10 consecutive semesters to the top 15 students with highest academic performance in the program, maintaining excellence throughout entire academic career.
+                      Awarded for 10 consecutive semesters to the top 15 students with highest academic performance in the program, maintaining excellence throughout my academic career.
                     </p>
                   </div>
                 </div>
@@ -1160,7 +1160,7 @@ const courses = [
               variants={fadeInUp}
               className="text-gray-300 mb-8 max-w-2xl mx-auto"
             >
-              I'm always open to discussing new projects, research opportunities, or creative collaborations. If you're looking for a Computer Scientist and Mathematician with expertise in Machine Learning and AI, let's connect!
+              I'm always open to discussing new projects, research opportunities, and creative collaborations. If you're looking for a Computer Scientist and Mathematician with expertise in Machine Learning and AI, let's connect!
             </motion.p>
             
             <motion.div 

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { variants as motionVariants, defaultViewportSettings, earlyViewportSettings } from '../shared/motion';
-import { Github, Linkedin, Mail, ExternalLink, Code, Terminal, Database, Server, Cpu, TerminalSquare, FileCode, Braces, Layers, User, BrainCircuit } from 'lucide-react';
+import { Github, Linkedin, Mail, ExternalLink, Code, Terminal, Database, Server, Cpu, TerminalSquare, FileCode, FileText, Braces, Layers, User, BrainCircuit } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 // Import enhanced components via UI barrel
@@ -246,7 +246,7 @@ export default function LandingPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.2 }}
                 >
-                  Transforming Numbers
+                  Shaping the future
                 </motion.span>
                 <motion.span 
                   className="block mt-1 lg:mt-2 text-gray-800 dark:text-gray-100"
@@ -254,7 +254,7 @@ export default function LandingPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.4 }}
                 >
-                  into Action
+                  with Generative AI
                 </motion.span>
               </motion.h1>
               
@@ -262,8 +262,9 @@ export default function LandingPage() {
                 variants={fadeInUp}
                 className="text-base sm:text-lg text-gray-600 dark:text-gray-400 mb-4 lg:mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed px-2 sm:px-0"
               >
-                Building production-ready AI systems with LLM fine-tuning, RAG architectures, and cloud-native deployment on AWS/GCP.
+                Building production-ready AI systems with LLM fine-tuning, RAG architectures, and scalable cloud deployment.
               </motion.p>
+              
               
               <motion.div 
                 variants={fadeInUp}
@@ -428,17 +429,22 @@ export default function LandingPage() {
                 <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900/50 dark:text-blue-300 mr-3">
                   <FileCode size={18} />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200">About Me</h3>
+                <div>
+                  <h3 className="text-2xl sm:text-3xl font-bold mb-2 text-gray-800 dark:text-gray-100">Background</h3>
+                  <div className="w-20 h-1 bg-blue-600 dark:bg-blue-400"></div>
+                </div>
               </div>
-              <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                I'm a Computer Scientist & Mathematician with 3+ years developing production-ready generative AI solutions. Currently building AI-powered clinical decision support systems at GenomAI, with previous research experience at Harvard University.
-              </p>
-              <Link to="/about" className="text-blue-600 dark:text-blue-400 font-medium inline-flex items-center group">
-                <span>Read more</span>
-                <svg className="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-150" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </Link>
+              <div className="max-w-3xl text-left">
+                <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                  Computer Scientist & Mathematician with 3+ years developing generative AI solutions. Currently building clinical decision support systems at GenomAI and contributing to research at Harvard University.
+                </p>
+                <HoverMotion>
+                  <Link to="/about" className="inline-flex items-center font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-300 group">
+                    Learn more
+                    <span className="ml-2 transform transition-transform duration-300 group-hover:translate-x-1">→</span>
+                  </Link>
+                </HoverMotion>
+              </div>
             </motion.div>
             
             
@@ -451,17 +457,22 @@ export default function LandingPage() {
                 <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900/50 dark:text-blue-300 mr-3">
                   <Layers size={18} />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200">Projects</h3>
+                <div>
+                  <h3 className="text-2xl sm:text-3xl font-bold mb-2 text-gray-800 dark:text-gray-100">Featured Work</h3>
+                  <div className="w-20 h-1 bg-blue-600 dark:bg-blue-400"></div>
+                </div>
               </div>
-              <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                From TextInsight (multilingual NLP library) to scalable RAG systems, I build end-to-end AI solutions that bridge advanced ML techniques with robust engineering practices. Each project emphasizes production-ready deployment and measurable business impact.
-              </p>
-              <Link to="/projects" className="text-blue-600 dark:text-blue-400 font-medium inline-flex items-center group">
-                <span>Explore projects</span>
-                <svg className="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-150" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </Link>
+              <div className="max-w-3xl text-left">
+                <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                  End-to-end AI solutions from multilingual NLP libraries to scalable RAG systems. Each project emphasizes production deployment and measurable business impact.
+                </p>
+                <HoverMotion>
+                  <Link to="/projects" className="inline-flex items-center font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-300 group">
+                    View projects
+                    <span className="ml-2 transform transition-transform duration-300 group-hover:translate-x-1">→</span>
+                  </Link>
+                </HoverMotion>
+              </div>
             </motion.div>
           </motion.div>
         </div>
@@ -469,83 +480,97 @@ export default function LandingPage() {
       
       {/* Blog and Contact Preview */}
       <section className="py-16 sm:py-20 bg-gray-50 dark:bg-gray-800">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 mobile-card-container">
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={staggerContainer}
-            className="max-w-4xl mx-auto"
-          >
-            <motion.h2 
-              variants={fadeInUp} 
-              className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400"
-            >
-              Research & Writing
-            </motion.h2>
-            
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={defaultViewportSettings} className="text-center">
+            <motion.h2 variants={fadeInUp} className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-2 sm:mb-4">Recent Updates</motion.h2>
             <motion.p 
               variants={fadeInUp}
               className="text-base sm:text-lg text-gray-600 dark:text-gray-300 mb-6 sm:mb-10 text-center"
             >
-              Come and read my thoughts! 
+              Latest insights and professional certifications in AI and machine learning.
             </motion.p>
-            
+          </motion.div>
+          
+          {/* Blog Previews */}
+          <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+            {/* Latest Blog Post */}
             <motion.div 
-              variants={fadeInUp}
-              className="bg-white dark:bg-gray-900 p-6 sm:p-8 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 relative overflow-hidden mobile-smooth-transition mobile-card-large"
-              whileHover={{ y: -5, transition: { duration: 0.3 } }}
+              variants={motionVariants.scrollReveal.up()}
+              className="bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 transition-all duration-500 hover:shadow-xl group"
             >
-              <div className="absolute top-0 right-0 w-40 h-40 bg-blue-100/50 dark:bg-blue-900/20 rounded-full -mr-20 -mt-20 z-0"></div>
-              <div className="relative z-10">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200">Latest from the Blog</h3>
-                  <div className="px-3 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300 rounded-full text-sm font-medium">
-                    Actively posting
-                  </div>
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 flex items-center justify-center rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900/50 dark:text-blue-300 mr-4">
+                  <FileText className="w-6 h-6" />
                 </div>
-                
-                {/* <div className="mb-6 pb-6 border-b border-gray-100 dark:border-gray-700">
-                  <h4 className="text-lg font-medium mb-2">Multi-Agent Environments for Decision Support</h4>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
-                    Exploring how multi-agent simulations can help model complex organizational dynamics.
-                  </p>
-                  <div className="flex items-center text-sm text-gray-500 dark:text-gray-500">
-                    <span>May 10, 2025</span>
-                    <span className="mx-2">•</span>
-                    <span>10 min read</span>
-                  </div>
-                </div> */}
-                
                 <div>
-                  <Link
-                    to="/blog"
-                    className="flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-150 relative overflow-hidden group shadow-lg touch-target mobile-smooth-transition"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span className="z-10 relative">Visit Blog</span>
-                    <ExternalLink size={16} className="z-10 relative transform group-hover:translate-x-1 transition-transform duration-150" />
-                    <div className="absolute inset-0 bg-blue-500 transform translate-y-full group-hover:translate-y-0 transition-transform duration-200"></div>
-                    {/* Professional light reflection effect with proper dark mode support */}
-                    <motion.div
-                      className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-gradient-to-r from-transparent via-white/60 dark:via-gray-800/40 to-transparent skew-x-20 transition-opacity duration-700"
-                      animate={{ 
-                        x: ["200%", "-200%"],
-                        transition: { 
-                          repeat: Infinity, 
-                          repeatType: "loop", 
-                          duration: 2.8,
-                          ease: "easeInOut",
-                          repeatDelay: 1.2
-                        } 
-                      }}
-                    />
-                  </Link>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-300 text-xs font-medium rounded">
+                      Latest Post
+                    </span>
+                  </div>
+                  <h4 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-200 mb-1">
+                    <Link to="/blog" className="hover:underline">
+                      RAG Systems in Production: Lessons Learned
+                    </Link>
+                  </h4>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm">
+                    January 15, 2025 • 8 min read
+                  </p>
                 </div>
               </div>
+              <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
+                Real-world challenges and solutions for deploying Retrieval-Augmented Generation systems at scale, from vector search optimization to context management.
+              </p>
+              <Link 
+                to="/blog" 
+                className="inline-flex items-center font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-300 group"
+              >
+                Read post
+                <span className="ml-2 transform transition-transform duration-300 group-hover:translate-x-1">→</span>
+              </Link>
             </motion.div>
-          </motion.div>
+            
+            {/* Latest Certification */}
+            <motion.div 
+              variants={motionVariants.scrollReveal.up()}
+              className="bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 transition-all duration-500 hover:shadow-xl group"
+            >
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 flex items-center justify-center rounded-full bg-green-100 text-green-600 dark:bg-green-900/50 dark:text-green-300 mr-4">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="px-2 py-1 bg-green-100 dark:bg-green-900/50 text-green-600 dark:text-green-300 text-xs font-medium rounded">
+                      New Certification
+                    </span>
+                  </div>
+                  <h4 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-200 mb-1">
+                    <a href="https://www.datacamp.com/certificate/AIEDA0019827293059" target="_blank" rel="noreferrer" className="hover:underline">
+                      AI Engineer for Developers Associate
+                    </a>
+                  </h4>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm">
+                    DataCamp • July 2025
+                  </p>
+                </div>
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
+                Advanced certification covering LLM engineering, RAG systems, and production-ready AI development practices.
+              </p>
+              <a 
+                href="https://www.datacamp.com/certificate/AIEDA0019827293059"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center font-semibold text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 transition-colors duration-300 group"
+              >
+                View certificate
+                <span className="ml-2 transform transition-transform duration-300 group-hover:translate-x-1">→</span>
+              </a>
+            </motion.div>
+          </div>
         </div>
       </section>
       
@@ -576,7 +601,7 @@ export default function LandingPage() {
                 <div>
                   <h3 className="text-xl font-semibold mb-4">Get in Touch</h3>
                   <p className="text-gray-400 mb-6">
-                    I'm always interested in new projects, research collaborations, or just talking about interesting problems in AI and computational mathematics.
+                    Always interested in new projects, research collaborations, and discussing innovative challenges in AI and computational mathematics.
                   </p>
                   <div className="flex items-center mb-4">
                     <Mail className="text-blue-400 mr-3" size={18} />
@@ -599,7 +624,7 @@ export default function LandingPage() {
                       duration={0.2}
                     >
                       <Github className="mr-3 text-white" size={20} />
-                      <span>Github Projects</span>
+                      <span>GitHub</span>
                       <motion.div 
                         className="absolute inset-0 opacity-0 group-hover:opacity-10 bg-gradient-to-r from-transparent via-white dark:via-gray-200 to-transparent skew-x-20"
                         animate={{ 
@@ -623,7 +648,7 @@ export default function LandingPage() {
                       duration={0.2}
                     >
                       <Linkedin className="mr-3 text-white" size={20} />
-                      <span>LinkedIn Profile</span>
+                      <span>LinkedIn</span>
                       <motion.div 
                         className="absolute inset-0 opacity-0 group-hover:opacity-10 bg-gradient-to-r from-transparent via-white dark:via-gray-200 to-transparent skew-x-20"
                         animate={{ 
@@ -640,12 +665,12 @@ export default function LandingPage() {
                     </HoverMotion>
                     <HoverMotion as={motion.a}
                       href="mailto:larajuand@outlook.com" 
-                      className="flex items-center px-4 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors duration-150 relative overflow-hidden group"
+                      className="flex items-center px-4 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors duration-150 relative overflow-hidden group touch-target mobile-smooth-transition"
                       y={-2}
                       duration={0.2}
                     >
                       <Mail className="mr-3 text-white" size={20} />
-                      <span>Send Email</span>
+                      <span>Email</span>
                       <motion.div 
                         className="absolute inset-0 opacity-0 group-hover:opacity-10 bg-gradient-to-r from-transparent via-white dark:via-gray-200 to-transparent skew-x-20"
                         animate={{ 

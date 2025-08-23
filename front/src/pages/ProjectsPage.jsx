@@ -90,7 +90,7 @@ const projects = [
   {
     id: 1,
     name: "TextInsight",
-    description: "Advanced text analysis library combining BERT for sentiment analysis, GPT-3.5 for text correction and topic generation, and embeddings for graph visualization. Deployed at Ipsos to analyze survey data, cutting analysis time by 60% while delivering deeper insights.",
+    description: "Advanced text analysis library combining BERT for sentiment analysis, GPT-3.5 for text correction and topic generation, and embeddings for graph visualization. Deployed at Ipsos to analyze survey data, reducing analysis time by 60% while delivering deeper insights.",
     image: "textinsight.png",
     tags: ["NLP", "Transformers", "OpenAI", "NetworkX", "PyVis"],
     github: "https://github.com/JuanLara18/TextInsight",
@@ -110,7 +110,7 @@ const projects = [
   {
     id: 3,
     name: "Translation",
-    description: "High-performance distributed translation system for large multilingual datasets using PySpark and OpenAI. Supports caching, checkpointing, and metadata-preserving Stata translation.",
+    description: "High-performance distributed translation system for large multilingual datasets using PySpark and OpenAI. Features caching, checkpointing, and metadata-preserving Stata translation.",
     image: "translation.png",
     tags: ["nlp", "distributed-computing", "stata", "pyspark", "openai"],
     github: "https://github.com/JuanLara18/Translation",
@@ -120,7 +120,7 @@ const projects = [
   {
     id: 4,
     name: "AgentFlow",
-    description: "Simulation framework to visualize multi-agent organizational dynamics using a modular Streamlit-based interface. Models organizational behavior and hierarchies.",
+    description: "Simulation framework for visualizing multi-agent organizational dynamics using a modular Streamlit-based interface. Models organizational behavior and hierarchies.",
     image: "agentflow.png",
     tags: ["simulation", "multi-agent-systems", "organizational-model"],
     github: "https://github.com/JuanLara18/AgentFlow",
@@ -148,7 +148,7 @@ const projects = [
   {
     id: 7,
     name: "QuizApp",
-    description: "A modern full-stack learning platform that lets educators create and manage quizzes, and delivers instant feedback to learners via a React frontend and Flask backend.",
+    description: "A modern full-stack learning platform that enables educators to create and manage quizzes, delivering instant feedback to learners via a React frontend and Flask backend.",
     image: "quizapp.png",
     tags: ["flask", "reactjs", "sqlite", "quiz"],
     github: "https://github.com/JuanLara18/QuizApp",
@@ -157,7 +157,7 @@ const projects = [
   {
     id: 8,
     name: "Whiteboard-app",
-    description: "Collaborative whiteboard built with React, TypeScript, and WebSockets. Draw, share, and brainstorm ideas in real-time with team members.",
+    description: "Collaborative whiteboard built with React, TypeScript, and WebSockets. Draw, share, and brainstorm ideas in real-time with your team.",
     image: "whiteboard.png",
     tags: ["react", "real-time", "typescript", "whiteboard"],
     github: "https://github.com/JuanLara18/whiteboard-app",
@@ -166,7 +166,7 @@ const projects = [
   {
     id: 9,
     name: "Cunservicios Platform",
-    description: "Smart platform for managing public utility services, including bill consultation, claims (PQR), and payment tracking. Built with React and Python.",
+    description: "Smart platform for managing public utility services, including bill consultation, claims processing (PQR), and payment tracking. Built with React and Python.",
     image: "cunservicios.png",
     tags: ["react", "python", "sql", "pqr"],
     github: "https://github.com/JuanLara18/Cunservicios",
@@ -176,7 +176,7 @@ const projects = [
   {
     id: 10,
     name: "Notebook-Converter",
-    description: "Easily convert Jupyter Notebooks to different formats (PDF, HTML, Markdown) using a customizable and efficient command-line tool. Optimized for data scientists and researchers.",
+    description: "Convert Jupyter Notebooks to different formats (PDF, HTML, Markdown) using a customizable and efficient command-line tool. Optimized for data scientists and researchers.",
     image: "notebook-converter.png",
     tags: ["automation", "jupyter-notebook"],
     github: "https://github.com/JuanLara18/Notebook-Converter",
@@ -185,7 +185,7 @@ const projects = [
   {
     id: 11,
     name: "AI-Roadmap",
-    description: "A structured, project-based roadmap for learning Machine Learning & AI through hands-on projects. Each project builds on the previous one, helping you move from beginner to advanced AI concepts.",
+    description: "A structured, project-based roadmap for learning Machine Learning & AI through hands-on projects. Each project builds on the previous, helping you progress from beginner to advanced AI concepts.",
     image: "ai-roadmap.png",
     tags: ["ai", "ml", "education"],
     github: "https://github.com/JuanLara18/AI-Roadmap",
@@ -194,7 +194,7 @@ const projects = [
   {
     id: 12,
     name: "MadameX",
-    description: "Interactive cryptography toolkit that allows users to encrypt and decrypt messages using various algorithms, as well as perform cryptanalysis to break encrypted messages without the original key.",
+    description: "Interactive cryptography toolkit that enables users to encrypt and decrypt messages using various algorithms, and perform cryptanalysis to break encrypted messages without the original key.",
     image: "madamex.png",
     tags: ["cryptography", "cryptoanalysis", "encryption-decryption"],
     github: "https://github.com/JuanLara18/MadameX",
@@ -204,7 +204,7 @@ const projects = [
   {
     id: 13,
     name: "BrickBreaker",
-    description: "Classic brick breaker game built with JavaScript and p5.js. Features multiple levels, power-ups, and increasing difficulty.",
+    description: "Classic brick breaker game built with JavaScript and p5.js. Features multiple levels, power-ups, and progressive difficulty.",
     image: "brickbreaker.png",
     tags: ["object-oriented-programming", "retrogames", "JavaScript"],
     github: "https://github.com/JuanLara18/BrickBreaker",
@@ -213,7 +213,7 @@ const projects = [
   {
     id: 14,
     name: "Tetris",
-    description: "Implementation of the classic Tetris game using JavaScript and p5 library, developed for the Object-oriented Programming course.",
+    description: "Implementation of the classic Tetris game using JavaScript and p5 library, developed for an Object-oriented Programming course.",
     image: "tetris.png", 
     tags: ["object-oriented-programming", "retrogames", "JavaScript"],
     github: "https://github.com/JuanLara18/Tetris",
@@ -223,7 +223,7 @@ const projects = [
   {
     id: 15,
     name: "BalanceAI",
-    description: "Reinforcement learning project to teach an AI agent to balance itself. Visual interface allows watching the agent learn in real-time as it improves through training iterations.",
+    description: "Reinforcement learning project to teach an AI agent to balance itself. Visual interface enables real-time observation of the agent learning and improving through training iterations.",
     image: "balance-ai.png",
     tags: ["reinforcement-learning", "machine-learning", "python", "gymnasium"],
     category: "upcoming"
@@ -231,7 +231,7 @@ const projects = [
   {
     id: 16,
     name: "DJ-Mix Generator",
-    description: "AI-powered DJ that creates seamless transitions between songs based on your preferences. Analyzes BPM, key, and energy levels to create professional sounding mixes with techno focus.",
+    description: "AI-powered DJ that creates seamless transitions between songs based on your preferences. Analyzes BPM, key, and energy levels to create professional-sounding mixes with a techno focus.",
     image: "dj-mix.png",
     tags: ["audio-processing", "machine-learning", "music-generation", "python"],
     category: "upcoming"
@@ -239,7 +239,7 @@ const projects = [
   {
     id: 17,
     name: "FoodEconomy",
-    description: "Web app that tracks historical prices of essential household products, analyzes their evolution over time, and recommends optimized shopping lists based on price trends and user preferences.",
+    description: "Web app that tracks historical prices of essential household products, analyzes their evolution over time, and recommends optimized shopping lists based on price trends and preferences.",
     image: "food-economy.png",
     tags: ["web-scraping", "data-analysis", "price-prediction", "react", "python"],
     category: "upcoming",
@@ -609,7 +609,7 @@ export default function ProjectsPage() {
               variants={fadeInUp}
               className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-6 sm:mb-8 max-w-3xl mx-auto px-2 sm:px-0"
             >
-              A showcase of my work in AI, machine learning, web development, and more. Each project represents a unique challenge solved through computational thinking and creative problem-solving.
+              A showcase of my work in AI, machine learning, web development, and more. Each project represents a unique challenge solved through computational thinking and innovative problem-solving.
             </motion.p>
             
             {/* Search and filter */}
@@ -841,7 +841,7 @@ export default function ProjectsPage() {
             variants={fadeInUp}
             className="text-base sm:text-lg md:text-xl text-gray-300 mb-8 sm:mb-10 max-w-3xl mx-auto px-2 sm:px-0"
           >
-            Have a project idea or collaboration opportunity? I'm always interested in discussing new challenges and innovative solutions.
+            Have a project idea or collaboration opportunity? I'm always interested in discussing new challenges and building innovative solutions.
           </motion.p>
           
           <motion.div 
