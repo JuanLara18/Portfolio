@@ -2,12 +2,13 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { variants as motionVariants, defaultViewportSettings, earlyViewportSettings } from '../shared/motion';
-import { ChevronDown, Github, Linkedin, Mail, ExternalLink, Code, Terminal, Database, Server, Cpu, TerminalSquare, FileCode, Braces, Layers, User, BrainCircuit } from 'lucide-react';
+import { Github, Linkedin, Mail, ExternalLink, Code, Terminal, Database, Server, Cpu, TerminalSquare, FileCode, Braces, Layers, User, BrainCircuit } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 // Import enhanced components via UI barrel
 import { TypingTerminal, TechIcon, ParticleBackground } from '../components/ui';
 import { HoverMotion } from '../components/layout/TransitionProvider';
+import ScrollIndicator from '../components/ui/ScrollIndicator';
 
 // Constantes de configuración de scroll
 const SCROLL_CONFIG = {
@@ -106,7 +107,6 @@ export default function LandingPage() {
   // Parallax for decorative elements
   const bgElement1Y = useTransform(scrollY, [0, SCROLL_CONFIG.PARALLAX_RANGE], [0, 30]);
   const bgElement2Y = useTransform(scrollY, [0, SCROLL_CONFIG.PARALLAX_RANGE], [0, -20]);
-  const scrollIndicatorOpacity = useTransform(scrollY, [0, 100], [1, 0]);
   
   // Handle scroll events
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -401,32 +401,12 @@ export default function LandingPage() {
         </div>
       </motion.section>
       
-      {/* Scroll indicator positioned between hero and content sections */}
-      <div className="relative py-4 sm:py-6 bg-white dark:bg-gray-900 flex justify-center">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          style={{ opacity: scrollIndicatorOpacity }}
-          transition={{ 
-            delay: 0.8, 
-            duration: 0.8
-          }}
-          className="cursor-pointer touch-target"
-          onClick={scrollToContent}
-        >
-          <motion.div
-            animate={{ 
-              y: [0, 8, 0],
-              transition: { 
-                duration: 1.5, 
-                repeat: Infinity,
-                repeatType: "loop"
-              }
-            }}
-          >
-            <ChevronDown size={24} className="text-blue-600 dark:text-blue-400" />
-          </motion.div>
-        </motion.div>
+      {/* Scroll indicator */}
+      <div className="bg-white dark:bg-gray-900">
+        <ScrollIndicator 
+          fadeOutStart={0} 
+          fadeOutEnd={100}
+        />
       </div>
       
       {/* Section Previews */}

@@ -11,12 +11,12 @@ import {
   ArrowRight, 
   Layers,
   Brain,
-  FileText,
-  ChevronDown 
+  FileText
 } from 'lucide-react';
 import { loadAllPosts, getAllTags, BLOG_CONFIG, formatDate } from '../utils/blogUtils';
 import { variants as motionVariants } from '../shared/motion';
 import { MotionCard } from '../shared/ui/Card';
+import ScrollIndicator from '../components/ui/ScrollIndicator';
 
 // Animation variants
 const fadeInUp = motionVariants.fadeInUp();
@@ -153,7 +153,6 @@ export default function BlogHomePage() {
   // Transform values for smoother parallax effects
   const heroOpacity = useTransform(scrollY, [100, 400], [1, 0.95]);
   const heroY = useTransform(scrollY, [0, 400], [0, -50]);
-  const scrollIndicatorOpacity = useTransform(scrollY, [0, 200], [1, 0]);
   
   // Load posts and tags on component mount
   useEffect(() => {
@@ -250,34 +249,37 @@ export default function BlogHomePage() {
   
   return (
     <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
-      {/* Hero Section */}
-      <motion.section 
-        ref={heroRef}
-        style={{ opacity: heroOpacity, y: heroY }}
-        className="relative h-[80vh] min-h-[600px] flex items-center justify-center overflow-hidden parallax-smooth"
-      >
+      
+      {/* Hero Section + Scroll Indicator Container */}
+      <div className="h-[calc(100dvh-5.5rem)] flex flex-col">
+        {/* Hero Section */}
+        <motion.section 
+          ref={heroRef}
+          style={{ opacity: heroOpacity, y: heroY }}
+          className="relative flex-1 flex items-center justify-center overflow-hidden parallax-smooth"
+        >
         <div className="absolute inset-0 bg-gradient-to-b from-blue-50 to-white dark:from-gray-800 dark:to-gray-900 -z-10"></div>
         
         {/* Decorative elements */}
         <div className="absolute top-40 right-20 w-72 h-72 rounded-full bg-blue-100/50 dark:bg-blue-900/20 blur-3xl -z-10"></div>
         <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-indigo-100/30 dark:bg-indigo-900/10 blur-3xl -z-10"></div>
         
-  <div className="container mx-auto px-6 -mt-2 mobile-card-container">
+  <div className="container mx-auto px-6 -mt-10 mobile-card-container">
           <motion.div 
             initial="hidden"
             animate="visible"
             variants={staggerContainer}
-            className="max-w-4xl mx-auto text-center mb-2"
+            className="max-w-4xl mx-auto text-center mb-0"
           >
-            <motion.div variants={fadeInUp} className="mb-4">
-              <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 text-sm font-medium mb-4">
+            <motion.div variants={fadeInUp} className="mb-2">
+              <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 text-sm font-medium mb-2">
                 <BookOpen size={14} className="mr-1.5" /> Blog
               </div>
             </motion.div>
             
             <motion.h1 
               variants={fadeInUp}
-              className="text-4xl md:text-5xl font-bold mb-6 leading-tight"
+              className="text-4xl md:text-5xl font-bold mb-2 leading-tight"
             >
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
                 Thoughts & Discoveries
@@ -286,7 +288,7 @@ export default function BlogHomePage() {
             
             <motion.p 
               variants={fadeInUp}
-              className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto"
+              className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-4 max-w-3xl mx-auto"
             >
               Exploring mathematical curiosities, research insights, and the fascinating intersections of theory and practice.
             </motion.p>
@@ -349,31 +351,16 @@ export default function BlogHomePage() {
           </motion.div>
         </div>
         
-      </motion.section>
-      
-      {/* Scroll indicator positioned outside hero section - with smoother transition */}
-      <motion.div
-        style={{ opacity: scrollIndicatorOpacity }}
-        className="flex justify-center items-center py-3 cursor-pointer z-40 h-[6vh] min-h-[50px] transition-all duration-300 ease-out"
-        onClick={() => {
-          const targetPosition = window.innerHeight * 0.8;
-          window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-        }}
-      >
-        <motion.div
-          animate={{
-            y: [0, 6, 0],
-            transition: {
-              duration: 2,
-              repeat: Infinity,
-              repeatType: 'loop',
-              ease: "easeInOut"
-            }
-          }}
-        >
-          <ChevronDown size={22} className="text-blue-600 dark:text-blue-400 transition-colors duration-200" />
-        </motion.div>
-      </motion.div>
+        </motion.section>
+        
+        {/* Scroll indicator */}
+        <ScrollIndicator 
+          fadeOutStart={0} 
+          fadeOutEnd={200}
+          size={22}
+          className="flex-shrink-0"
+        />
+      </div>
       
       {/* Posts Grid */}
       <section className="py-0 pb-16">

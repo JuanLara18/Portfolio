@@ -20,10 +20,10 @@ import {
   Music, 
   Search, 
   Filter,
-  ChevronDown, 
   Terminal,
   Mail
 } from 'lucide-react';
+import ScrollIndicator from '../components/ui/ScrollIndicator';
 
 // Animation variants (centralized)
 const fadeInUp = motionVariants.fadeInUp();
@@ -418,7 +418,6 @@ export default function ProjectsPage() {
   // Transform values based on scroll position
   const heroOpacity = useTransform(scrollY, [260, 800], [1, 0.98]);
   const heroScale = useTransform(scrollY, [260, 800], [1, 0.995]);
-  const scrollIndicatorOpacity = useTransform(scrollY, [0, 300], [1, 0]);
   
   // Filter projects based on category and search term with optimized visual layout
   const filteredProjects = useMemo(() => {
@@ -566,34 +565,37 @@ export default function ProjectsPage() {
         <meta name="keywords" content="AI Projects, Machine Learning Portfolio, TextInsight, RAG Systems, Python Projects" />
       </Helmet>
       <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
-      {/* Hero Section */}
-      <motion.section 
-        ref={heroRef}
-        style={{ opacity: heroOpacity, scale: heroScale }}
-        className="relative h-[80vh] min-h-[600px] sm:min-h-[500px] flex items-center justify-center overflow-hidden"
-      >
+      
+      {/* Hero Section + Scroll Indicator Container */}
+      <div className="h-[calc(100dvh-5.5rem)] flex flex-col">
+        {/* Hero Section */}
+        <motion.section 
+          ref={heroRef}
+          style={{ opacity: heroOpacity, scale: heroScale }}
+          className="relative flex-1 flex items-center justify-center overflow-hidden"
+        >
         <div className="absolute inset-0 bg-gradient-to-b from-indigo-50 to-white dark:from-gray-800 dark:to-gray-900 -z-10"></div>
         
         {/* Decorative elements - adjusted for mobile */}
         <div className="absolute top-20 sm:top-40 right-10 sm:right-20 w-48 sm:w-72 h-48 sm:h-72 rounded-full bg-blue-100/50 dark:bg-blue-900/20 blur-3xl -z-10"></div>
         <div className="absolute -bottom-10 sm:-bottom-20 -left-10 sm:-left-20 w-60 sm:w-80 h-60 sm:h-80 rounded-full bg-indigo-100/30 dark:bg-indigo-900/10 blur-3xl -z-10"></div>
         
-  <div className="container mx-auto px-4 sm:px-6 -mt-2 mobile-card-container">
+  <div className="container mx-auto px-4 sm:px-6 -mt-10 mobile-card-container">
           <motion.div 
             initial="hidden"
             animate="visible"
             variants={staggerContainer}
-            className="max-w-4xl mx-auto text-center mb-2"
+            className="max-w-4xl mx-auto text-center mb-0"
           >
-            <motion.div variants={fadeInUp} className="mb-4">
-              <div className="inline-flex items-center px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 dark:bg-indigo-900/50 dark:text-indigo-300 text-sm font-medium mb-4">
+            <motion.div variants={fadeInUp} className="mb-2">
+              <div className="inline-flex items-center px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 dark:bg-indigo-900/50 dark:text-indigo-300 text-sm font-medium mb-2">
                 <Layers size={14} className="mr-1.5" /> Project Portfolio
               </div>
             </motion.div>
             
             <motion.h1 
               variants={fadeInUp}
-              className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 leading-tight"
+              className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 sm:mb-3 leading-tight"
             >
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
                 Exploring Solutions
@@ -653,30 +655,15 @@ export default function ProjectsPage() {
           </motion.div>
         </div>
         
-      </motion.section>
-      
-      {/* Scroll indicator positioned outside hero section - compact */}
-      <motion.div
-        style={{ opacity: scrollIndicatorOpacity }}
-        className="flex justify-center items-center py-2 cursor-pointer z-40 h-[8vh] min-h-[60px]"
-        onClick={() => {
-          const targetPosition = window.innerHeight * 0.8;
-          window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-        }}
-      >
-        <motion.div
-          animate={{
-            y: [0, 8, 0],
-            transition: {
-              duration: 1.5,
-              repeat: Infinity,
-              repeatType: 'loop'
-            }
-          }}
-        >
-          <ChevronDown size={24} className="text-blue-600 dark:text-blue-400" />
-        </motion.div>
-      </motion.div>
+        </motion.section>
+        
+        {/* Scroll indicator */}
+        <ScrollIndicator 
+          fadeOutStart={0} 
+          fadeOutEnd={300}
+          className="flex-shrink-0"
+        />
+      </div>
       
       {/* All Projects Grid */}
       <section className="py-0 pb-16">

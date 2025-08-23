@@ -18,7 +18,6 @@ import {
   Mail, 
   Phone,
   MapPin,
-  ChevronDown,
   Github,
   BarChart,
   Terminal,
@@ -27,6 +26,7 @@ import {
   Box
 } from 'lucide-react';
 import { HoverMotion } from '../components/layout/TransitionProvider';
+import ScrollIndicator from '../components/ui/ScrollIndicator';
 
 // Animation variants
 const fadeInUp = motionVariants.fadeInUp();
@@ -360,7 +360,6 @@ export default function AboutPage() {
   // Transform values based on scroll position
   const heroOpacity = useTransform(scrollY, [260, 800], [1, 0.98]);
   const heroScale = useTransform(scrollY, [260, 800], [1, 0.995]);
-  const scrollIndicatorOpacity = useTransform(scrollY, [0, 300], [1, 0]);
   
 // Experience data
 const experiences = [
@@ -601,12 +600,14 @@ const courses = [
       </Helmet>
       <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
       
-      {/* Hero Section */}
-      <motion.section 
-        ref={heroRef}
-        style={{ opacity: heroOpacity, scale: heroScale }}
-  className="hero-section relative h-[80vh] min-h-[600px] flex items-center justify-center overflow-hidden pt-6 sm:pt-8"
-      >
+      {/* Hero Section + Scroll Indicator Container */}
+      <div className="h-[calc(100dvh-5.5rem)] flex flex-col">
+        {/* Hero Section */}
+        <motion.section 
+          ref={heroRef}
+          style={{ opacity: heroOpacity, scale: heroScale }}
+          className="hero-section relative flex-1 flex items-center justify-center overflow-hidden pt-0"
+        >
         {/* Enhanced background with multiple layers */}
         <div className="absolute inset-0 bg-gradient-to-b from-blue-50 via-blue-50/80 to-white dark:from-gray-800/90 dark:via-gray-800/70 dark:to-gray-900 -z-10"></div>
         
@@ -669,7 +670,7 @@ const courses = [
         <div className="absolute inset-0 opacity-5 dark:opacity-10 bg-grid-pattern -z-10"></div>
         
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-12 mb-8">
+          <div className="flex flex-col lg:flex-row items-center lg:items-start gap-2 sm:gap-4 lg:gap-6 mb-0">
             {/* Content Column */}
             <motion.div 
               initial="hidden"
@@ -678,14 +679,14 @@ const courses = [
               className="lg:w-3/5 text-center lg:text-left"
             >
               {/* Enhanced badge */}
-              <motion.div variants={fadeInRight} className="mb-6">
+              <motion.div variants={fadeInRight} className="mb-3">
                 <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-100 to-blue-50 dark:from-blue-900/50 dark:to-blue-800/30 text-blue-800 dark:text-blue-300 text-sm font-medium backdrop-blur-sm border border-blue-200/50 dark:border-blue-700/30 shadow-sm touch-target">
                   <Code size={14} className="mr-2" /> About Me
                 </div>
               </motion.div>
               
               {/* Enhanced name heading with animated underline */}
-              <motion.div variants={fadeInRight} className="relative mb-4">
+              <motion.div variants={fadeInRight} className="relative mb-2">
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-2 leading-tight">
                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 dark:from-blue-400 dark:via-blue-300 dark:to-indigo-400">
                     Juan Lara
@@ -707,7 +708,7 @@ const courses = [
               {/* Enhanced subtitle with better styling */}
               <motion.h2 
                 variants={fadeInRight}
-                className="text-lg xs:text-xl sm:text-2xl md:text-3xl text-gray-800 dark:text-gray-200 mb-6 xs:mb-8 font-medium"
+                className="text-lg xs:text-xl sm:text-2xl md:text-3xl text-gray-800 dark:text-gray-200 mb-3 xs:mb-4 font-medium"
               >
                 Computer Scientist & Mathematician
               </motion.h2>
@@ -715,7 +716,7 @@ const courses = [
               {/* Content paragraphs with enhanced styling */}
               <motion.div 
                 variants={fadeInRight}
-                className="space-y-4 xs:space-y-5 text-sm xs:text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed max-w-3xl"
+                className="space-y-2 xs:space-y-3 text-sm xs:text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed max-w-3xl"
               >
                 <p className="text-sm xs:text-base sm:text-lg">
                   <span className="font-medium text-blue-600 dark:text-blue-400">LLM/ML Specialist</span> with 3+ years developing production-ready generative AI solutions. Currently building AI-powered clinical decision support systems at <span className="font-medium text-blue-600 dark:text-blue-400">GenomAI</span>, with previous research experience at <span className="font-medium text-indigo-600 dark:text-indigo-400">Harvard University</span>.
@@ -738,13 +739,13 @@ const courses = [
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="md:w-2/5 flex justify-center md:justify-end px-4 sm:px-0"
+              className="w-full lg:w-2/5 flex justify-center lg:justify-end px-4 sm:px-0"
             >
-              <div className="relative w-full max-w-xs sm:max-w-sm">
+              <div className="relative w-full max-w-xs sm:max-w-sm lg:max-w-none">
                 {/* Modern profile card with mobile-optimized dimensions */}
-                <div className="bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-2xl border border-gray-100 dark:border-gray-700 backdrop-blur-sm mobile-card-optimized">
+                <div className="bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-2xl border border-gray-100 dark:border-gray-700 backdrop-blur-sm mobile-card-optimized">
                   {/* Profile image - responsive sizing */}
-                  <div className="relative w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 mx-auto mb-4 sm:mb-6">
+                  <div className="relative w-36 h-36 xs:w-40 xs:h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 mx-auto mb-4 sm:mb-6">
                     <div className="relative w-full h-full rounded-xl sm:rounded-2xl overflow-hidden bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-700 dark:to-gray-800 border-2 sm:border-4 border-white dark:border-gray-600 shadow-xl">
                       <img 
                         src={`${process.env.PUBLIC_URL}/images/Profile.JPG`} 
@@ -793,30 +794,15 @@ const courses = [
           </div>
         </div>
         
-      </motion.section>
-      
-      {/* Scroll indicator positioned outside hero section in the remaining 20% space */}
-      <motion.div
-        style={{ opacity: scrollIndicatorOpacity }}
-        className="flex justify-center items-start pt-4 pb-6 cursor-pointer z-40 h-[20vh] min-h-[120px]"
-        onClick={() => {
-          const targetPosition = window.innerHeight * 0.8;
-          window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-        }}
-      >
-        <motion.div
-          animate={{
-            y: [0, 8, 0],
-            transition: {
-              duration: 1.5,
-              repeat: Infinity,
-              repeatType: 'loop'
-            }
-          }}
-        >
-          <ChevronDown size={24} className="text-blue-600 dark:text-blue-400" />
-        </motion.div>
-      </motion.div>
+        </motion.section>
+        
+        {/* Scroll indicator */}
+        <ScrollIndicator 
+          fadeOutStart={0} 
+          fadeOutEnd={300}
+          className="hidden sm:flex flex-shrink-0"
+        />
+      </div>
       
       {/* Skills Section */}
       <section className="pt-8 pb-16 bg-gray-50 dark:bg-gray-800">
