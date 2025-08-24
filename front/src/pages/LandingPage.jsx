@@ -508,20 +508,20 @@ export default function LandingPage() {
                     </span>
                   </div>
                   <h4 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-200 mb-1">
-                    <Link to="/blog" className="hover:underline">
-                      RAG Systems in Production: Lessons Learned
+                    <Link to="/blog/curiosities/tetris-np-complete" className="hover:underline">
+                      Why Tetris is NP-Complete: A Proof
                     </Link>
                   </h4>
                   <p className="text-gray-600 dark:text-gray-400 text-sm">
-                    January 15, 2025 • 8 min read
+                    January 10, 2025 • 5 min read
                   </p>
                 </div>
               </div>
               <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
-                Real-world challenges and solutions for deploying Retrieval-Augmented Generation systems at scale, from vector search optimization to context management.
+                A rigorous mathematical proof showing that the decision problem of Tetris survival is NP-complete, connecting a beloved game to fundamental computational complexity theory.
               </p>
               <Link 
-                to="/blog" 
+                to="/blog/curiosities/tetris-np-complete" 
                 className="inline-flex items-center font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-300 group"
               >
                 Read post
