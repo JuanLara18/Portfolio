@@ -227,9 +227,15 @@ html,body{overscroll-behavior:none;position:relative;height:100%;min-height:100v
 /* Tighten paddings for smaller phones */
 @media (max-width:480px){
   header[class*="fixed"]{min-height:76px}
-  .hero-section{padding-top:5rem!important}
+  .hero-section{padding-top:5rem!important;min-height:calc(100dvh - 3.5rem)!important;height:auto!important}
   .mobile-card-container{padding-left:.75rem!important;padding-right:.75rem!important}
   .mobile-card{padding:1.125rem!important}
+  
+  /* Ensure hero container has enough space on small phones */
+  .h-\[calc\(100dvh-5\.5rem\)\] {
+    height: auto !important;
+    min-height: calc(100dvh - 3.5rem) !important;
+  }
 /* Enhanced professional transitions and dark mode overlay fixes */
 @media (max-width: 768px) {
   /* Smooth mobile transitions - prevent jarring animations */
@@ -311,48 +317,37 @@ html,body{overscroll-behavior:none;position:relative;height:100%;min-height:100v
     margin-right: auto !important;
     box-sizing: border-box !important;
   }
+
+  /* Fix hero section height on mobile to prevent card cutoff */
+  .hero-section {
+    min-height: calc(100dvh - 4rem) !important;
+    height: auto !important;
+  }
+  
+  /* Hero container adjustments for mobile */
+  .h-\[calc\(100dvh-5\.5rem\)\] {
+    height: auto !important;
+    min-height: calc(100dvh - 4rem) !important;
+  }
 }
 }
 
 @media (max-width:320px){
   header[class*="fixed"]{min-height:80px}
-  .hero-section{padding-top:5.5rem!important}
+  .hero-section{padding-top:5.5rem!important;min-height:calc(100dvh - 3rem)!important;height:auto!important}
   .mobile-card-container{padding-left:.5rem!important;padding-right:.5rem!important}
   .mobile-card{padding:.875rem!important;border-radius:.5rem!important}
-  /* Smooth transitions for all elements */
-  *, *::before, *::after {
-    will-change: auto;
+  
+  /* Profile card on very small screens - more compact but visible */
+  .mobile-card-optimized {
+    max-width: 260px !important;
+    padding: 1rem !important;
   }
   
-  /* Improved scroll behavior */
-  html {
-    scroll-behavior: smooth;
-  }
-  
-  /* Enhanced motion for blog components */
-  .blog-smooth-transition {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  .parallax-smooth {
-    backface-visibility: hidden;
-    transform-style: preserve-3d;
-  }
-  
-  /* Highlight animation for table of contents navigation */
-  .toc-highlight {
-    animation: tocHighlight 2s ease-out;
-  }
-  
-  @keyframes tocHighlight {
-    0% {
-      background-color: rgba(59, 130, 246, 0.1);
-      border-left: 4px solid rgba(59, 130, 246, 0.5);
-    }
-    100% {
-      background-color: transparent;
-      border-left: 4px solid transparent;
-    }
+  /* Ensure hero container has enough space */
+  .h-\[calc\(100dvh-5\.5rem\)\] {
+    height: auto !important;
+    min-height: calc(100dvh - 3rem) !important;
   }
 }
 

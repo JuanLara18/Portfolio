@@ -748,7 +748,7 @@ const courses = [
                   <div className="relative w-36 h-36 xs:w-40 xs:h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 mx-auto mb-4 sm:mb-6">
                     <div className="relative w-full h-full rounded-xl sm:rounded-2xl overflow-hidden bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-700 dark:to-gray-800 border-2 sm:border-4 border-white dark:border-gray-600 shadow-xl">
                       <img 
-                        src={`${process.env.PUBLIC_URL}/images/Profile.JPG`} 
+                        src={`${process.env.PUBLIC_URL}/images/Profile.jpeg`} 
                         alt="Juan Lara - Computer Scientist and Mathematician" 
                         loading="lazy"
                         className="w-full h-full object-cover"
