@@ -581,7 +581,7 @@ export default function BlogHomePage() {
               </a>
               
               <a 
-                href="https://linkedin.com/in/juan-lara18"
+                href="https://www.linkedin.com/in/julara/"
                 target="_blank"
                 rel="noreferrer"
                 className="px-8 py-3 bg-white text-gray-900 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors flex items-center gap-2 font-medium shadow-lg"

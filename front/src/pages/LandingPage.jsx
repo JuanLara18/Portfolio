@@ -639,7 +639,7 @@ export default function LandingPage() {
                       />
                     </HoverMotion>
                     <HoverMotion as={motion.a}
-                      href="https://www.linkedin.com/in/julara/?locale=en_US" 
+                      href="https://www.linkedin.com/in/julara/" 
                       target="_blank" 
                       rel="noopener noreferrer" 
                       className="flex items-center px-4 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors duration-150 relative overflow-hidden group touch-target mobile-smooth-transition"

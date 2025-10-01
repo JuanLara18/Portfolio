@@ -80,7 +80,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
 						<div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-4 sm:p-5">
 							<h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Connect</h3>
 							<div className="grid grid-cols-3 gap-2 sm:gap-3">
-								<Link to="https://www.linkedin.com/in/julara/?locale=en_US" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center justify-center bg-white dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 p-3 rounded-lg transition-colors touch-target">
+								<Link to="https://www.linkedin.com/in/julara/" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center justify-center bg-white dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 p-3 rounded-lg transition-colors touch-target">
 									<Linkedin size={20} />
 									<span className="text-xs mt-1">LinkedIn</span>
 								</Link>

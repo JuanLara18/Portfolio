@@ -31,7 +31,7 @@ const Footer = () => {
                   <Github size={20} />
                 </a>
                 <a 
-                  href="https://linkedin.com/in/juan-camilo-lara-cruz" 
+                  href="https://www.linkedin.com/in/julara/" 
                   className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-all duration-200"
                   target="_blank"
                   rel="noopener noreferrer"

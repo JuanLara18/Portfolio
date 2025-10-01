@@ -202,7 +202,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Juan Lara**
 - 📧 Email: [larajuand@outlook.com](mailto:larajuand@outlook.com)
-- 💼 LinkedIn: [linkedin.com/in/julara](https://www.linkedin.com/in/julara/?locale=en_US)
+- 💼 LinkedIn: [linkedin.com/in/julara](https://www.linkedin.com/in/julara/)
 - 🐱 GitHub: [github.com/JuanLara18](https://github.com/JuanLara18)
 - 🌐 Website: [juanlara.dev](https://juanlara18.github.io/Portfolio)
 
